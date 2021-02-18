@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 // import logo2 from "~/assets/images/tpcLogo1.jpg";
 import logo1 from "~/assets/images/heroes.png";
-import logo2 from "~/assets/images/tpcLogo3.jpg";
+// import logo2 from "~/assets/images/tpcLogo3.jpg";
 import "./LoginForm.scss";
 // import loginAction from "~/actions/loginAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +39,7 @@ export default function Logon() {
       {" "}
       <div className="logonContainer">
         <section className="form">
-          <img className="logoImg" src={logo2} alt="Be the hero" />
+          {/* <img className="logoImg" src={logo2} alt="Be the hero" /> */}
           {/* <form onSubmit={(e) => handleLogin(e)}> */}
           <form>
             <h1>Faça o seu login</h1>

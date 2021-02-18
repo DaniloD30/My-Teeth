@@ -1,12 +1,18 @@
 import React from "react";
 // import { Typography } from "@material-ui/core";
 import SignUpForm from "~/components/signUp/SignUpForm";
-const SignUp = () => {
+import { withRouter } from "react-router";
+const SignUp = (props) => {
+
+  const comeBack = () => {
+    props.history.push("/login");
+  };
+
   return (
     <>
-      <SignUpForm />
+      <SignUpForm comeback={comeBack}/>
     </>
   );
 };
 
-export default SignUp;
+export default withRouter(SignUp);
