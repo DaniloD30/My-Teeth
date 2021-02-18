@@ -1,0 +1,37 @@
+.ceabs-menu-list {
+	width: 70px;
+
+	.menuItem {
+		height: 70px;
+		border-bottom: 1px solid #f3f3f3;
+
+		.MuiListItemText-root {
+			flex: initial;
+		}
+	}
+
+	.MuiList-padding {
+		padding: 0;
+	}
+
+	.MuiButtonBase-root {
+		padding-left: 0.7rem;
+
+		.MuiTypography-root {
+			color: #fff;
+
+			font-size: 11px;
+			line-height: 29x;
+			font-weight: normal;
+			text-decoration: none;
+		}
+
+		&.active {
+			.MuiTypography-root {
+				color: #fff;
+			}
+
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+	}
+}

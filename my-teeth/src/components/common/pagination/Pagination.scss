@@ -1,0 +1,26 @@
+.MuiPagination-root {
+	.MuiPagination-ul li button {
+		font-size: 14px;
+	}
+
+	.MuiPagination-ul li:first-child button {
+		border: solid;
+		border-width: 1px;
+	}
+
+	.MuiPagination-ul li:last-child button {
+		border: solid;
+		border-width: 1px;
+	}
+
+	// .MuiPagination-ul li {
+	// 	color: #14235a;
+	// 	font-weight: bold;
+	// }
+
+	// .MuiPagination-ul li .Mui-selected {
+	// 	background-color: #14235a;
+	// 	color: #fff;
+	// 	border: 1px solid #14235a;
+	// }
+}

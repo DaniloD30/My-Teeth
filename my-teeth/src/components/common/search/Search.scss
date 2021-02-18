@@ -1,0 +1,34 @@
+.search {
+	outline: 0px; // <-- shold probably remove this for better accessibility, adding for demo aesthetics for now.
+	width: 100%;
+	height: 40px;
+	background: none; //var(--color-light);
+	padding: 0px 0px 0px 5px;
+	border-radius: 1px; //var(--rad);
+	appearance: none; //for iOS input[type="search"] roundedness issue. border-radius alone doesn't work
+	transition: all var(--dur) var(--bez);
+	transition-property: width, border-radius;
+	z-index: 1;
+	position: relative;
+	border: 0px;
+	font-size: 12px;
+	outline: 0;
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	color: #afc3d2;
+}
+
+::placeholder {
+	color: #afc3d2;
+	opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: #afc3d2;
+}
+
+::-ms-input-placeholder {
+	/* Microsoft Edge */
+	color: #afc3d2;
+}
+

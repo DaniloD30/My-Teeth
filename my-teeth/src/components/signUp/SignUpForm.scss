@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
+.signUp {
+  font: 400 14px Roboto, sans-serif;
+  .register-container {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logoImg {
+    max-width: 250px;
+  }
+
+  .register-container .content {
+    width: 100%;
+    padding: 96px;
+    background: #f0f0f5;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .register-container .content section {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .register-container .content section h1 {
+    margin: 64px 0 32px;
+    font-size: 32px;
+  }
+
+  .register-container .content section p {
+    font-size: 18px;
+    color: #737380;
+    line-height: 32px;
+  }
+
+  .register-container .content form {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .register-container .content form input {
+    margin-top: 8px;
+  }
+
+  .register-container .content form .input-group {
+    display: flex;
+  }
+
+  .register-container .content form .input-group input + input {
+    margin-left: 8px;
+  }
+
+  input,
+  button,
+  textarea {
+    font: 400 18px Roboto, sans-serif;
+  }
+
+  form input {
+    width: 100%;
+    height: 60px;
+    color: #333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 0 24px;
+  }
+
+  form textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 140px;
+    height: 60px;
+    color: #333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 16px 24px;
+    line-height: 24px;
+  }
+
+  .buttonLogin {
+    width: 100%;
+    height: 60px;
+    background: #48d6cf;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    transition: filter 0.2s;
+  }
+
+  .buttonLogin:hove r {
+    filter: brightness(90%);
+  }
+}

@@ -1,0 +1,56 @@
+.SubMenu {
+	position: absolute;
+	left: 70px;
+	background: white;
+	width: 200px;
+	height: 100vh;
+
+	.subMenuItem {
+		height: 40px !important;
+		text-transform: inherit !important;
+		font-size: 14px;
+		color: #3d5564;
+		font-weight: bold;
+	}
+}
+
+.headerSubMenu {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	justify-content: space-between;
+	padding: 5px 15px;
+	// border-bottom: 1px solid #AFC3D2;
+	margin-bottom: 5px;
+
+	.titleSubMenu {
+		font-size: 18px;
+		color: #3d5564;
+		font-weight: bold;
+	}
+}
+
+.btnCloseSubMenu {
+	padding: 3px 5px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.btnCloseSubMenu:hover {
+	background: #cccccc2e;
+}
+
+.link {
+	font-family: "Trebuchet MS", sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	letter-spacing: 0px;
+	color: rgba(175, 195, 210, 1);
+	text-decoration: none;
+	cursor: default;
+}
+
+.link:hover {
+	text-decoration: none;
+	cursor: pointer;
+}

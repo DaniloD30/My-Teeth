@@ -1,0 +1,18 @@
+.custom-pagination {
+	padding: 2rem 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.MuiPaginationItem-page.Mui-selected {
+		background-color: transparent;
+		font-weight: bold;
+		color: #13245a;
+	}
+
+	.MuiPaginationItem-root.MuiPaginationItem-page:not(.Mui-disabled) {
+		.MuiPaginationItem-icon {
+			color: #13245a;
+		}
+	}
+}

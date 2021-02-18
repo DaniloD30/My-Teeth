@@ -1,0 +1,53 @@
+.field-file {
+  width: 130px;
+  height: 130px;
+  border-radius: 3px;
+  position: relative;
+  background-color: rgba($color: #afc3d2, $alpha: 0.2);
+
+  &.field-image-error {
+    border: 1px solid red;
+  }
+
+  .field-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+  }
+
+  .field-placholder {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    img {
+      width: 70%;
+      height: 70%;
+    }
+  }
+
+  label {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+
+    .MuiButtonBase-root {
+      width: 0.5rem;
+      min-width: unset;
+    }
+  }
+
+  .close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    img {
+      filter: contrast(200%) brightness(150%);
+    }
+  }
+}
