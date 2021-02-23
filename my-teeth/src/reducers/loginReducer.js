@@ -2,8 +2,7 @@ import Constants from "~/helpers/enums/Constants";
 
 const INITIAL_STATE = {
   accountCreateSuccess: false,
-  auth: false,
-  type: ''
+  auth: false
 };
 
 export default function loginReducer(state = INITIAL_STATE, action) {
@@ -18,8 +17,7 @@ export default function loginReducer(state = INITIAL_STATE, action) {
     case Constants.CREATE_LOGIN:
       return {
         ...state,
-        auth: action?.payload.auth,
-        type: action?.payload.profileid
+        auth: action?.payload.auth
         // clinicaAdd: action?.payload?.data,
       };
     default:

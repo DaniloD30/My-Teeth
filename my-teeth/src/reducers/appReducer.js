@@ -3,7 +3,8 @@ import Constants from "~/helpers/enums/Constants";
 const INITIAL_STATE = {
   loading: {
     getUsersLoading: false,
-    loginCreateLoading: false
+    loginCreateLoading: false,
+    loginLoading: false
   },
 };
 

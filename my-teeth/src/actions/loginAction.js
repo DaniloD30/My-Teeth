@@ -51,15 +51,17 @@ export const createLogin = (
   loginService
     .createLogin(params)
     .then((response) => {
-      dispatch({
-        type: Constants.CREATE_LOGIN,
-        payload: response.data,
-      });
+      console.log("response login ->", response)
+     
 
-      if (response) {
-        login(response.data.token);
-        localStorage.setItem("profile_id", response.data.profileid);
-        localStorage.setItem("userid", response.data.userid);
+      if (response?.data?.auth) {
+        dispatch({
+          type: Constants.CREATE_LOGIN,
+          payload: response?.data,
+        });
+        login(response?.data?.token);
+        localStorage.setItem("profile_id", response?.data?.profileid);
+        localStorage.setItem("userid", response?.data?.userid);
         fnCallback();
       }
     })
