@@ -1,5 +1,5 @@
 import Constants from "~/helpers/enums/Constants";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const startLoading = (identifier) => ({
   type: Constants.UPDATE_LOADING,
@@ -28,23 +28,23 @@ const filterData = (items, val) => {
   return searchedItems;
 };
 
-// export const showToast = (
-//   { description, type },
-//   props = () => {}
-// ) => {
-//   toast(description, {
-//     type: type,
-//     position: toast.POSITION.TOP_CENTER,
-//     ...props,
-//   });
-// };
+export const showToast = (
+  { description, type },
+  props = () => {}
+) => {
+  toast(description, {
+    type: type,
+    position: toast.POSITION.TOP_CENTER,
+    ...props,
+  });
+};
 
-// export const showError = (error) => {
-// 	showToast({
-// 		type: "error",
-// 		description: error,
-// 	});
-// };
+export const showError = (error) => {
+	showToast({
+		type: "error",
+		description: error,
+	});
+};
 
 export const fileToBase64 = (file) => {
   return new Promise((resolve) => {
@@ -94,5 +94,8 @@ const Utils = {
   stringBase64ToObjectBase64,
   fileToBase64,
   base64ToArrayBuffer,
+  showToast,
+  showError
+
 };
 export default Utils;

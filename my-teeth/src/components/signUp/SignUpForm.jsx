@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 // import { FiArrowLeft } from 'react-icons/fi';
 import logo1 from "~/assets/images/heroes.png";
@@ -12,15 +12,24 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-// import { ToastContainer } from "react-toastify";
+import SaveIcon from '@material-ui/icons/Save';
+import { ToastContainer } from "react-toastify";
 import Utils from "~/helpers/Utils";
 import { Formik, Form } from "formik";
 import RegisterInputText from "~/components/common/registerInputs/RegisterInputText";
 import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import loginAction from "~/actions/loginAction";
 export default function SignUpForm(props) {
   const dispatch = useDispatch();
+  const accountCreateSuccess = useSelector(
+    (state) => state?.login?.accountCreateSuccess
+  );
+
+  const loginCreateLoading = useSelector(
+    (state) => state?.app?.loading?.loginCreateLoading
+  );
+  // const { userData } = useSelector((state) => state.login);
   // const [name, setName] = useState("");
   // const [email, setEmail] = useState("");
   // const [whatsapp, setWhatsapp] = useState("");
@@ -66,6 +75,14 @@ export default function SignUpForm(props) {
 
   // }
 
+  useEffect(() => {
+    if (accountCreateSuccess) {
+      setTimeout(function () {
+        props.comeback();
+      }, 5000);
+    }
+  }, [accountCreateSuccess]);
+
   return (
     <div className="signUp">
       <div className="register-container">
@@ -81,6 +98,8 @@ export default function SignUpForm(props) {
               Já possuo cadastro
             </Link>
           </section>
+          <ToastContainer />
+
           <Formik
             initialValues={{ ...user }}
             validate={(values) => {
@@ -97,9 +116,9 @@ export default function SignUpForm(props) {
               if (!values.pass) {
                 errors.pass = "Senha Obrigatória";
               }
-              if (!values.profile_id) {
-                errors.profile_id = "Tipo de perfil Obrigatória";
-              }
+              // if (!values.profile_id) {
+              //   errors.profile_id = "Tipo de perfil Obrigatória";
+              // }
               if (!values.clinic_id) {
                 errors.clinic_id = "Clínica Obrigatória";
               }
@@ -111,64 +130,82 @@ export default function SignUpForm(props) {
             }}
             onSubmit={(values, { setSubmitting }) => {
               dispatch(
-                loginAction.createAccount(values, "loginCreateLoading", (error) => {
-                  setSubmitting(false);
-                  if (error) {
-                    Utils.showError(error);
-                    return;
+                loginAction.createAccount(
+                  values,
+                  "loginCreateLoading",
+                  (error) => {
+                    setSubmitting(false);
+                    if (error) {
+                      Utils.showError(error);
+                      return;
+                    }
+                    // console.log("ENTROU NO CALLBACK");
+                    Utils.showToast({
+                      type: "success",
+                      description: "Usuário cadastrado com sucesso",
+                    });
                   }
-
-                  Utils.showToast({
-                    type: "success",
-                    description: "Usuário cadastrado com sucesso",
-                  });
-
-                  props.comeback();
-                })
+                )
               );
             }}
-          >
-            {({ submitForm }) => (
-              <Form>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <RegisterInputText label={"Nome"} name="name" />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <RegisterInputText label={"Senha"} name="pass" />
-                  </Grid>
-                  <Grid item xs={8}>
-                    <RegisterInputText label={"E-mail"} name="email" />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <RegisterInputText label={"Gênero"} name="genre" />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <RegisterInputText label={"Plano"} name="plan_id" />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <RegisterInputText label={"Clínica"} name="clinic_id" />
-                  </Grid>
-                  <Grid item xs={4}>
-                    {/* <RegisterInputText label={"Perfil"} name="profile_id" /> */}
-                    <RegisterSelect
-                      label={"Perfil"}
-                      name="profile_id"
-                      options={["Dentista"]}
-                    />
-                  </Grid>
-                </Grid>
+            render={({ submitForm, setFieldValue }) => {
+              return (
+                <Form>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <RegisterInputText label={"Nome"} name="name" />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <RegisterInputText label={"Senha"} name="pass" />
+                    </Grid>
+                    <Grid item xs={8}>
+                      <RegisterInputText label={"E-mail"} name="email" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText label={"Gênero"} name="genre" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText label={"Plano"} name="plan_id" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText label={"Clínica"} name="clinic_id" />
+                    </Grid>
 
-                <button
-                  className="buttonLogin"
-                  type="submit"
-                  onClick={submitForm}
-                >
-                  Cadastrar
-                </button>
-              </Form>
-            )}
-          </Formik>
+                    <Grid item xs={4}>
+                      <RegisterSelect
+                        label={"Perfil"}
+                        name="profile_id"
+                        options={[
+                          "Administrador",
+                          "Dentista",
+                          "Atendente",
+                          "Cliente",
+                        ]}
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Button
+                    id="speeding-filter-period-save-button"
+                    className="report-save-button"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    disabled={loginCreateLoading}
+                    onClick={submitForm}
+                  >
+                    {loginCreateLoading ? (
+												<CircularProgress style={{ height: 14, width: 14, marginRight: 8 }} color={"#fff"} />
+											) : (
+												<SaveIcon />
+											)}
+                    Cadastrar
+                  </Button>
+                </Form>
+              );
+            }}
+          />
           {/* <form>
             <input
               placeholder="Nome da ONG"

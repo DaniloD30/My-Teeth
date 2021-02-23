@@ -1,33 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { FiLogIn } from 'react-icons/fi';
 import { Link } from "react-router-dom";
 // import logo2 from "~/assets/images/tpcLogo1.jpg";
 import logo1 from "~/assets/images/heroes.png";
 // import logo2 from "~/assets/images/tpcLogo3.jpg";
 import "./LoginForm.scss";
-// import loginAction from "~/actions/loginAction";
+import loginAction from "~/actions/loginAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@material-ui/core";
 // import heroesImg from '../../assets/heroes.png';
 // import logo from '../../assets/logo.svg';
 
 export default function Logon() {
-  // const [dataLogin, setDataLogin] = useState({ values: {} });
+  const [dataLogin, setDataLogin] = useState({ values: {} });
   const loginLoading = useSelector((state) => state.app.loading.loginLoading);
 
   const dispatch = useDispatch();
 
-  // const login = () => {
-  // dispatch(
-  // loginAction.sendCredentials("loginLoading", (error) => {
-  // if (error) {
-  // return;
-  // }
-  // dispatch(loginAction.addProfiles("loginLoading"));
-  //     })
-  //   );
-  // };
+  const login = () => {
+    dispatch(
+      loginAction.createLogin(dataLogin, "loginLoading", (error) => {
+        if (error) {
+          return;
+        }
 
+        // Redireciona para a tela HOME com as permissões 
+      })
+    );
+  };
+  const handleChange = (e) => {
+    setDataLogin({ ...dataLogin, values: { [e.target.name]: e.target.value } });
+  };
   // useEffect(() => {
   // if (localStorage.getItem("tokenAzure")) {
   //   dispatch(loginAction.addProfiles("loginLoading"));
@@ -46,19 +49,19 @@ export default function Logon() {
             <input
               style={{ marginBottom: "10px" }}
               placeholder="Sua ID"
-              name="user"
-              // onChange={handleChange}
+              name="username"
+              onChange={handleChange}
             />
             <input
               placeholder="Senha"
               type="password"
               name="password"
-              // onChange={handleChange}
+              onChange={handleChange}
             />
 
             <button
               className="buttonLogin"
-              // onClick={() => login()}
+              onClick={() => login()}
               type="submit"
             >
               Entrar

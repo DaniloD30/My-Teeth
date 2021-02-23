@@ -1,7 +1,7 @@
 import Constants from "~/helpers/enums/Constants";
 
 const INITIAL_STATE = {
-  contaCriadaSucesso: false,
+  accountCreateSuccess: false,
   auth: false,
   type: ''
 };
@@ -11,7 +11,7 @@ export default function loginReducer(state = INITIAL_STATE, action) {
     case Constants.CREATE_ACCOUNT:
       return {
         ...state,
-        contaCriadaSucesso: true
+        accountCreateSuccess: true
 
         // clinicaAdd: action?.payload?.data,
       };

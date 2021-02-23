@@ -41,7 +41,7 @@ const RegisterSelect = (props) => {
 							}
 
 							return (
-								<MenuItem key={idx} value={idx}>
+								<MenuItem key={idx} value={idx+1}>
 									{text}
 								</MenuItem>
 							);
