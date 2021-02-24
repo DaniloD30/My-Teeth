@@ -47,6 +47,7 @@ export const routes = [
     icon: Dashboard,
     view: () => <Home />,
     onlyAuthorized: true,
+    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
     showOnMenu: true,
     mainPage: true,
   },
