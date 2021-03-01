@@ -95,7 +95,7 @@ const RegisteredClinic = (props) => {
   const edit = (id, row) => {
     history.push(
       {
-        pathname: `/users/profile/insert/${id}`,
+        pathname: `/register/clinicInsert/${id}`,
       },
       row
     );
@@ -136,7 +136,7 @@ const RegisteredClinic = (props) => {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
         history.push("/login");
-      }, 5000);
+      }, 3000);
     }
 
     // dispatch(pointsInterestAction.pointsInterestDelete(IdrowDelete, refreshList));

@@ -2,7 +2,7 @@ import http from "~/config/httpRequest/http";
 
 const CLINIC = 'clinics';
 
-export const addClinic = (data, token) => {
+export const addClinicService = (data, token) => {
     return new Promise((resolve, reject) => {
         http.post(`${CLINIC}/`, data, {headers: {'x-access-token': token}})
             .then(response => resolve(response))
@@ -35,7 +35,7 @@ export const editClinic = (data, token, id) => {
 };
 
 const clinicaService = {
-    addClinic,
+    addClinicService,
     getClinic,
     deleteClinicService,
     editClinic

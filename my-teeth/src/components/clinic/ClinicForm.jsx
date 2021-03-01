@@ -5,82 +5,69 @@ import {
   Grid,
   Box,
   Button,
-  CircularProgress,
+  // CircularProgress,
   Paper,
-  Typography,
+  // Typography,
 } from "@material-ui/core";
 import { Formik, Form } from "formik";
-// import Utils from "~/helpers/Utils";
+import Utils from "~/helpers/Utils";
 // import { useTranslation } from "react-i18next";
 // import Utils from "~/helpers/Utils";
-import UserIcon from "~/assets/icons/user.svg";
+import { withRouter } from "react-router";
+// import UserIcon from "~/assets/icons/user.svg";
+import { isAuthenticated, getToken } from "~/services/auth";
 import RegisterInputText from "~/components/common/registerInputs/RegisterInputText";
 import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
-import RegisterCheckbox from "~/components/common/registerInputs/RegisterCheckbox";
-import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
+// import RegisterCheckbox from "~/components/common/registerInputs/RegisterCheckbox";
+// import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
 // import CpfCnpjUtils from "~/helpers/CpfCnpjUtils";
 import { ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 // import RegisterImageInput from "~/components/common/registerInputs/RegisterImageInput";
 // import driverAction from "~/actions/driverAction";
-import RegisterImageInput from "../../components/common/registerInputs/RegisterImageInput"
+// import RegisterImageInput from "../../components/common/registerInputs/RegisterImageInput";
+import clinicAction from "~/actions/clinicAction";
 const ClinicForm = (props) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const { location } = history;
   // const { t } = useTranslation();
   // const { loading } = useSelector((state) => state.app);
-  const getProfilesLoading = useSelector(
-    (state) => state.app?.loading?.getProfilesLoading
-  );
-  const addUsersLoading = useSelector(
-    (state) => state.app?.loading?.addUsersLoading
-  );
-
-  const editUsersLoading = useSelector(
-    (state) => state.app?.loading?.editUsersLoading
+  // const getProfilesLoading = useSelector(
+  //   (state) => state.app?.loading?.getProfilesLoading
+  // );
+  const addClinicLoading = useSelector(
+    (state) => state.app?.loading?.addClinicLoading
   );
 
-  const getResourceLoading = useSelector(
-    (state) => state.app?.loading?.getResourceLoading
-  );
-  const [perfil, setPerfil] = React.useState([]);
-  const [
-    recursosIndividualizados,
-    setRecursosIndividualizados,
-  ] = React.useState([]);
+  // const editUsersLoading = useSelector(
+  //   (state) => state.app?.loading?.editUsersLoading
+  // );
 
-  let user = {
-    usuario: "",
-    nome: "",
-    sobrenome: "",
-    matricula: "",
-    cpf: "",
-    email: "",
-    fixo: "",
-    celular: "",
-    celularTipo: null,
-    foto: null,
-    idTipoUsuario: 1,
-    administrador: false,
-    motivoInativacao: "",
-    ativo: true,
-    idUsuarioCriacao: 1,
-    dataCriacao: "2020-12-14T17:05:36.075Z",
-    idUsuarioAtualizacao: 1,
-    dataAtualizacao: "2020-12-14T17:05:36.075Z",
-    Enderecos: [],
-    Perfis: null,
-    Recursos: null,
-    tenantId: "tpc",
+  let clinic = {
+    company_name: "Clinica dasdadd",
+    main_office: "Sim",
+    cnpj: "12345678910123",
+    state_registration: "1234321",
+    municipal_registration: "34565432",
+    site: "www.clinicadenison.com.br",
+    type: 1,
+    due_date: "10",
+    service_rate: 1,
+    login_wirecard: "Sim",
+    payment_slip: 0,
+    payment_transfer: 0,
+    payment_card: 1,
+    clinic_type_id: 1,
   };
 
   if (location?.state) {
-    user = {
-      ...user,
+    clinic = {
+      ...clinic,
       ...location?.state,
     };
   }
+
   useEffect(() => {
     // console.log("location state ->", location.state);
     // console.log("location pathname ->", location.pathname);
@@ -90,14 +77,6 @@ const ClinicForm = (props) => {
     // 	dispatch(groupPointsAction.getAvailablePointsForGroupById(location.state.Id));
     // }
   }, [history, location.pathname, location.state]);
-
-  const handleChange = (arr, type) => {
-    if (type === "recursosIndividualizados") {
-      setRecursosIndividualizados(arr);
-    } else {
-      setPerfil(arr);
-    }
-  };
 
   useEffect(() => {
     // dispatch(profileAction.getProfiles("getProfilesLoading", 1));
@@ -111,7 +90,7 @@ const ClinicForm = (props) => {
         <Box id="userForm" style={{ padding: "10px" }}>
           <Formik
             initialValues={{
-              ...user,
+              ...clinic,
             }}
             validate={(values) => {
               const errors = {};
@@ -119,24 +98,6 @@ const ClinicForm = (props) => {
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              // if (values?.foto?.base64) {
-              //   let y = Utils.stringBase64ToObjectBase64(values.foto.base64);
-              //   values.foto = Utils.b64toBlob(y.data);
-              // }
-              // console.log("values ->", values)
-              // if (values?.foto?.base64) {
-              //   let x = Utils.stringBase64ToObjectBase64(values.foto.base64)
-              //   let y = Utils.base64ToArrayBuffer(x.data);
-              //   console.log(" y ->", y)
-              // values.foto = Utils.b64toBlob(y.data);
-              // }
-              // console.log("y ->", y)
-              // let x = atob(y.data)
-              // console.log("x ->", x)aa
-              values.perfis = perfil;
-              values.recursosPermissoes = recursosIndividualizados;
-
-              // editUsersLoading
               if (location?.state) {
                 // dispatch(
                 //   userAction.editUser(
@@ -161,38 +122,43 @@ const ClinicForm = (props) => {
                 dispatch de edição usuario
                 */
               } else {
-                // dispatch(
-                //   userAction.addUser(values, "addUsersLoading", (error) => {
-                //     setSubmitting(false);
-                //     if (error) {
-                //       Utils.showError(error);
-                //       return;
-                //     }
-                //     Utils.showToast({
-                //       type: "success",
-                //       description: "Usuário salvo com sucesso",
-                //     });
-                //     props.comeback();
-                //   })
-                // );
+                //               params = "",
+                // token,
+                // LOADING_IDENTIFICATOR = "",
+                if (isAuthenticated()) {
+                  dispatch(
+                    clinicAction.addClinic(
+                      values,
+                      getToken(),
+
+                      "addClinicLoading",
+                      (error) => {
+                        if (error) {
+                          setSubmitting(false);
+                          Utils.showError(error);
+                          return;
+                        }
+
+                        Utils.showToast({
+                          type: "success",
+                          description: "Clínica cadastrada com sucesso",
+                        });
+
+                        setTimeout(function () {
+                          props.comeback();
+                        }, 3000);
+
+                        // props.comeback();
+                      }
+                    )
+                  );
+                } else {
+                  Utils.showError("Não autenticado!");
+                  setTimeout(function () {
+                    props.history.push("/login");
+                  }, 3000);
+                }
               }
-
-              // dispatch(
-              //   driverAction.saveDriver(newDriver, (error) => {
-              //     setSubmitting(false);
-              //     if (error) {
-              //       Utils.showError(error);
-              //       return;
-              //     }
-
-              //     Utils.showTranslatedToast({
-              //       type: Constants.SUCCESS,
-              //       description: Labels.REGISTER_DRIVER_FORM_MSG_SUCCESS,
-              //     });
-
-              //     props.comeback();
-              //   })
-              // );
             }}
           >
             {({ submitForm, resetForm }) => (
@@ -205,185 +171,119 @@ const ClinicForm = (props) => {
                 >
                   <Grid container spacing={3}>
                     <Grid item xs={4}>
-                      {location?.state ? null : (
-                        <RegisterInputText label={"E-mail"} name="email" />
-                      )}
+                      {/* {location?.state ? null : ( */}
+                      <RegisterInputText
+                        label={"Nome da Clínica"}
+                        name="company_name"
+                        maxL="255"
+                      />
+                      {/* )} */}
                     </Grid>
                     <Grid item xs={8}>
-                      <RegisterImageInput
-                        name={"foto"}
+                      <RegisterInputText
+                        label={"Main Office"}
+                        name="main_office"
+                        maxL="3"
+                      />
+                      {/* <RegisterImageInput
+                        name={"foto"}    
                         placholderIcon={
                           <img src={UserIcon} alt={"Icon Close"} {...props} />
                         }
                         accept=".jpg, .png, .jpeg"
-                      />
+                      /> */}
                     </Grid>
                   </Grid>
 
-                  <Box
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Box style={{ width: "400px" }}>
-                      {location?.state ? null : (
-                        <RegisterInputText label={"Usuário"} name="usuario" />
-                      )}
-                    </Box>
-                    <Box style={{ marginLeft: "20px" }}>
-                      <RegisterCheckbox
-                        // label={"ativo"}
-                        name="idTipoUsuario"
-                        size="medium"
-                        color="primary"
-                        labelLegend={"Interno"}
-                      />
-                    </Box>
-                    <Box>
-                      <RegisterCheckbox
-                        name="administrador"
-                        size="medium"
-                        color="primary"
-                        labelLegend={"Admnistrador"}
-                      />
-                    </Box>
-                    <Box>
-                      <RegisterCheckbox
-                        name="ativo"
-                        size="medium"
-                        color="primary"
-                        labelLegend={"Ativo"}
-                      />
-                    </Box>
-                  </Box>
-
-                  <Grid item xs={10}>
-                    <Grid item xs={12} md={8}>
-                      <RegisterInputText label={"Nome"} name="nome" />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Grid item xs={12} md={8}>
-                      <RegisterInputText label={"Sobrenome"} name="sobrenome" />
-                    </Grid>
-                  </Grid>
-                  <Grid container spacing={4}>
-                    <Grid item xs={12} md={2}>
-                      <RegisterInputText label={"Matrícula"} name="matricula" />
-                    </Grid>
-
-                    <Grid item xs={12} md={2}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={4}>
                       <RegisterMaskedTextInput
-                        label={"CPF"}
-                        name="cpf"
-                        mask="999.999.999-99"
+                        label={"cnpj"}
+                        name="cnpj"
+                        mask="99.999.999/9999-99"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"Municipal Registration"}
+                        name="municipal_registration"
+                        maxL="20"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"State Registration"}
+                        name="state_registration"
+                        maxL="20"
                       />
                     </Grid>
                   </Grid>
 
-                  <Grid container spacing={4}>
-                    <Grid item xs={12} md={2}>
-                      <RegisterMaskedTextInput
-                        label={"Telefone"}
-                        name="fixo"
-                        mask="(99) 99999-9999"
-                      />
+                  <Grid container spacing={3}>
+                    <Grid item xs={4}>
+                      <RegisterInputText label={"Site"} name="site" maxL="20" />
                     </Grid>
-
-                    <Grid item xs={12} md={2}>
-                      <RegisterMaskedTextInput
-                        label={"Celular"}
-                        name="celular"
-                        mask="(99) 99999-9999"
-                      />
+                    <Grid item xs={4}>
+                      <RegisterInputText label={"type"} name="type" maxL="20" />
                     </Grid>
-
-                    <Grid item xs={12} md={2}>
-                      <RegisterSelect
-                        label={"Tipo Celular"}
-                        name="celularTipo"
-                        options={["Fixo"]}
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"Due date"}
+                        name="due_date"
+                        maxL="20"
                       />
                     </Grid>
                   </Grid>
 
-                  <Grid container spacing={4}>
-                    <Grid item xs={12} md={12}>
-                      <Box id="addres" style={{ marginTop: "10px" }}>
-                        <Typography>Endereço</Typography>
-                        <Paper>
-                          <Grid container spacing={4}>
-                            <Grid item xs={12} md={3}>
-                              <RegisterMaskedTextInput
-                                label={"CEP"}
-                                name="Enderecos[0].cep"
-                                mask="99.999-999"
-                              />
-                            </Grid>
-
-                            <Grid item xs={12} md={3}>
-                              <RegisterInputText
-                                label={"PAÍS"}
-                                name="Enderecos.pais"
-                              />
-                            </Grid>
-                          </Grid>
-
-                          <Grid container spacing={4}>
-                            <Grid item xs={12} md={6}>
-                              <RegisterInputText
-                                label={"Logradouro"}
-                                name="Enderecos[0].logradouro"
-                              />
-                            </Grid>
-
-                            <Grid item xs={12} md={3}>
-                              <RegisterInputText
-                                label={"Número"}
-                                name="Enderecos[0].numero"
-                              />
-                            </Grid>
-                          </Grid>
-
-                          <Grid container spacing={4}>
-                            <Grid item xs={12} md={5}>
-                              <RegisterInputText
-                                label={"Complemento"}
-                                name="Enderecos[0].complemento"
-                              />
-                            </Grid>
-
-                            <Grid item xs={12} md={5}>
-                              <RegisterInputText
-                                label={"Bairro"}
-                                name="Enderecos[0].bairro"
-                              />
-                            </Grid>
-                          </Grid>
-
-                          <Grid container spacing={4}>
-                            <Grid item xs={12} md={5}>
-                              <RegisterInputText
-                                label={"Cidade"}
-                                name="Enderecos[0].cidade"
-                              />
-                            </Grid>
-
-                            <Grid item xs={12} md={5}>
-                              <RegisterInputText
-                                label={"UF"}
-                                name="Enderecos[0].uf"
-                              />
-                            </Grid>
-                          </Grid>
-                        </Paper>
-                      </Box>
+                  <Grid container spacing={3}>
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"service_rate"}
+                        name="service_rate"
+                        maxL="20"
+                      />
                     </Grid>
-
-                    {/* <Grid item xs={12} md={2}></Grid> */}
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"login_wirecard"}
+                        name="login_wirecard"
+                        maxL="20"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"payment_slip"}
+                        name="payment_slip"
+                        maxL="20"
+                      />
+                    </Grid>
                   </Grid>
+
+                  <Grid container spacing={3}>
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"payment_transfer"}
+                        name="payment_transfer"
+                        maxL="20"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"payment_card"}
+                        name="payment_card"
+                        maxL="20"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <RegisterInputText
+                        label={"clinic_type_id"}
+                        name="clinic_type_id"
+                        maxL="20"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  {/* <Grid item xs={12} md={2}></Grid> */}
 
                   <Grid
                     container
@@ -420,7 +320,7 @@ const ClinicForm = (props) => {
                           size="large"
                           fullWidth
                           disableElevation
-                          disabled={addUsersLoading || editUsersLoading}
+                          disabled={addClinicLoading}
                           onClick={submitForm}
                           // disabled={loading.driver}
                           // startIcon={loading.driver ? <CircularProgress size={18} /> : <ConfirmIcon />}
@@ -441,4 +341,4 @@ const ClinicForm = (props) => {
   );
 };
 
-export default ClinicForm;
+export default withRouter(ClinicForm);

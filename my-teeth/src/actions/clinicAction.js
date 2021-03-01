@@ -1,36 +1,42 @@
 import Utils from "~/helpers/Utils";
-import { getClinic, deleteClinicService } from "~/services/clinicaService";
+import {
+  getClinic,
+  deleteClinicService,
+  addClinicService,
+} from "~/services/clinicaService";
 import Constants from "~/helpers/enums/Constants";
 
-// export const addClinic = (
-//   params = "",
-//   token,
-//   LOADING_IDENTIFICATOR = ""
-//   // fnCallback = () => { }
-// ) => (dispatch) => {
-//   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-//   clinicaservice
-//     .addClinic(params, token)
-//     .then((response) => {
-//       if (response) {
-//         // Utils.SwalFire({
-//         //   icon: 'success',
-//         //   title: 'Sucesso',
-//         //   text: 'Registro Cadastrado!'
-//         // });
-//       }
-//     })
-//     .catch(() => {
-//       // utils.SwalFire({
-//       //   icon: 'error',
-//       //   title: 'Erro',
-//       //   text: 'Tente novamente!'
-//       // });
-//     })
-//     .finally(() => {
-//       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
-//     });
-// };
+export const addClinic = (
+  params = "",
+  token,
+  LOADING_IDENTIFICATOR = "",
+  fnCallback = () => { }
+) => (dispatch) => {
+  dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+
+  addClinicService(params, token)
+    .then((response) => {
+      if (response) {
+        fnCallback()
+        // Utils.SwalFire({
+        //   icon: 'success',
+        //   title: 'Sucesso',
+        //   text: 'Registro Cadastrado!'
+        // });
+      }
+    })
+    .catch((error) => {
+      fnCallback(error)
+      // utils.SwalFire({
+      //   icon: 'error',
+      //   title: 'Erro',
+      //   text: 'Tente novamente!'
+      // });
+    })
+    .finally(() => {
+      dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+    });
+};
 
 export const getAllCinics = (
   token,
@@ -126,7 +132,7 @@ export const deleteClinic = (
       }
     })
     .catch((error) => {
-      fnCallback();
+      fnCallback(error);
       // Utils.SwalFire({
       //   icon: 'error',
       //   title: 'Erro',
@@ -140,6 +146,7 @@ export const deleteClinic = (
 
 const clinicAction = {
   getAllCinics,
+  addClinic,
   deleteClinic,
 };
 export default // addClinic,

@@ -5,7 +5,7 @@ import { Field } from "formik";
 import "./RegisterComponents.scss";
 
 const RegisterInputText = (props) => {
-	const { label, ...fieldProps } = props;
+	const { label, maxL, ...fieldProps  } = props;
 
 	return (
 		<Box className="register-field">
@@ -18,7 +18,7 @@ const RegisterInputText = (props) => {
 				fullWidth
 				variant="outlined"
 				margin="dense"
-				inputProps={{ maxLength: 50 }}
+				inputProps={{ maxLength: maxL }}
 				{...fieldProps}
 			/>
 		</Box>
