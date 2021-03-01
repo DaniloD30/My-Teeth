@@ -96,7 +96,7 @@ const AuthenticatedLayout = (props) => {
                 </div>
                 <div id="info-user" className="action-info">
                   <Typography id="info-name" className="username">
-                    {userData?.account?.name}
+                    Implementar
                   </Typography>
                   <Dropdown>
                     <Item>
