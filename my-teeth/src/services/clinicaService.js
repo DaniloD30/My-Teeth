@@ -18,7 +18,7 @@ export const getClinic = (token) => {
     });
 };
 
-export const deleteClinic = (token, id) => {
+export const deleteClinicService = (token, id) => {
     return new Promise((resolve, reject) => {
         http.delete(`${CLINIC}/${id}`, {headers: {'x-access-token': token}})
             .then(response => resolve(response))
@@ -37,7 +37,7 @@ export const editClinic = (data, token, id) => {
 const clinicaService = {
     addClinic,
     getClinic,
-    deleteClinic,
+    deleteClinicService,
     editClinic
 }
 export default clinicaService;

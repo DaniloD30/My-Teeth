@@ -1,5 +1,5 @@
 import Utils from "~/helpers/Utils";
-import { getClinic } from "~/services/clinicaService";
+import { getClinic, deleteClinicService } from "~/services/clinicaService";
 import Constants from "~/helpers/enums/Constants";
 
 // export const addClinic = (
@@ -106,45 +106,45 @@ export const getAllCinics = (
 //     });
 // };
 
-// export const deleteClinic = (
-//   token,
-//   id,
-//   LOADING_IDENTIFICATOR = ""
-//   // fnCallback = () => { }
-// ) => (dispatch) => {
-//   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-//   clinicaservice
-//     .deleteClinic(token, id)
-//     .then((response) => {
-//       if (response) {
-//         // Utils.SwalFire({
-//         //   icon: 'success',
-//         //   title: 'Sucesso',
-//         //   text: 'Deletado com sucesso!'
-//         // });
-//         // console.log('response get all =>', response.data.count);
-//       }
-//     })
-//     .catch(() => {
-//       // Utils.SwalFire({
-//       //   icon: 'error',
-//       //   title: 'Erro',
-//       //   text: 'Tente novamente!'
-//       // });
-//     })
-//     .finally(() => {
-//       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
-//     });
-// };
+export const deleteClinic = (
+  token,
+  id,
+  LOADING_IDENTIFICATOR = "",
+  fnCallback = () => {}
+) => (dispatch) => {
+  dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+  deleteClinicService(token, id)
+    .then((response) => {
+      if (response) {
+        fnCallback();
+        // Utils.SwalFire({
+        //   icon: 'success',
+        //   title: 'Sucesso',
+        //   text: 'Deletado com sucesso!'
+        // });
+        // console.log('response get all =>', response.data.count);
+      }
+    })
+    .catch((error) => {
+      fnCallback();
+      // Utils.SwalFire({
+      //   icon: 'error',
+      //   title: 'Erro',
+      //   text: 'Tente novamente!'
+      // });
+    })
+    .finally(() => {
+      dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+    });
+};
 
 const clinicAction = {
-  getAllCinics
-}
-export default 
-  // addClinic,
-  clinicAction
-  // deleteClinic,
-  // editClinic,
-  // editClinicData,
-  // flagEdit,
-;
+  getAllCinics,
+  deleteClinic,
+};
+export default // addClinic,
+clinicAction;
+// deleteClinic,
+// editClinic,
+// editClinicData,
+// flagEdit,

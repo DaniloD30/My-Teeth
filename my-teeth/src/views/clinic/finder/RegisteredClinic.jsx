@@ -24,53 +24,31 @@ const RegisteredClinic = (props) => {
   const dispatch = useDispatch();
   const clinics = useSelector((state) => state.clinic?.clinics);
   const [IdrowDelete, setIdRowDelete] = React.useState();
+  const [isDelete, setIsDelete] = React.useState(false);
   const [modal, setFlagModal] = React.useState(false);
 
   const getClinicsLoading = useSelector(
     (state) => state.app?.loading?.getClinicsLoading
   );
 
-  const deleteProfilesLoading = useSelector(
-    (state) => state.app?.loading?.deleteProfilesLoading
+  const deleteClinicLoading = useSelector(
+    (state) => state.app?.loading?.deleteClinicLoading
   );
 
   useEffect(() => {
-    console.log("clinic ->", clinics)
-    // if (!deleteProfilesLoading) {
-    //   dispatch(profileAction.getProfiles("getProfilesLoading", 1));
-    // }
-  }, [clinics]);
+    if (isDelete) {
+      if (isAuthenticated()) {
+        dispatch(clinicAction.getAllCinics(getToken(), "getClinicsLoading"));
+      } else {
+        Utils.showError("Não autenticado!");
+        setTimeout(function () {
+          history.push("/login");
+        }, 3000);
+      }
+    }
+    setIsDelete(false);
+  }, [dispatch, isDelete, history]);
 
-  // "rows": [
-  //   {
-  //     "id": 2,
-  //     "company_name": "Clinica Denison",
-  //     "main_office": "Sim",
-  //     "cnpj": "123456789101",
-  //     "state_registration": "1234321",
-  //     "municipal_registration": "34565432",
-  //     "site": "www.clinicadenison.com.br",
-  //     "type": true,
-  //     "due_date": 10,
-  //     "service_rate": "1.00",
-  //     "login_wirecard": "Sim",
-  //     "payment_slip": false,
-  //     "payment_transfer": false,
-  //     "payment_card": true,
-  //     "clinic_type_id": 1,
-  //     "createdAt": "2021-03-01T17:34:01.000Z",
-  //     "updatedAt": "2021-03-01T17:34:01.000Z",
-  //     "clinicTypeId": 1,
-  //     "clinicType": {
-  //       "id": 1,
-  //       "name": "Matriz",
-  //       "description": "Qualquer coisa",
-  //       "active": true,
-  //       "createdAt": "2021-02-19T15:11:14.000Z",
-  //       "updatedAt": "2021-02-19T15:11:14.000Z"
-  //     }
-  //   }
-  // ]
   const SENT_COLUMNS = [
     {
       name: "cnpj",
@@ -99,7 +77,8 @@ const RegisteredClinic = (props) => {
   };
 
   const handlePage = (event, value) => {
-    // dispatch(profileAction.getProfiles("getProfilesLoading", value));
+    // change page
+    // dispatch(profileAction.getProfiles("deleteClinicLoading", value));
   };
 
   useEffect(() => {
@@ -109,7 +88,7 @@ const RegisteredClinic = (props) => {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
         history.push("/login");
-      }, 5000);
+      }, 3000);
     }
   }, [dispatch, history]);
 
@@ -123,30 +102,43 @@ const RegisteredClinic = (props) => {
   };
 
   const handleDelete = (row) => {
-    setIdRowDelete(row.idPerfil);
+    setIdRowDelete(row?.id);
     setFlagModal(true);
   };
 
   const confirmDeleteRow = () => {
-    // dispatch(
-    //   profileAction.deleteProfile(
-    //     IdrowDelete,
-    //     "deleteProfilesLoading",
-    //     (error) => {
-    //       if (error) {
-    //         Utils.showError(error);
-    //         return;
-    //       }
+    if (isAuthenticated()) {
+      dispatch(
+        clinicAction.deleteClinic(
+          getToken(),
+          IdrowDelete,
+          "deleteClinicLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
 
-    //       Utils.showToast({
-    //         type: "success",
-    //         description: "Perfil deletado com sucesso",
-    //       });
+            Utils.showToast({
+              type: "success",
+              description: "Clínica deletada com sucesso",
+            });
 
-    //       // props.comeback();
-    //     }
-    //   )
-    // );
+            setTimeout(function () {
+              setIsDelete(true);
+            }, 3000);
+
+            // props.comeback();
+          }
+        )
+      );
+    } else {
+      Utils.showError("Não autenticado!");
+      setTimeout(function () {
+        history.push("/login");
+      }, 5000);
+    }
+
     // dispatch(pointsInterestAction.pointsInterestDelete(IdrowDelete, refreshList));
     setFlagModal(false);
   };
@@ -185,7 +177,7 @@ const RegisteredClinic = (props) => {
                     </Button>
                   </Box>
                 </div>
-                {getClinicsLoading? (
+                {getClinicsLoading || deleteClinicLoading ? (
                   <Box style={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>
