@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 // import { FiArrowLeft } from 'react-icons/fi';
 import logo1 from "~/assets/images/heroes.png";
 import "./SignUpForm.scss";
 // import "./styles.css";
 import {
   Grid,
-  Box,
+
   Button,
   CircularProgress,
-  Paper,
-  Typography,
+ 
 } from "@material-ui/core";
 import SaveIcon from '@material-ui/icons/Save';
 import { ToastContainer } from "react-toastify";
@@ -81,7 +80,7 @@ export default function SignUpForm(props) {
         props.comeback();
       }, 5000);
     }
-  }, [accountCreateSuccess]);
+  }, [accountCreateSuccess, props]);
 
   return (
     <div className="signUp">

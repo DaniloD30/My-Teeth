@@ -14,15 +14,18 @@ export const Authenticated = (props) => {
   // console.log("routes ->", routes)
   return (
     <Switch>
-      {authenticatedRoutes.map((route, index) => (
-        route.path && <PrivateRoute
-          key={index}
-          path={route.path}
-          exact={route.exact}
-          component={route.view}
-          profiles={route.profilesAuthorized}
-        />
-      ))}
+      {authenticatedRoutes.map(
+        (route, index) =>
+          route.path && (
+            <PrivateRoute
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={route.view}
+              profiles={route.profilesAuthorized}
+            />
+          )
+      )}
       <Route
         path="/login"
         exact
@@ -36,22 +39,29 @@ export const Authenticated = (props) => {
 export const Anonymous = (props) => {
   const anonymousRoutes = _.filter(
     routes,
-    (r) => !(r.onlyAuthorized) || r.onlyAuthorized === "both"
+    (r) => !r.onlyAuthorized || r.onlyAuthorized === "both"
   );
-  console.log("Anonymous ->", anonymousRoutes)
+  console.log("Anonymous ->", anonymousRoutes);
   return (
     <Switch>
-      {anonymousRoutes.map((route, index) => (
-        route.path && <Route
-          key={index}
-          path={route.path}
-          exact={route.exact}
-          component={route.view}
-        />
-      ))}
+      {anonymousRoutes.map(
+        (route, index) =>
+          route.path && (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={route.view}
+            />
+          )
+      )}
       <Redirect to="/login" />
     </Switch>
   );
 };
 
-export default { Authenticated, Anonymous };
+const routers = {
+  Authenticated,
+  Anonymous,
+};
+export default routers;

@@ -1,15 +1,12 @@
 export const subRoutesUsers = [
     {
-        label: "Admin",
-        path: "/users/list"
-    },
-	{
-		label: "Perfil",
-		path: "/users/profile",
+        label: "Clínica",
+        path: "/register/clinicList"
     },
     {
-        label: "Clonar Perfil",
-        path: "/users/cloneProfile"
-    }
+        label: "Procedimento",
+        path: "/register/procedureList"
+    },
+    
    
 ];

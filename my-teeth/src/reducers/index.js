@@ -4,7 +4,9 @@ import { combineReducers } from "redux";
 
 import app from "~/reducers/appReducer";
 import login from "~/reducers/loginReducer";
+import clinic from "~/reducers/clinicaReducer";
 export default combineReducers({
   app,
-  login
-});
+  login,
+  clinic
+}); 

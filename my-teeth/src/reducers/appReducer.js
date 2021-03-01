@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   loading: {
     getUsersLoading: false,
     loginCreateLoading: false,
-    loginLoading: false
+    loginLoading: false,
+    getClinicsLoading: false
   },
 };
 

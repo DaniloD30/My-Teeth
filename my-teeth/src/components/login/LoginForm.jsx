@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 // import { FiLogIn } from 'react-icons/fi';
 import { Link } from "react-router-dom";
 // import logo2 from "~/assets/images/tpcLogo1.jpg";
@@ -7,7 +7,7 @@ import logo1 from "~/assets/images/heroes.png";
 import "./LoginForm.scss";
 import loginAction from "~/actions/loginAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, CircularProgress } from "@material-ui/core";
+import {  CircularProgress } from "@material-ui/core";
 // import heroesImg from '../../assets/heroes.png';
 // import logo from '../../assets/logo.svg';
 import Utils from "~/helpers/Utils";

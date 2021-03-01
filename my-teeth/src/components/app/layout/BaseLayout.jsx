@@ -11,7 +11,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import logo2 from "~/assets/images/tpcLogo3.jpg";
 import Menu from "~/components/app/menu/Menu";
-import { useDispatch, useSelector } from "react-redux";
+import { /* useDispatch, */ useSelector } from "react-redux";
 // import loginAction from "~/actions/loginAction"
 import "./Layout.scss";
 
@@ -35,7 +35,7 @@ const anonymousTheme = createMuiTheme({
 });
 
 const AuthenticatedLayout = (props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { userData } = useSelector((state) => state.login);
 
@@ -58,7 +58,7 @@ const AuthenticatedLayout = (props) => {
 
   const logout = () => {
     // dispatch(loginAction.logout());
-  }
+  };
 
   return (
     <ThemeProvider theme={autheticatedTheme}>
@@ -147,4 +147,8 @@ const AnonymousLayout = (props) => {
   );
 };
 
-export default { AuthenticatedLayout, AnonymousLayout };
+const baseLayout = {
+  AuthenticatedLayout,
+  AnonymousLayout,
+};
+export default baseLayout;

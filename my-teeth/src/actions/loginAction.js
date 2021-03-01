@@ -20,20 +20,10 @@ export const createAccount = (
         dispatch({
           type: Constants.CREATE_ACCOUNT,
         });
-        // Utils.SwalFire({
-        //   icon: 'success',
-        //   title: 'Sucesso',
-        //   text: 'Conta criada com sucesso!'
-        // });
       }
     })
     .catch((error) => {
       fnCallback(error);
-      // Utils.SwalFire({
-      //   icon: 'error',
-      //   title: 'Erro',
-      //   text: 'Tente novamente!'
-      // });
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -51,9 +41,6 @@ export const createLogin = (
   loginService
     .createLogin(params)
     .then((response) => {
-      console.log("response login ->", response)
-     
-
       if (response?.data?.auth) {
         dispatch({
           type: Constants.CREATE_LOGIN,
@@ -67,18 +54,14 @@ export const createLogin = (
     })
     .catch((error) => {
       fnCallback(error);
-      // Utils.SwalFire({
-      //   icon: 'error',
-      //   title: 'Erro',
-      //   text: 'Tente novamente!'
-      // });
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
     });
 };
 
-export default {
+const loginAction = {
   createAccount,
   createLogin,
-};
+}
+export default loginAction
