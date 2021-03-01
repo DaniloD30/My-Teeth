@@ -3,6 +3,7 @@ import {
   getClinic,
   deleteClinicService,
   addClinicService,
+  editClinicService
 } from "~/services/clinicaService";
 import Constants from "~/helpers/enums/Constants";
 
@@ -81,36 +82,38 @@ export const getAllCinics = (
 //   });
 // };
 
-// export const editClinic = (
-//   data,
-//   token,
-//   id,
-//   LOADING_IDENTIFICATOR = ""
-//   // fnCallback = () => { }
-// ) => (dispatch) => {
-//   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-//   clinicaservice
-//     .editClinic(data, token, id)
-//     .then((response) => {
-//       if (response) {
-//         // Utils.SwalFire({
-//         //   icon: 'success',
-//         //   title: 'Sucesso',
-//         //   text: 'Editado com sucesso!'
-//         // });
-//       }
-//     })
-//     .catch(() => {
-//       // Utils.SwalFire({
-//       //   icon: 'error',
-//       //   title: 'Erro',
-//       //   text: 'Tente novamente!'
-//       // });
-//     })
-//     .finally(() => {
-//       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
-//     });
-// };
+export const editClinic = (
+  data,
+  token,
+  id,
+  LOADING_IDENTIFICATOR = "",
+  fnCallback = () => { }
+) => (dispatch) => {
+  dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+  
+    editClinicService(data, token, id)
+    .then((response) => {
+      if (response) {
+        fnCallback()
+        // Utils.SwalFire({
+        //   icon: 'success',
+        //   title: 'Sucesso',
+        //   text: 'Editado com sucesso!'
+        // });
+      }
+    })
+    .catch((error) => {
+      fnCallback(error)
+      // Utils.SwalFire({
+      //   icon: 'error',
+      //   title: 'Erro',
+      //   text: 'Tente novamente!'
+      // });
+    })
+    .finally(() => {
+      dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+    });
+};
 
 export const deleteClinic = (
   token,
@@ -147,6 +150,7 @@ export const deleteClinic = (
 const clinicAction = {
   getAllCinics,
   addClinic,
+  editClinic,
   deleteClinic,
 };
 export default // addClinic,

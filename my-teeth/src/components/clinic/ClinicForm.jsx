@@ -40,9 +40,9 @@ const ClinicForm = (props) => {
     (state) => state.app?.loading?.addClinicLoading
   );
 
-  // const editUsersLoading = useSelector(
-  //   (state) => state.app?.loading?.editUsersLoading
-  // );
+  const editClinicLoading = useSelector(
+    (state) => state.app?.loading?.editClinicLoading
+  );
 
   let clinic = {
     company_name: "Clinica dasdadd",
@@ -99,28 +99,42 @@ const ClinicForm = (props) => {
             }}
             onSubmit={(values, { setSubmitting }) => {
               if (location?.state) {
-                // dispatch(
-                //   userAction.editUser(
-                //     values,
-                //     location?.state?.idUsuario,
-                //     "editUsersLoading",
-                //     (error) => {
-                //       setSubmitting(false);
-                //       if (error) {
-                //         Utils.showError(error);
-                //         return;
-                //       }
-                //       Utils.showToast({
-                //         type: "success",
-                //         description: "Usuário editado com sucesso",
-                //       });
-                //       props.comeback();
-                //     }
-                //   )
-                // );
-                /*
-                dispatch de edição usuario
-                */
+                console.log("entrou edit");
+                console.log("location state ->", location?.state);
+                if (isAuthenticated()) {
+                  dispatch(
+                    clinicAction.editClinic(
+                      values,
+                      getToken(),
+                      location?.state?.id,
+                      "editClinicLoading",
+                      (error) => {
+                        setSubmitting(false);
+
+                        if (error) {
+                          Utils.showError(error);
+                          return;
+                        }
+
+                        Utils.showToast({
+                          type: "success",
+                          description: "Clínica editada com sucesso!",
+                        });
+
+                        setTimeout(function () {
+                          props.comeback();
+                        }, 3000);
+
+                        // props.comeback();
+                      }
+                    )
+                  );
+                } else {
+                  Utils.showError("Não autenticado!");
+                  setTimeout(function () {
+                    props.history.push("/login");
+                  }, 3000);
+                }
               } else {
                 //               params = "",
                 // token,
@@ -133,15 +147,16 @@ const ClinicForm = (props) => {
 
                       "addClinicLoading",
                       (error) => {
+                        setSubmitting(false);
+
                         if (error) {
-                          setSubmitting(false);
                           Utils.showError(error);
                           return;
                         }
 
                         Utils.showToast({
                           type: "success",
-                          description: "Clínica cadastrada com sucesso",
+                          description: "Clínica cadastrada com sucesso!",
                         });
 
                         setTimeout(function () {
@@ -320,7 +335,7 @@ const ClinicForm = (props) => {
                           size="large"
                           fullWidth
                           disableElevation
-                          disabled={addClinicLoading}
+                          disabled={addClinicLoading || editClinicLoading}
                           onClick={submitForm}
                           // disabled={loading.driver}
                           // startIcon={loading.driver ? <CircularProgress size={18} /> : <ConfirmIcon />}
