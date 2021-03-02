@@ -1,7 +1,13 @@
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import { Box, Container, Toolbar, Typography } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 
 import Dropdown from "~/components/common/dropdown/Dropdown";
 import Item from "~/components/common/dropdown/Item";
@@ -37,7 +43,10 @@ const anonymousTheme = createMuiTheme({
 const AuthenticatedLayout = (props) => {
   // const dispatch = useDispatch();
 
-  const { userData } = useSelector((state) => state.login);
+  const userDataProfile = useSelector((state) => state.user?.userDataProfile);
+  const dataUserLoading = useSelector(
+    (state) => state.app?.loading?.dataUserLoading
+  );
 
   const autheticatedTheme = createMuiTheme({
     palette: {
@@ -96,7 +105,15 @@ const AuthenticatedLayout = (props) => {
                 </div>
                 <div id="info-user" className="action-info">
                   <Typography id="info-name" className="username">
-                    Implementar
+                    {dataUserLoading ? (
+                      <CircularProgress
+                        style={{ height: 14, width: 14, marginRight: 8 }}
+                        color={"#fff"}
+                      />
+                    ) : (
+                      userDataProfile?.name
+                    )}
+                    {/* Implementar */}
                   </Typography>
                   <Dropdown>
                     <Item>

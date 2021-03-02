@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     getClinicsLoading: false,
     deleteClinicLoading: false,
     addClinicLoading: false,
-    editClinicLoading: false
+    editClinicLoading: false,
+    dataUserLoading: false
   },
 };
 
