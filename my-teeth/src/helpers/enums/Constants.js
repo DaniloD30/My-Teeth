@@ -4,12 +4,14 @@ export const CREATE_LOGIN = "CREATE_LOGIN";
 export const GET_ALL_CLINICS = "GET_ALL_CLINICS";
 export const GET_DADOS_PROFILE = "GET_DADOS_PROFILE";
 export const LOGOUT = "LOGOUT";
+export const GET_ALL_PROCEDURES = "GET_ALL_PROCEDURES";
 const Constants = {
   UPDATE_LOADING,
   CREATE_ACCOUNT,
   CREATE_LOGIN,
   GET_ALL_CLINICS,
   GET_DADOS_PROFILE,
+  GET_ALL_PROCEDURES,
   LOGOUT
 }
 export default Constants;

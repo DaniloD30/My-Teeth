@@ -1,13 +1,13 @@
 import Utils from "~/helpers/Utils";
 import {
-  getClinic,
-  deleteClinicService,
-  addClinicService,
-  editClinicService,
-} from "~/services/clinicaService";
+  addProcedureService,
+  getProcedureService,
+  deleteProcedureService,
+  editProcedureService,
+} from "~/services/proceduresService";
 import Constants from "~/helpers/enums/Constants";
 
-export const addClinic = (
+export const addProcedure = (
   params = "",
   token,
   LOADING_IDENTIFICATOR = "",
@@ -15,7 +15,7 @@ export const addClinic = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  addClinicService(params, token)
+  addProcedureService(params, token)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -29,19 +29,19 @@ export const addClinic = (
     });
 };
 
-export const getAllCinics = (
+export const getAllProcedures = (
   token,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  getClinic(token)
+  getProcedureService(token)
     .then((response) => {
       if (response) {
         dispatch({
-          type: Constants.GET_ALL_CLINICS,
-          payload: response?.data,
+          type: Constants.GET_ALL_PROCEDURES,
+          payload: response.data,
         });
       }
     })
@@ -51,7 +51,7 @@ export const getAllCinics = (
     });
 };
 
-export const editClinic = (
+export const editProcedure = (
   data,
   token,
   id,
@@ -60,7 +60,7 @@ export const editClinic = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  editClinicService(data, token, id)
+  editProcedureService(data, token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -74,14 +74,14 @@ export const editClinic = (
     });
 };
 
-export const deleteClinic = (
+export const deleteProcedure = (
   token,
   id,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-  deleteClinicService(token, id)
+  deleteProcedureService(token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -95,10 +95,10 @@ export const deleteClinic = (
     });
 };
 
-const clinicAction = {
-  getAllCinics,
-  addClinic,
-  editClinic,
-  deleteClinic,
+const procedureAction = {
+  getAllProcedures,
+  addProcedure,
+  editProcedure,
+  deleteProcedure,
 };
-export default clinicAction;
+export default procedureAction;

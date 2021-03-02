@@ -10,6 +10,9 @@ import Home from "../../views/home/Home";
 // import Users from "~/views/users/register/Users";
 import RegisteredClinic from "~/views/clinic/finder/RegisteredClinic";
 import RegisterClinic from "~/views/clinic/register/RegisterClinic";
+
+import RegisteredProcedure from "~/views/procedures/finder/RegisteredProcedure";
+import RegisterProcedure from "~/views/procedures/register/RegisterProcedure";
 // import RegisteredProfile from "~/views/profile/finder/RegisteredProfile";
 // import RegisterProfile from "~/views/profile/register/RegisterProfile";
 // import Resources from "~/views/resources/Resources";
@@ -97,6 +100,44 @@ export const routes = [
     // menu: () => "Usuários",
     // iconMaterial: <PersonAddIcon fontSize="large" />,
     view: () => <RegisterClinic />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/register/procedureList",
+    exact: true,
+    title: () => "Procedimento",
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisteredProcedure />,
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Procedimento" }],
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // subMenu: true,
+    // subRoutes: subRoutesUsers,
+    // mainPage: false,
+  },
+  {
+    path: "/register/procedureInsert",
+    exact: true,
+    title: () => "Procedimento",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Procedimento" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterProcedure />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/register/procedureInsert/:Id",
+    exact: true,
+    title: () => "Procedimento",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Procedimento" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterProcedure />,
     onlyAuthorized: true,
     showOnMenu: false,
     // mainPage: false,

@@ -6,9 +6,12 @@ import app from "~/reducers/appReducer";
 import login from "~/reducers/loginReducer";
 import clinic from "~/reducers/clinicaReducer";
 import user from "~/reducers/userReducer";
+import procedure from "~/reducers/procedureReducer";
+
 export default combineReducers({
   app,
   login,
   clinic,
-  user
+  user,
+  procedure
 }); 

@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 // import profileAction from "../../../actions/profileAction";
-import clinicAction from "~/actions/clinicAction";
+import procedureAction from "~/actions/procedureAction";
 import { isAuthenticated, getToken } from "~/services/auth";
 import Page from "~/components/common/page/Page";
 import Table from "~/components/common/table/Table";
@@ -19,26 +19,28 @@ import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
-const RegisteredClinic = (props) => {
+const RegisteredProcedure = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
-  const clinics = useSelector((state) => state.clinic?.clinics);
+  const procedures = useSelector((state) => state.procedure?.procedures);
   const [IdrowDelete, setIdRowDelete] = React.useState();
   const [isDelete, setIsDelete] = React.useState(false);
   const [modal, setFlagModal] = React.useState(false);
 
-  const getClinicsLoading = useSelector(
-    (state) => state.app?.loading?.getClinicsLoading
+  const getProceduresLoading = useSelector(
+    (state) => state.app?.loading?.getProceduresLoading
   );
 
-  const deleteClinicLoading = useSelector(
-    (state) => state.app?.loading?.deleteClinicLoading
+  const deleteProcedureLoading = useSelector(
+    (state) => state.app?.loading?.deleteProcedureLoading
   );
 
   useEffect(() => {
     if (isDelete) {
       if (isAuthenticated()) {
-        dispatch(clinicAction.getAllCinics(getToken(), "getClinicsLoading"));
+        dispatch(
+          procedureAction.getAllProcedures(getToken(), "getProceduresLoading")
+        );
       } else {
         Utils.showError("Não autenticado!");
         setTimeout(function () {
@@ -49,36 +51,41 @@ const RegisteredClinic = (props) => {
     setIsDelete(false);
   }, [dispatch, isDelete, history]);
 
+  // "id": 1,
+  // "description": "Limpeza",
+  // "value": "50",
   const SENT_COLUMNS = [
     {
-      name: "cnpj",
-      label: "CNPJ",
-      render: (cnpj) => <strong>{cnpj}</strong>,
+      name: "id",
+      label: "ID",
+      render: (id) => <strong>{id}</strong>,
     },
     {
-      name: "company_name",
-      label: "Nome da Clínica",
-      render: (company) => <span>{company}</span>,
+      name: "description",
+      label: "Descrição",
+      render: (description) => <span>{description}</span>,
     },
     {
-      name: "site",
-      label: "Site da Clínica",
-      render: (site) => <span>{site}</span>,
+      name: "value",
+      label: "Valor",
+      render: (value) => <span>{value}</span>,
     },
   ];
 
   const openForm = () => {
-    history.push("/register/clinicInsert");
+    history.push("/register/procedureInsert");
   };
 
   const handlePage = (event, value) => {
     // change page
-    // dispatch(profileAction.getProfiles("deleteClinicLoading", value));
+    // dispatch(profileAction.getProfiles("deleteProcedureLoading", value));
   };
 
   useEffect(() => {
     if (isAuthenticated()) {
-      dispatch(clinicAction.getAllCinics(getToken(), "getClinicsLoading"));
+      dispatch(
+        procedureAction.getAllProcedures(getToken(), "getProceduresLoading")
+      );
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
@@ -90,7 +97,7 @@ const RegisteredClinic = (props) => {
   const edit = (id, row) => {
     history.push(
       {
-        pathname: `/register/clinicInsert/${id}`,
+        pathname: `/register/procedureInsert/${id}`,
       },
       row
     );
@@ -104,10 +111,10 @@ const RegisteredClinic = (props) => {
   const confirmDeleteRow = () => {
     if (isAuthenticated()) {
       dispatch(
-        clinicAction.deleteClinic(
+        procedureAction.deleteProcedure(
           getToken(),
           IdrowDelete,
-          "deleteClinicLoading",
+          "deleteProcedureLoading",
           (error) => {
             if (error) {
               Utils.showError(error);
@@ -116,7 +123,7 @@ const RegisteredClinic = (props) => {
 
             Utils.showToast({
               type: "success",
-              description: "Clínica deletada com sucesso",
+              description: "Procedimento deletado com sucesso",
             });
 
             setTimeout(function () {
@@ -168,22 +175,22 @@ const RegisteredClinic = (props) => {
                         src={AddIcon}
                         style={{ height: "auto", width: 20, padding: 3 }}
                       />
-                      Adicionar Clínica
+                      Adicionar Procedimento
                     </Button>
                   </Box>
                 </div>
-                {getClinicsLoading || deleteClinicLoading ? (
+                {getProceduresLoading || deleteProcedureLoading ? (
                   <Box style={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>
-                ) : clinics?.length < 1 ? (
+                ) : procedures?.length < 1 ? (
                   <Typography variant="h3" style={{ textAlign: "center" }}>
-                    Nenhuma clínica encontrado!
+                    Nenhum procedimento encontrado!
                   </Typography>
                 ) : (
                   <Table
                     columns={SENT_COLUMNS}
-                    dataSource={clinics}
+                    dataSource={procedures}
                     edit={edit}
                     del={handleDelete}
                   />
@@ -213,4 +220,4 @@ const RegisteredClinic = (props) => {
     </>
   );
 };
-export default withRouter(RegisteredClinic);
+export default withRouter(RegisteredProcedure);
