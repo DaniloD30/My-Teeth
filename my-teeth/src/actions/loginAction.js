@@ -1,7 +1,7 @@
 import Utils from "~/helpers/Utils";
 import Constants from "~/helpers/enums/Constants";
 import loginService from "~/services/loginService";
-import { login } from "~/services/auth";
+import { login, logout } from "~/services/auth";
 export const createAccount = (
   params = "",
   LOADING_IDENTIFICATOR = "",
@@ -60,8 +60,15 @@ export const createLogin = (
     });
 };
 
+const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("profile_id");
+  localStorage.removeItem("userid");
+  logout();
+  dispatch({ type: Constants.LOGOUT });
+};
 const loginAction = {
   createAccount,
   createLogin,
+  logoutUser
 }
 export default loginAction

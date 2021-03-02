@@ -17,8 +17,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import logo2 from "~/assets/images/tpcLogo3.jpg";
 import Menu from "~/components/app/menu/Menu";
-import { /* useDispatch, */ useSelector } from "react-redux";
-// import loginAction from "~/actions/loginAction"
+import { useDispatch, useSelector } from "react-redux";
+import loginAction from "~/actions/loginAction";
 import "./Layout.scss";
 
 const anonymousTheme = createMuiTheme({
@@ -41,7 +41,7 @@ const anonymousTheme = createMuiTheme({
 });
 
 const AuthenticatedLayout = (props) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const userDataProfile = useSelector((state) => state.user?.userDataProfile);
   const dataUserLoading = useSelector(
@@ -66,7 +66,7 @@ const AuthenticatedLayout = (props) => {
   });
 
   const logout = () => {
-    // dispatch(loginAction.logout());
+    dispatch(loginAction.logoutUser());
   };
 
   return (
@@ -113,7 +113,6 @@ const AuthenticatedLayout = (props) => {
                     ) : (
                       userDataProfile?.name
                     )}
-                    {/* Implementar */}
                   </Typography>
                   <Dropdown>
                     <Item>

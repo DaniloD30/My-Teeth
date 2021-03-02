@@ -20,6 +20,11 @@ export default function loginReducer(state = INITIAL_STATE, action) {
         auth: action?.payload.auth
         // clinicaAdd: action?.payload?.data,
       };
+    case Constants.LOGOUT:
+      return {
+        ...state,
+        auth: false
+      }
     default:
       return state;
   }
