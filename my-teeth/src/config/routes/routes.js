@@ -5,7 +5,7 @@ import React from "react";
 
 import Login from "~/views/login/Login";
 import SignUp from "~/views/signUp/SignUp";
-import Home from "../../views/home/Home";
+import Home from "~/views/home/Home";
 // import Home from "~/views/home/Home";
 // import Users from "~/views/users/register/Users";
 import RegisteredClinic from "~/views/clinic/finder/RegisteredClinic";
@@ -20,6 +20,7 @@ import RegisterProcedure from "~/views/procedures/register/RegisterProcedure";
 
 import Dashboard from "~/assets/icons/dashboard.svg";
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 // import PersonAddIcon from "@material-ui/icons/PersonAdd";
 // import AccountBoxIcon from "@material-ui/icons/AccountBox";
 // import DescriptionIcon from "@material-ui/icons/Description";
@@ -27,6 +28,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 
 // import Dashboard from "~/assets/icons/menuSide/dashboard.svg";
 import { subRoutesUsers } from "./subRoutes";
+import Profile from "~/views/profile/Profile";
 export const routes = [
   {
     path: "/login",
@@ -141,6 +143,17 @@ export const routes = [
     onlyAuthorized: true,
     showOnMenu: false,
     // mainPage: false,
+  },
+  {
+    path: "/profile",
+    exact: true,
+    title: () => "Perfil",
+    menu: () => "Perfil",
+    iconMaterial: <AccountBoxIcon fontSize="large" />,
+    view: () => <Profile />,
+    onlyAuthorized: true,
+    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
+    showOnMenu: true,
   },
 ];
 
