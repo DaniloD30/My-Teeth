@@ -5,6 +5,8 @@ export const GET_ALL_CLINICS = "GET_ALL_CLINICS";
 export const GET_DADOS_PROFILE = "GET_DADOS_PROFILE";
 export const LOGOUT = "LOGOUT";
 export const GET_ALL_PROCEDURES = "GET_ALL_PROCEDURES";
+export const SAVE_PHOTO_USER = "SAVE_PHOTO_USER";
+
 const Constants = {
   UPDATE_LOADING,
   CREATE_ACCOUNT,
@@ -12,6 +14,7 @@ const Constants = {
   GET_ALL_CLINICS,
   GET_DADOS_PROFILE,
   GET_ALL_PROCEDURES,
+  SAVE_PHOTO_USER,
   LOGOUT
 }
 export default Constants;

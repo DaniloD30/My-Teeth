@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import {
+  Avatar,
   Box,
   CircularProgress,
   Container,
@@ -20,7 +21,7 @@ import Menu from "~/components/app/menu/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import loginAction from "~/actions/loginAction";
 import "./Layout.scss";
-
+import Utils from "~/helpers/Utils";
 const anonymousTheme = createMuiTheme({
   palette: {
     primary: {
@@ -44,6 +45,7 @@ const AuthenticatedLayout = (props) => {
   const dispatch = useDispatch();
 
   const userDataProfile = useSelector((state) => state.user?.userDataProfile);
+  const [imageUser, setImage] = useState("");
   const dataUserLoading = useSelector(
     (state) => state.app?.loading?.dataUserLoading
   );
@@ -64,6 +66,13 @@ const AuthenticatedLayout = (props) => {
       fontSize: 10,
     },
   });
+
+  useEffect(() => {
+    if (userDataProfile?.picture) {
+      let file = Utils.ab2str(userDataProfile?.picture?.data);
+      setImage(file);
+    }
+  }, [userDataProfile]);
 
   const logout = () => {
     dispatch(loginAction.logoutUser());
@@ -122,10 +131,7 @@ const AuthenticatedLayout = (props) => {
                     </Item>
                   </Dropdown>
                 </div>
-                <img
-                  src={"https://image.flaticon.com/icons/svg/145/145867.svg"}
-                  alt={"user"}
-                />
+                <Avatar src={imageUser} />
               </div>
             </aside>
           </Toolbar>

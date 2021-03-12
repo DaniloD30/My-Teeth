@@ -5,7 +5,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from "~/components/common/page/Page";
-import Profile from "~/components/profile/profileForm/ProfileForm";
+import ProfileForm from "~/components/profile/profileForm/ProfileForm";
 import ProfileDetails from "~/components/profile/detail/ProfileDetails";
 
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Account = () => {
+const Profile = () => {
   const classes = useStyles();
 
   return (
@@ -37,7 +37,7 @@ const Account = () => {
             md={6}
             xs={12}
           >
-            <Profile />
+            <ProfileForm />
           </Grid>
           <Grid
             item
@@ -53,4 +53,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Profile;

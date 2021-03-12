@@ -17,7 +17,7 @@ import { withRouter } from "react-router";
 // import UserIcon from "~/assets/icons/user.svg";
 import { isAuthenticated, getToken } from "~/services/auth";
 import RegisterInputText from "~/components/common/registerInputs/RegisterInputText";
-import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
+// import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
 // import RegisterCheckbox from "~/components/common/registerInputs/RegisterCheckbox";
 // import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
 // import CpfCnpjUtils from "~/helpers/CpfCnpjUtils";

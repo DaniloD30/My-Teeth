@@ -85,6 +85,10 @@ const base64ToArrayBuffer = (base64) => {
   return bytes.buffer;
 };
 
+const ab2str = (buf) => {
+  return String.fromCharCode.apply(null, new Uint16Array(buf));
+}
+
 const Utils = {
   endLoading,
   startLoading,
@@ -95,7 +99,8 @@ const Utils = {
   fileToBase64,
   base64ToArrayBuffer,
   showToast,
-  showError
+  showError,
+  ab2str
 
 };
 export default Utils;

@@ -17,6 +17,8 @@ const INITIAL_STATE = {
     deleteProcedureLoading: false,
     addProcedureLoading: false,
     editProcedureLoading: false,
+
+    editUserLoading: false
   },
 };
 
