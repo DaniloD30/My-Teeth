@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
-  Button,
+  // Button,
   Card,
   CardActions,
   CardContent,
@@ -50,23 +50,47 @@ const ProfileForm = (props) => {
   const dispatch = useDispatch();
   const userDataProfile = useSelector((state) => state.user?.userDataProfile);
   const [img, setImage] = useState(null);
+  // const [imgResult, setImageResult] = useState("");
+
+  const savePhoto = (d) => {
+    const data = d.split(",")[1];
+    var raw = window.atob(data);
+    var rawlenght = raw.length;
+    var array = new Uint8Array(new ArrayBuffer(rawlenght));
+    for (var i = 0; i < rawlenght; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+    var image = [];
+    for (var i = 0; i < rawlenght; i++) {
+      image.push(array[i]);
+    }
+    // let img = `data:image/png;base64, ${userDataProfile?.picture}`;
+    // setImage(d);
+    // console.log("save ->", d)
+    dispatch(userAction.savePhoto(image));
+  };
+
   const handleUploadClick = (event) => {
     var file = event.target.files[0];
-    // const reader = new FileReader();
-    // var url = reader.readAsDataURL(file);
+    var reader = new FileReader();
+    reader.onload = function (event) {
+      // O arquivo de texto será impresso aqui
+      // setImageResult()
+      savePhoto(event.target.result);
+      // console.log(event.target.result)
+    };
 
-    // reader.onloadend = function(e) {
-    // this.setState({
-    // selectedFile: [reader.result]
-    // });
+    if (file && file.type.match("image.*")) {
+      reader.readAsDataURL(file);
+    }
+
     // }.bind(this);
     // console.log(url); // Would see a path?
 
     /* dispatach que vai salvar a foto da sote */
     // console.log("file ii->", file)
-    setImage(URL.createObjectURL(file));
+    // setImage(URL.createObjectURL(file));
     // console.log("File ->", file)
-    dispatch(userAction.savePhoto(URL.createObjectURL(file)));
     // this.setState({
     //   mainState: "uploaded",
     //   selectedFile: event.target.files[0],
@@ -75,8 +99,14 @@ const ProfileForm = (props) => {
   };
 
   useEffect(() => {
-    if (userDataProfile?.picture) {
-      setImage(Utils.ab2str(userDataProfile?.picture?.data));
+    if (userDataProfile?.picture?.data) {
+      // console.log("data mysql ->", Utils._arrayBufferToBase64(userDataProfile?.picture?.data))
+
+      let img = `data:image/png;base64, ${Utils._arrayBufferToBase64(
+        userDataProfile?.picture?.data
+      )}`;
+      // console.log("img ->", img)
+      setImage(img);
     }
   }, [userDataProfile]);
   return (

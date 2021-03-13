@@ -69,7 +69,8 @@ const AuthenticatedLayout = (props) => {
 
   useEffect(() => {
     if (userDataProfile?.picture) {
-      let file = Utils.ab2str(userDataProfile?.picture?.data);
+      // let file = Utils.ab2str(userDataProfile?.picture?.data);
+      let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(userDataProfile?.picture?.data)}`;
       setImage(file);
     }
   }, [userDataProfile]);

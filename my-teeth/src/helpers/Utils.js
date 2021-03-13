@@ -28,10 +28,7 @@ const filterData = (items, val) => {
   return searchedItems;
 };
 
-export const showToast = (
-  { description, type },
-  props = () => {}
-) => {
+export const showToast = ({ description, type }, props = () => {}) => {
   toast(description, {
     type: type,
     position: toast.POSITION.TOP_CENTER,
@@ -40,10 +37,10 @@ export const showToast = (
 };
 
 export const showError = (error) => {
-	showToast({
-		type: "error",
-		description: error,
-	});
+  showToast({
+    type: "error",
+    description: error,
+  });
 };
 
 export const fileToBase64 = (file) => {
@@ -84,10 +81,19 @@ const base64ToArrayBuffer = (base64) => {
   }
   return bytes.buffer;
 };
+function _arrayBufferToBase64(buffer) {
+  var binary = "";
+  var bytes = new Uint8Array(buffer);
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
 
 const ab2str = (buf) => {
   return String.fromCharCode.apply(null, new Uint16Array(buf));
-}
+};
 
 const Utils = {
   endLoading,
@@ -100,7 +106,7 @@ const Utils = {
   base64ToArrayBuffer,
   showToast,
   showError,
-  ab2str
-
+  ab2str,
+  _arrayBufferToBase64,
 };
 export default Utils;

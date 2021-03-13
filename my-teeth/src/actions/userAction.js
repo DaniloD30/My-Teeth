@@ -38,7 +38,7 @@ export const editProfile = (
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => { }
 ) => (dispatch) => {
-  console.log("Entrou na action profile")
+  // console.log("Entrou na action profile")
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
   userService
     .editProfileServ(data, token, localStorage.getItem("userid"))

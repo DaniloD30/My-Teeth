@@ -108,23 +108,21 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                         description: "Usuário editado com sucesso!",
                       });
 
-                      dispatch(
-                        userAction.getDataProfile(
-                          getToken(),
-                          "dataUserLoading",
-                          (error) => {
-                            if (error) {
-                              Utils.showError(error);
-                              return;
-                            }
+                      setTimeout(function () {
+                        dispatch(
+                          userAction.getDataProfile(
+                            getToken(),
+                            "dataUserLoading",
+                            (error) => {
+                              if (error) {
+                                Utils.showError(error);
+                                return;
+                              }
 
-                            // Redireciona para a tela HOME com as permissões
-                          }
-                        )
-                      );
-                      // setTimeout(function () {
-                      //   props.comeback();
-                      // }, 3000);
+                            }
+                          )
+                        );
+                      }, 2000);
 
                       // props.comeback();
                     }
