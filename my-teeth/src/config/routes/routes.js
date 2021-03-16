@@ -6,6 +6,7 @@ import React from "react";
 import Login from "~/views/login/Login";
 import SignUp from "~/views/signUp/SignUp";
 import Home from "~/views/home/Home";
+import Scheduler from "~/views/scheduler/Scheduler";
 // import Home from "~/views/home/Home";
 // import Users from "~/views/users/register/Users";
 import RegisteredClinic from "~/views/clinic/finder/RegisteredClinic";
@@ -21,6 +22,7 @@ import RegisterProcedure from "~/views/procedures/register/RegisterProcedure";
 import Dashboard from "~/assets/icons/dashboard.svg";
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import EventIcon from '@material-ui/icons/Event';
 // import PersonAddIcon from "@material-ui/icons/PersonAdd";
 // import AccountBoxIcon from "@material-ui/icons/AccountBox";
 // import DescriptionIcon from "@material-ui/icons/Description";
@@ -154,6 +156,18 @@ export const routes = [
     onlyAuthorized: true,
     profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
     showOnMenu: true,
+  },
+  {
+    path: "/scheduler",
+    exact: true,
+    title: () => "Agenda",
+    menu: () => "Agenda",
+    iconMaterial: <EventIcon fontSize="large"/>,
+    view: () => <Scheduler />,
+    onlyAuthorized: true,
+    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
+    showOnMenu: true,
+    // mainPage: true,
   },
 ];
 

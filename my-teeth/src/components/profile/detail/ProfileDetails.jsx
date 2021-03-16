@@ -18,6 +18,7 @@ import RegisterInputText from "~/components/common/registerInputs/RegisterInputT
 import userAction from "~/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticated, getToken } from "~/services/auth";
+import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
 // import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
 import { ToastContainer } from "react-toastify";
@@ -77,7 +78,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
     <form autoComplete="off" noValidate className={classes.root} {...rest}>
       <ToastContainer />
       <Card>
-        <CardHeader subheader="The information can be edited" title="Profile" />
+        <CardHeader subheader="A informação pode ser editada" title="Perfil" />
         <Divider />
         <CardContent>
           <Formik
@@ -170,10 +171,18 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       <RegisterInputText label={"Gênero"} name="genre" />
                     </Grid>
                     <Grid item md={6} xs={12}>
-                      <RegisterInputText label={"RG"} name="rg" />
+                      <RegisterMaskedTextInput
+                        label={"RG"}
+                        name="rg"
+                        mask="99.999.999-9"
+                      />
                     </Grid>
                     <Grid item md={6} xs={12}>
-                      <RegisterInputText label={"CPF"} name="cpf" />
+                      <RegisterMaskedTextInput
+                        label={"CPF"}
+                        name="cpf"
+                        mask="999.999.999-99"
+                      />
                     </Grid>
                     {/* <Grid item md={6} xs={12}>
                       <RegisterInputText label={"Picture"} name="picture" />
