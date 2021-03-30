@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SchedulerComponent.scss";
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
@@ -25,6 +25,7 @@ import {
 import { createElement } from "@syncfusion/ej2-base";
 import { enableRipple } from "@syncfusion/ej2-base";
 import { DropDownList } from "@syncfusion/ej2-dropdowns";
+import { useSelector } from "react-redux";
 enableRipple(true);
 const SchedulerComponent = (props) => {
   const data = [
@@ -41,50 +42,64 @@ const SchedulerComponent = (props) => {
 
   const departmentData = [{ Text: "DENTISTA", Id: 1, Color: "#9e5fff" }];
 
-  const consultantData = [
-    {
-      Text: "Alice",
-      Id: 1,
-      GroupId: 1,
-      Color: "#bbdc00",
-      Designation: "Cardiologist",
-    },
-    {
-      Text: "Nancy",
-      Id: 2,
-      GroupId: 1,
-      Color: "#9e5fff",
-      Designation: "Orthodontist",
-    },
-    {
-      Text: "Robert",
-      Id: 3,
-      GroupId: 1,
-      Color: "#bbdc00",
-      Designation: "Optometrist",
-    },
-    {
-      Text: "Robson",
-      Id: 4,
-      GroupId: 1,
-      Color: "#9e5fff",
-      Designation: "Periodontist",
-    },
-    {
-      Text: "Laura",
-      Id: 5,
-      GroupId: 1,
-      Color: "#bbdc00",
-      Designation: "Orthopedic",
-    },
-    {
-      Text: "Margaret",
-      Id: 6,
-      GroupId: 1,
-      Color: "#9e5fff",
-      Designation: "Endodontist",
-    },
-  ];
+  // const consultantData = [
+  //   {
+  //     Text: "Alice",
+  //     Id: 1,
+  //     GroupId: 1,
+  //     Color: "#bbdc00",
+  //     Designation: "Cardiologist",
+  //   },
+  //   {
+  //     Text: "Nancy",
+  //     Id: 2,
+  //     GroupId: 1,
+  //     Color: "#9e5fff",
+  //     Designation: "Orthodontist",
+  //   },
+  //   {
+  //     Text: "Robert",
+  //     Id: 3,
+  //     GroupId: 1,
+  //     Color: "#bbdc00",
+  //     Designation: "Optometrist",
+  //   },
+  //   {
+  //     Text: "Robson",
+  //     Id: 4,
+  //     GroupId: 1,
+  //     Color: "#9e5fff",
+  //     Designation: "Periodontist",
+  //   },
+  //   {
+  //     Text: "Laura",
+  //     Id: 5,
+  //     GroupId: 1,
+  //     Color: "#bbdc00",
+  //     Designation: "Orthopedic",
+  //   },
+  //   {
+  //     Text: "Margaret",
+  //     Id: 6,
+  //     GroupId: 1,
+  //     Color: "#9e5fff",
+  //     Designation: "Endodontist",
+  //   },
+  // ];
+
+  const dentistasData = useSelector((state) => state.user?.dentista);
+
+  useEffect(() => {
+    if (dentistasData.length > 0) {
+      dentistasData.map((item, index) => {
+        item.Text = item?.person?.name;
+        item.Id = item?.id;
+        item.GroupId = 1;
+        item.Color = "#bbdc00";
+        item.Designation = "Dentista";
+      });
+    }
+  }, [dentistasData]);
 
   const getConsultantName = (value) => {
     return value.resourceData[value.resource.textField];
@@ -150,25 +165,24 @@ const SchedulerComponent = (props) => {
     }
   };
 
-  const editorTemplate = (props) => {
-    return props !== undefined ? (
-     <div>
-       <input>
-       </input>
-       <div>
-         <p>testando</p>
-       </div>
-     </div>
-    ) : (
-      <div></div>
-    );
-  };
+  // const editorTemplate = (props) => {
+  //   return props !== undefined ? (
+  //     <div>
+  //       <input></input>
+  //       <div>
+  //         <p>testando</p>
+  //       </div>
+  //     </div>
+  //   ) : (
+  //     <div></div>
+  //   );
+  // };
 
   const onActionBegin = (args) => {
-    console.log("args ->", args)
+    console.log("args ->", args);
 
     //CRUD HERE
-    
+
     /*
     Post -> Objeto
     Delete -> Index 
@@ -179,7 +193,7 @@ const SchedulerComponent = (props) => {
     // if (args.requestType == 'eventCreate' && weekEnds.indexOf((args.data[0].StartTime).getDay()) >= 0) {
     //     args.cancel = true;
     // }
-}
+  };
 
   //Field funciona como o mapeamento
   return (
@@ -190,9 +204,10 @@ const SchedulerComponent = (props) => {
         width="100%"
         height="650px"
         currentView="Day"
-        selectedDate={new Date(2018, 1, 15)}
+        selectedDate={new Date(2021, 0, 1)}
         popupOpen={onPopupOpen.bind(this)}
-        // editorTemplate={editorTemplate.bind(this)} 
+        // editorTemplate={editorTemplate.bind(this)}
+        // new Date(ano, mês, dia, hora, minuto, segundo, milissegundo);
         resourceHeaderTemplate={resourceHeaderTemplate.bind(this)}
         eventSettings={{
           dataSource: data,
@@ -227,7 +242,7 @@ const SchedulerComponent = (props) => {
             title="Dentista"
             name="Consultants"
             allowMultiple={false}
-            dataSource={consultantData}
+            dataSource={dentistasData}
             textField="Text"
             idField="Id"
             groupIDField="GroupId"
@@ -236,7 +251,6 @@ const SchedulerComponent = (props) => {
         </ResourcesDirective>
         <Inject services={[Day, Week, WorkWeek, Month, Agenda, DragAndDrop]} />
       </ScheduleComponent>
-      
     </>
   );
 };

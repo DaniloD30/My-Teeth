@@ -36,7 +36,7 @@ export const editProfile = (
   data,
   token,
   LOADING_IDENTIFICATOR = "",
-  fnCallback = () => { }
+  fnCallback = () => {}
 ) => (dispatch) => {
   // console.log("Entrou na action profile")
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
@@ -66,9 +66,52 @@ export const editProfile = (
     });
 };
 
+export const getAllDataProfile = (
+  token,
+  LOADING_IDENTIFICATOR = "",
+  fnCallback = () => {}
+) => (dispatch) => {
+  dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+  userService
+    .getAllDataUser(token)
+    .then((response) => {
+      if (response?.data) {
+        let admnistrador = [];
+        let atendente = [];
+        let cliente = [];
+        let dentista = [];
+        response?.data?.rows.map((item) => {
+          if (item?.profile?.name === "Administrador") {
+            admnistrador.push(item);
+          }
+          if (item?.profile?.name === "Dentista") {
+            dentista.push(item);
+          }
+          if (item?.profile?.name === "Atendente") {
+            atendente.push(item);
+          }
+          if (item?.profile?.name === "Cliente") {
+            cliente.push(item);
+          }
+        });
+        dispatch({
+          type: Constants.GET_ALL_DADOS_PROFILE,
+          payload: { admnistrador, atendente, cliente, dentista },
+        });
+      }
+    })
+    .catch((error) => {
+      fnCallback(error);
+    })
+    .finally(() => {
+      dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+    });
+};
+
 const userAction = {
   getDataProfile,
   savePhoto,
-  editProfile
+  editProfile,
+  getAllDataProfile,
 };
 export default userAction;

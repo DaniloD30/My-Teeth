@@ -10,6 +10,15 @@ export const getDataUser = (token,  id) => {
   });
 };
 
+export const getAllDataUser = (token) => {
+  return new Promise((resolve, reject) => {
+    http
+      .get(`${USER}/`, { headers: { 'x-access-token': token } })
+      .then(response => resolve(response))
+      .catch(error => reject(error));
+  });
+};
+
 export const editProfileServ = (data, token, id) => {
   return new Promise((resolve, reject) => {
     http.put(`persons/${id}`, data, {headers: {'x-access-token': token}})
@@ -20,7 +29,8 @@ export const editProfileServ = (data, token, id) => {
 
 const userService = {
     getDataUser,
-    editProfileServ
+    editProfileServ,
+    getAllDataUser
 }
 
 export default userService;
