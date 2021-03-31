@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import SchedulerComponent from "~/components/scheduler/SchedulerComponent";
 import Page from "~/components/common/page/Page";
 import userAction from "~/actions/userAction";
+import appointmentAction from "~/actions/appointmentAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@material-ui/core";
 import Utils from "~/helpers/Utils";
@@ -13,6 +14,7 @@ const Scheduler = (props) => {
   useEffect(() => {
     if (isAuthenticated()) {
       dispatch(userAction.getAllDataProfile(getToken(), "dataAllUserLoading"));
+      dispatch(appointmentAction.getAllAppointments(getToken(), "dataAppointmentsLoading"));
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
@@ -20,15 +22,19 @@ const Scheduler = (props) => {
       }, 3000);
     }
   }, [dispatch, history]);
-
+  
   const dataAllUserLoading = useSelector(
     (state) => state.app?.loading?.dataAllUserLoading
+  );
+
+  const dataAppointmentsLoading = useSelector(
+    (state) => state.app?.loading?.dataAppointmentsLoading
   );
 
   return (
     <>
       <Page>
-        {dataAllUserLoading ? (
+        {dataAllUserLoading || dataAppointmentsLoading? (
           <Box style={{ display: "flex", justifyContent: "center" }}>
             <CircularProgress />
           </Box>
