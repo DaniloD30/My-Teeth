@@ -39,7 +39,17 @@ const RegisteredProcedure = (props) => {
     if (isDelete) {
       if (isAuthenticated()) {
         dispatch(
-          procedureAction.getAllProcedures(getToken(), "getProceduresLoading")
+          procedureAction.getAllProcedures(
+            getToken(),
+            "getProceduresLoading",
+            (error) => {
+              if (error) {
+                Utils.showError(error);
+                return;
+              }
+
+            }
+          )
         );
       } else {
         Utils.showError("Não autenticado!");

@@ -1,13 +1,13 @@
 import Utils from "~/helpers/Utils";
 import {
-  addProcedureService,
-  getProcedureService,
-  deleteProcedureService,
-  editProcedureService,
-} from "~/services/proceduresService";
+  addAppointmentService,
+  getAppointment,
+  deleteAppointmentService,
+  editAppointmentService,
+} from "~/services/appointmentService";
 import Constants from "~/helpers/enums/Constants";
 
-export const addProcedure = (
+export const addAppointment = (
   params = "",
   token,
   LOADING_IDENTIFICATOR = "",
@@ -15,7 +15,7 @@ export const addProcedure = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  addProcedureService(params, token)
+  addAppointmentService(params, token)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -29,14 +29,14 @@ export const addProcedure = (
     });
 };
 
-export const getAllProcedures = (
+export const getAllAppointments = (
   token,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  getProcedureService(token)
+  getAppointment(token)
     .then((response) => {
       if (response) {
         dispatch({
@@ -46,14 +46,14 @@ export const getAllProcedures = (
       }
     })
     .catch((error) => {
-      fnCallback(error)
+      fnCallback(error);
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
     });
 };
 
-export const editProcedure = (
+export const editAppointment = (
   data,
   token,
   id,
@@ -62,7 +62,7 @@ export const editProcedure = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  editProcedureService(data, token, id)
+  editAppointmentService(data, token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -76,14 +76,14 @@ export const editProcedure = (
     });
 };
 
-export const deleteProcedure = (
+export const deleteAppointment = (
   token,
   id,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-  deleteProcedureService(token, id)
+  deleteAppointmentService(token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -97,10 +97,10 @@ export const deleteProcedure = (
     });
 };
 
-const procedureAction = {
-  getAllProcedures,
-  addProcedure,
-  editProcedure,
-  deleteProcedure,
+const appointmentAction = {
+  getAllAppointments,
+  addAppointment,
+  editAppointment,
+  deleteAppointment,
 };
-export default procedureAction;
+export default appointmentAction;
