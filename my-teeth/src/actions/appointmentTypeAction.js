@@ -1,13 +1,13 @@
 import Utils from "~/helpers/Utils";
 import {
-  addAppointmentService,
-  getAppointment,
-  deleteAppointmentService,
-  editAppointmentService,
-} from "~/services/appointmentService";
+  addAppointmentTypeService,
+  getAppointmentType,
+  deleteAppointmentTypeService,
+  editAppointmentTypeService,
+} from "~/services/appointmentTypeService";
 import Constants from "~/helpers/enums/Constants";
 
-export const addAppointment = (
+export const addAppointmentType = (
   params = "",
   token,
   LOADING_IDENTIFICATOR = "",
@@ -15,7 +15,7 @@ export const addAppointment = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  addAppointmentService(params, token)
+  addAppointmentTypeService(params, token)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -29,18 +29,18 @@ export const addAppointment = (
     });
 };
 
-export const getAllAppointments = (
+export const getAllAppointmentsType = (
   token,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  getAppointment(token)
+  getAppointmentType(token)
     .then((response) => {
       if (response) {
         dispatch({
-          type: Constants.GET_ALL_APPOINTMENTS,
+          type: Constants.GET_ALL_APPOINTMENTS_TYPE,
           payload: response.data,
         });
       }
@@ -53,7 +53,7 @@ export const getAllAppointments = (
     });
 };
 
-export const editAppointment = (
+export const editAppointmentType = (
   data,
   token,
   id,
@@ -62,7 +62,7 @@ export const editAppointment = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  editAppointmentService(data, token, id)
+  editAppointmentTypeService(data, token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -76,14 +76,14 @@ export const editAppointment = (
     });
 };
 
-export const deleteAppointment = (
+export const deleteAppointmentType = (
   token,
   id,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-  deleteAppointmentService(token, id)
+  deleteAppointmentTypeService(token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -97,10 +97,10 @@ export const deleteAppointment = (
     });
 };
 
-const appointmentAction = {
-  getAllAppointments,
-  addAppointment,
-  editAppointment,
-  deleteAppointment,
+const appointmentTypeAction = {
+  getAllAppointmentsType,
+  addAppointmentType,
+  editAppointmentType,
+  deleteAppointmentType,
 };
-export default appointmentAction;
+export default appointmentTypeAction;

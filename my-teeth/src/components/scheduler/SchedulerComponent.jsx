@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./SchedulerComponent.scss";
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
@@ -26,22 +26,30 @@ import { createElement } from "@syncfusion/ej2-base";
 import { enableRipple } from "@syncfusion/ej2-base";
 import { DropDownList } from "@syncfusion/ej2-dropdowns";
 import { useSelector } from "react-redux";
+import { Box, TextField } from "@material-ui/core";
+import PopUp from "./PopUp";
+// import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
+// import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 enableRipple(true);
-const SchedulerComponent = (props) => {
-  const data = [
-    {
-      Id: 2,
-      Subject: "Meeting",
-      StartTime: new Date(2018, 1, 15, 10, 0),
-      EndTime: new Date(2018, 1, 15, 12, 30),
-      IsAllDay: false,
-      Status: "Completed",
-      Priority: "High",
-    },
-  ];
+const SchedulerComponent = ({ dataAppointment }) => {
+  // const dataS = [
+  //   {
+  //     Id: 5,
+  //     Subject: "ISA Annual Conference",
+  //     StartTime: "2018-02-15T04:30:00.000Z",
+  //     EndTime: "2018-02-15T06:00:00.000Z",
+  //     EventType: "commercial-event",
+  //     City: "USA",
+  //     CategoryColor: "#00bdae",
+  //   },
+  // ];
+  const scheduler = useRef();
 
-  const departmentData = [{ Text: "DENTISTA", Id: 1, Color: "#9e5fff" }];
-
+  const departmentData = [{ text: "DENTISTA", Id: 1, Color: "#9e5fff" }];
+  const [dentistas, setDentista] = useState([]);
+  const [flag, setFlag] = useState(false);
+  const [paciente, setPaciente] = useState([]);
+  // const [data, setData] = useState([]);
   // const consultantData = [
   //   {
   //     Text: "Alice",
@@ -88,6 +96,10 @@ const SchedulerComponent = (props) => {
   // ];
 
   const dentistasData = useSelector((state) => state.user?.dentista);
+  const pacientesData = useSelector((state) => state.user?.cliente);
+  // const appointmentsData = useSelector(
+  //   (state) => state.appointment?.appointments
+  // );
 
   useEffect(() => {
     if (dentistasData.length > 0) {
@@ -98,7 +110,26 @@ const SchedulerComponent = (props) => {
         item.Color = "#bbdc00";
         item.Designation = "Dentista";
       });
+      setDentista(dentistasData);
     }
+    if (pacientesData.length > 0) {
+      pacientesData.map((item, index) => {
+        item.Text = item?.person?.name;
+      });
+      setPaciente(pacientesData);
+    }
+    // if (appointmentsData.length > 0) {
+    // console.log("data ->", appointmentsData);
+    // appointmentsData.map((item, index) => {
+    // item.Subject = item?.note;
+    // item.Id = item?.id;
+    // Id: 5,
+    // Subject: "ISA Annual Conference",
+    // StartTime: "2018-02-15T04:30:00.000Z",
+    // EndTime: "2018-02-15T06:00:00.000Z",
+    // });
+    // setData(dataS);
+    // }
   }, [dentistasData]);
 
   const getConsultantName = (value) => {
@@ -107,7 +138,7 @@ const SchedulerComponent = (props) => {
 
   const getConsultantImage = (value) => {
     let resourceName = getConsultantName(value);
-    return resourceName.toLowerCase();
+    return resourceName;
   };
 
   const getConsultantDesignation = (value) => {
@@ -165,18 +196,52 @@ const SchedulerComponent = (props) => {
     }
   };
 
-  // const editorTemplate = (props) => {
-  //   return props !== undefined ? (
-  //     <div>
-  //       <input></input>
-  //       <div>
-  //         <p>testando</p>
-  //       </div>
-  //     </div>
-  //   ) : (
-  //     <div></div>
-  //   );
-  // };
+  const editorTemplateS = (props) => {
+    //   "appointmentsType_id":4,
+    // "userdentist_id":24,
+    // "userpatient_id":14,
+    // "userregistered_id":24,
+    // "clinic_id":4,
+    // "StartTime": "2020-07-13 17:00:00",
+    // "EndTime": "2020-07-13 18:00:00"  item.DepartmentID = 1;
+    // item.IsAllDay = false;
+    return props !== undefined ? (
+      <Box style={{ padding: "10px" }}>
+        <TextField id="standard-basic" name="note" label="Título" />
+        <TextField
+          id="standard-basic"
+          name="userdentist_id"
+          label="userdentist_id"
+        />
+        <TextField
+          id="standard-basic"
+          name="DepartmentID"
+          label="DepartmentID"
+        />
+        <TextField id="standard-basic" name="IsAllDay" label="IsAllDay" />
+        <TextField
+          id="standard-basic"
+          name="userpatient_id"
+          label="userpatient_id"
+        />
+        <TextField
+          id="standard-basic"
+          name="userregistered_id"
+          label="userregistered_id"
+        />
+        <TextField id="standard-basic" name="clinic_id" label="clinic_id" />
+        <TextField
+          id="standard-basic"
+          name="appointmentsType_id"
+          label="appointmentsType_id"
+        />
+        <TextField id="standard-basic" name="note" label="StartTime" />
+        <TextField id="standard-basic" name="note" label="EndTime" />
+      </Box>
+    ) : (
+      <div></div>
+    );
+  };
 
   const onActionBegin = (args) => {
     console.log("args ->", args);
@@ -195,32 +260,167 @@ const SchedulerComponent = (props) => {
     // }
   };
 
+  // const editorTemplate = (props) => {
+  //   return props !== undefined ? (
+  //     <table
+  //       className="custom-event-editor"
+  //       style={{ width: "100%", cellpadding: "5" }}
+  //     >
+  //       <tbody>
+  //         <tr>
+  //           <td className="e-textlabel">Summary</td>
+  //           <td style={{ colspan: "4" }}>
+  //             <input
+  //               id="Summary"
+  //               className="e-field e-input"
+  //               type="text"
+  //               name="Subject"
+  //               style={{ width: "100%" }}
+  //             />
+  //           </td>
+  //         </tr>
+  //         <tr>
+  //           <td className="e-textlabel">Status</td>
+  //           <td style={{ colspan: "4" }}>
+  //             <DropDownListComponent
+  //               id="EventType"
+  //               placeholder="Choose status"
+  //               data-name="EventType"
+  //               className="e-field"
+  //               style={{ width: "100%" }}
+  //               dataSource={["New", "Requested", "Confirmed"]}
+  //             ></DropDownListComponent>
+  //           </td>
+  //         </tr>
+  //         <tr>
+  //           <td className="e-textlabel">From</td>
+  //           <td style={{ colspan: "4" }}>
+  //             <DateTimePickerComponent
+  //               id="StartTime"
+  //               format="dd/MM/yy hh:mm a"
+  //               data-name="StartTime"
+  //               value={new Date(props.startTime || props.StartTime)}
+  //               className="e-field"
+  //             ></DateTimePickerComponent>
+  //           </td>
+  //         </tr>
+  //         <tr>
+  //           <td className="e-textlabel">To</td>
+  //           <td style={{ colspan: "4" }}>
+  //             <DateTimePickerComponent
+  //               id="EndTime"
+  //               format="dd/MM/yy hh:mm a"
+  //               data-name="EndTime"
+  //               value={new Date(props.endTime || props.EndTime)}
+  //               className="e-field"
+  //             ></DateTimePickerComponent>
+  //           </td>
+  //         </tr>
+  //         <tr>
+  //           <td className="e-textlabel">Reason</td>
+  //           <td style={{ colspan: "4" }}>
+  //             <textarea
+  //               id="Description"
+  //               className="e-field e-input"
+  //               name="Description"
+  //               rows={3}
+  //               cols={50}
+  //               style={{
+  //                 width: "100%",
+  //                 height: "60px !important",
+  //                 resize: "vertical",
+  //               }}
+  //             ></textarea>
+  //           </td>
+  //         </tr>
+  //         <tr>
+  //           <td className="e-textlabel">dentista</td>
+  //           <td style={{ colspan: "4" }}>
+  //             <DropDownListComponent
+  //               id="userdentist_id"
+  //               placeholder="Choose status"
+  //               data-name="userdentist_id"
+  //               className="e-field"
+  //               style={{ width: "100%" }}
+  //               dataSource={dentistas.map((item) => item?.Text)}
+  //             ></DropDownListComponent>
+  //           </td>
+  //         </tr>
+  //         <tr>
+  //           <td className="e-textlabel">departamento</td>
+  //           <td style={{ colspan: "4" }}>
+  //             <DropDownListComponent
+  //               id="DepartmentID"
+  //               placeholder="Choose status"
+  //               data-name="DepartmentID"
+  //               className="e-field"
+  //               style={{ width: "100%" }}
+  //               dataSource={departmentData.map((e) => e?.Text)}
+  //             ></DropDownListComponent>
+  //           </td>
+  //         </tr>
+  //       </tbody>
+  //     </table>
+  //   ) : (
+  //     <div></div>
+  //   );
+  // };
+
   //Field funciona como o mapeamento
+
+  const openModal = () => {
+    setFlag(true);
+  };
+
+  const closeModal = () => {
+    setFlag(false);
+  };
+
+  // const testE = (e) => {
+  //   console.log("teste double", e)
+  // }
   return (
     <>
       <ScheduleComponent
         // ref={(schedule) => (scheduleObj = schedule)}
-        cssClass="schedule-drag-drop"
+        // cssClass="schedule-drag-drop"
         width="100%"
         height="650px"
-        currentView="Day"
-        selectedDate={new Date(2021, 0, 1)}
-        popupOpen={onPopupOpen.bind(this)}
+        // currentView="Day"
+        selectedDate={new Date(2020, 6, 13)}
+        ref={scheduler}
+        popupOpen={(args) => {
+          args.cancel = true;
+        }}
+        // popupOpen={onPopupOpen.bind(this)}
         // editorTemplate={editorTemplate.bind(this)}
+        actionBegin={onActionBegin.bind(this)}
+        cellClick={(e) => {
+          openModal(e);
+        }}
+        // cellDoubleClick={(e) => {testE(e)}}
+        // cellDoubleClick={alert("double click")}
         // new Date(ano, mês, dia, hora, minuto, segundo, milissegundo);
         resourceHeaderTemplate={resourceHeaderTemplate.bind(this)}
         eventSettings={{
-          dataSource: data,
+          dataSource: dataAppointment,
           fields: {
             id: "Id",
-            subject: { name: "Subject" },
+            subject: { name: "note" },
             isAllDay: { name: "IsAllDay" },
             startTime: { name: "StartTime" },
             endTime: { name: "EndTime" },
-            description: { title: "Reason", name: "Description" },
+            // description: { title: "Reason", name: "Description" },
           },
+          // fields: {
+          //   id: "Id",
+          //   subject: { name: "Subject" },
+          //   isAllDay: { name: "IsAllDay" },
+          //   startTime: { name: "StartTime" },
+          //   endTime: { name: "EndTime" },
+          //   description: { title: "Reason", name: "Description" },
+          // },
         }}
-        actionBegin={onActionBegin.bind(this)}
         group={{
           enableCompactView: false,
           resources: ["Departments", "Consultants"],
@@ -238,11 +438,11 @@ const SchedulerComponent = (props) => {
             colorField="Color"
           />
           <ResourceDirective
-            field="ConsultantID"
+            field="userdentist_id"
             title="Dentista"
             name="Consultants"
             allowMultiple={false}
-            dataSource={dentistasData}
+            dataSource={dentistas}
             textField="Text"
             idField="Id"
             groupIDField="GroupId"
@@ -251,6 +451,13 @@ const SchedulerComponent = (props) => {
         </ResourcesDirective>
         <Inject services={[Day, Week, WorkWeek, Month, Agenda, DragAndDrop]} />
       </ScheduleComponent>
+      <PopUp
+        flagOpen={flag}
+        handleClose={closeModal}
+        dentista={dentistas}
+        pacientes={paciente}
+        departmentData={departmentData}
+      />
     </>
   );
 };
