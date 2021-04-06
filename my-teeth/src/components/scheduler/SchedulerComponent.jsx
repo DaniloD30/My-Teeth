@@ -22,11 +22,11 @@ import {
   ResourcesDirective,
   ResourceDirective,
 } from "@syncfusion/ej2-react-schedule";
-import { createElement } from "@syncfusion/ej2-base";
+// import { createElement } from "@syncfusion/ej2-base";
 import { enableRipple } from "@syncfusion/ej2-base";
-import { DropDownList } from "@syncfusion/ej2-dropdowns";
+// import { DropDownList } from "@syncfusion/ej2-dropdowns";
 import { useSelector } from "react-redux";
-import { Box, TextField } from "@material-ui/core";
+// import { Box, TextField } from "@material-ui/core";
 import PopUp from "./PopUp";
 // import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
 // import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
@@ -49,6 +49,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
   const [dentistas, setDentista] = useState([]);
   const [flag, setFlag] = useState(false);
   const [paciente, setPaciente] = useState([]);
+  const [args, setArgs] = useState(null);
   // const [data, setData] = useState([]);
   // const consultantData = [
   //   {
@@ -103,19 +104,19 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   useEffect(() => {
     if (dentistasData.length > 0) {
-      dentistasData.map((item, index) => {
-        item.Text = item?.person?.name;
-        item.Id = item?.id;
-        item.GroupId = 1;
-        item.Color = "#bbdc00";
-        item.Designation = "Dentista";
-      });
+      dentistasData.map(
+        (item, index) => (
+          (item.Text = item?.person?.name),
+          (item.Id = item?.id),
+          (item.GroupId = 1),
+          (item.Color = "#bbdc00"),
+          (item.Designation = "Dentista")
+        )
+      );
       setDentista(dentistasData);
     }
     if (pacientesData.length > 0) {
-      pacientesData.map((item, index) => {
-        item.Text = item?.person?.name;
-      });
+      pacientesData.map((item, index) => (item.Text = item?.person?.name));
       setPaciente(pacientesData);
     }
     // if (appointmentsData.length > 0) {
@@ -130,7 +131,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
     // });
     // setData(dataS);
     // }
-  }, [dentistasData]);
+  }, [dentistasData, pacientesData]);
 
   const getConsultantName = (value) => {
     return value.resourceData[value.resource.textField];
@@ -159,92 +160,93 @@ const SchedulerComponent = ({ dataAppointment }) => {
     );
   };
 
-  const onPopupOpen = (args) => {
-    if (args.type === "Editor") {
-      // Create required custom elements in initial time
-      if (!args.element.querySelector(".custom-field-row")) {
-        let row = createElement("div", { className: "custom-field-row" });
-        let formElement = args.element.querySelector(".e-schedule-form");
-        formElement.firstChild.insertBefore(
-          row,
-          formElement.firstChild.firstChild
-        );
-        let container = createElement("div", {
-          className: "custom-field-container",
-        });
-        let inputEle = createElement("input", {
-          className: "e-field",
-          attrs: { name: "EventType" },
-        });
-        container.appendChild(inputEle);
-        row.appendChild(container);
-        let drowDownList = new DropDownList({
-          dataSource: [
-            { text: "Public Event", value: "public-event" },
-            { text: "Maintenance", value: "maintenance" },
-            { text: "Commercial Event", value: "commercial-event" },
-            { text: "Family Event", value: "family-event" },
-          ],
-          fields: { text: "text", value: "value" },
-          value: args.data.EventType,
-          floatLabelType: "Always",
-          placeholder: "Event Type",
-        });
-        drowDownList.appendTo(inputEle);
-        inputEle.setAttribute("name", "EventType");
-      }
-    }
-  };
+  // const onPopupOpen = (args) => {
+  //   if (args.type === "Editor") {
+  //     // Create required custom elements in initial time
+  //     if (!args.element.querySelector(".custom-field-row")) {
+  //       let row = createElement("div", { className: "custom-field-row" });
+  //       let formElement = args.element.querySelector(".e-schedule-form");
+  //       formElement.firstChild.insertBefore(
+  //         row,
+  //         formElement.firstChild.firstChild
+  //       );
+  //       let container = createElement("div", {
+  //         className: "custom-field-container",
+  //       });
+  //       let inputEle = createElement("input", {
+  //         className: "e-field",
+  //         attrs: { name: "EventType" },
+  //       });
+  //       container.appendChild(inputEle);
+  //       row.appendChild(container);
+  //       let drowDownList = new DropDownList({
+  //         dataSource: [
+  //           { text: "Public Event", value: "public-event" },
+  //           { text: "Maintenance", value: "maintenance" },
+  //           { text: "Commercial Event", value: "commercial-event" },
+  //           { text: "Family Event", value: "family-event" },
+  //         ],
+  //         fields: { text: "text", value: "value" },
+  //         value: args.data.EventType,
+  //         floatLabelType: "Always",
+  //         placeholder: "Event Type",
+  //       });
+  //       drowDownList.appendTo(inputEle);
+  //       inputEle.setAttribute("name", "EventType");
+  //     }
+  //   }
+  // };
 
-  const editorTemplateS = (props) => {
-    //   "appointmentsType_id":4,
-    // "userdentist_id":24,
-    // "userpatient_id":14,
-    // "userregistered_id":24,
-    // "clinic_id":4,
-    // "StartTime": "2020-07-13 17:00:00",
-    // "EndTime": "2020-07-13 18:00:00"  item.DepartmentID = 1;
-    // item.IsAllDay = false;
-    return props !== undefined ? (
-      <Box style={{ padding: "10px" }}>
-        <TextField id="standard-basic" name="note" label="Título" />
-        <TextField
-          id="standard-basic"
-          name="userdentist_id"
-          label="userdentist_id"
-        />
-        <TextField
-          id="standard-basic"
-          name="DepartmentID"
-          label="DepartmentID"
-        />
-        <TextField id="standard-basic" name="IsAllDay" label="IsAllDay" />
-        <TextField
-          id="standard-basic"
-          name="userpatient_id"
-          label="userpatient_id"
-        />
-        <TextField
-          id="standard-basic"
-          name="userregistered_id"
-          label="userregistered_id"
-        />
-        <TextField id="standard-basic" name="clinic_id" label="clinic_id" />
-        <TextField
-          id="standard-basic"
-          name="appointmentsType_id"
-          label="appointmentsType_id"
-        />
-        <TextField id="standard-basic" name="note" label="StartTime" />
-        <TextField id="standard-basic" name="note" label="EndTime" />
-      </Box>
-    ) : (
-      <div></div>
-    );
-  };
+  // const editorTemplateS = (props) => {
+  //   //   "appointmentsType_id":4,
+  //   // "userdentist_id":24,
+  //   // "userpatient_id":14,
+  //   // "userregistered_id":24,
+  //   // "clinic_id":4,
+  //   // "StartTime": "2020-07-13 17:00:00",
+  //   // "EndTime": "2020-07-13 18:00:00"  item.DepartmentID = 1;
+  //   // item.IsAllDay = false;
+  //   return props !== undefined ? (
+  //     <Box style={{ padding: "10px" }}>
+  //       <TextField id="standard-basic" name="note" label="Título" />
+  //       <TextField
+  //         id="standard-basic"
+  //         name="userdentist_id"
+  //         label="userdentist_id"
+  //       />
+  //       <TextField
+  //         id="standard-basic"
+  //         name="DepartmentID"
+  //         label="DepartmentID"
+  //       />
+  //       <TextField id="standard-basic" name="IsAllDay" label="IsAllDay" />
+  //       <TextField
+  //         id="standard-basic"
+  //         name="userpatient_id"
+  //         label="userpatient_id"
+  //       />
+  //       <TextField
+  //         id="standard-basic"
+  //         name="userregistered_id"
+  //         label="userregistered_id"
+  //       />
+  //       <TextField id="standard-basic" name="clinic_id" label="clinic_id" />
+  //       <TextField
+  //         id="standard-basic"
+  //         name="appointmentsType_id"
+  //         label="appointmentsType_id"
+  //       />
+  //       <TextField id="standard-basic" name="note" label="StartTime" />
+  //       <TextField id="standard-basic" name="note" label="EndTime" />
+  //     </Box>
+  //   ) : (
+  //     <div></div>
+  //   );
+  // };
 
   const onActionBegin = (args) => {
     console.log("args ->", args);
+    //AQUI SO VAI SER IMPLEMENTADO O DELETE 
 
     //CRUD HERE
 
@@ -368,7 +370,8 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   //Field funciona como o mapeamento
 
-  const openModal = () => {
+  const openModal = (e) => {
+    setArgs(e);
     setFlag(true);
   };
 
@@ -457,6 +460,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
         dentista={dentistas}
         pacientes={paciente}
         departmentData={departmentData}
+        dataArg={args}
       />
     </>
   );

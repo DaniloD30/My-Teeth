@@ -25,6 +25,28 @@ const Scheduler = (props) => {
   //   },
   // ];
 
+ 
+
+  const dataAllUserLoading = useSelector(
+    (state) => state.app?.loading?.dataAllUserLoading
+  );
+
+  const dataAppointmentsLoading = useSelector(
+    (state) => state.app?.loading?.dataAppointmentsLoading
+  );
+
+  const appointmentsData = useSelector(
+    (state) => state.appointment?.appointments
+  );
+
+  const addAppointmentLoading = useSelector(
+    (state) => state.appointment?.addAppointmentLoading
+  );
+
+  const appointmentTypeLoading = useSelector(
+    (state) => state.app?.loading?.appointmentTypeLoading
+  );
+  
   useEffect(() => {
     // appointmentTypeAction
     if (isAuthenticated()) {
@@ -47,7 +69,7 @@ const Scheduler = (props) => {
           (error) => {
             if (error) {
               Utils.showError(error);
-              return; 
+              return;
             }
           }
         )
@@ -72,35 +94,44 @@ const Scheduler = (props) => {
     }
   }, [dispatch, history]);
 
-  const dataAllUserLoading = useSelector(
-    (state) => state.app?.loading?.dataAllUserLoading
-  );
-
-  const dataAppointmentsLoading = useSelector(
-    (state) => state.app?.loading?.dataAppointmentsLoading
-  );
-  
-  const appointmentsData = useSelector(
-    (state) => state.appointment?.appointments
-  );
-
-  const appointmentTypeLoading = useSelector(
-    (state) => state.app?.loading?.appointmentTypeLoading
-  );
-
   useEffect(() => {
     if (appointmentsData.length > 0) {
-      appointmentsData.map((item) => {
-        item.userdentist_id = 344;
-        item.DepartmentID = 1;
-        item.IsAllDay = false;
-      });
+      appointmentsData.map((item) => (
+        item.DepartmentID = 1
+    
+       
+        
+      ));
     }
   }, [appointmentsData]);
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      dispatch(
+        appointmentAction.getAllAppointments(
+          getToken(),
+          "dataAppointmentsLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+          }
+        )
+      );
+    } else {
+      Utils.showError("Não autenticado!");
+      setTimeout(function () {
+        history.push("/login");
+      }, 3000);
+    }
+  }, [dispatch, history, addAppointmentLoading]);
   return (
     <>
       <Page>
-        {dataAllUserLoading || dataAppointmentsLoading || appointmentTypeLoading ? (
+        {dataAllUserLoading ||
+        dataAppointmentsLoading ||
+        appointmentTypeLoading ? (
           <Box style={{ display: "flex", justifyContent: "center" }}>
             <CircularProgress />
           </Box>

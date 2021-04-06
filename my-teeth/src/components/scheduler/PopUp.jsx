@@ -1,50 +1,64 @@
-import {
-  Box,
-  Dialog,
-  TextField,
-  Typography,
-  Button,
-  Grid,
-  CircularProgress,
-} from "@material-ui/core";
+import { Box, Dialog, Button, Grid, CircularProgress } from "@material-ui/core";
+import { withRouter } from "react-router";
+import { ToastContainer } from "react-toastify";
+import { useHistory } from "react-router-dom";
 import RegisterInputText from "~/components/common/registerInputs/RegisterInputText";
 import React, { useEffect, useState } from "react";
 import SaveIcon from "@material-ui/icons/Save";
+import { isAuthenticated, getToken } from "~/services/auth";
 import { useDispatch, useSelector } from "react-redux";
 import Utils from "~/helpers/Utils";
+import appointmentAction from "~/actions/appointmentAction";
 import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
 import { Formik, Form } from "formik";
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from "@material-ui/pickers";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import pt from "date-fns/locale/pt-BR";
+import DateFnsUtils from "@date-io/date-fns";
+
 const PopUp = ({
   flagOpen,
   handleClose,
   dentista,
   pacientes,
   departmentData,
+  dataArg,
 }) => {
   const appointmentsType = useSelector(
     (state) => state.appointmentType?.appointmentsType
   );
-
+  const addAppointmentLoading = useSelector(
+    (state) => state.app?.loading?.addAppointmentLoading
+  );
+  const dispatch = useDispatch();
+  let history = useHistory();
+  const { location } = history;
   // const [department, setDepartment] = useState([]);
   // console.log("props d -->", departmentData);
 
   useEffect(() => {
     if (appointmentsType.length > 0) {
-      appointmentsType.map((item) => {
-        item.Text = item?.description;
-      });
+      appointmentsType.map((item) => (item.Text = item?.description));
     }
   }, [appointmentsType]);
 
   let user = {
-    name: "Teste ds",
-    birthday: null,
-    genre: "M",
-    rg: null,
-    cpf: null,
+    note: "",
+    appointmentsType_id: null,
+    userdentist_id: null,
+    userpatient_id: null,
+    clinic_id: 4,
+    // DepartmentID: null, // por enquanto estou adicionando o departamento no useEffect do getAppointment
+    userregistered_id: null, // localStorage
+    StartTime: dataArg?.startTime,
+    EndTime: dataArg?.endTime,
     // picture: null,
-    phone_mobile: null,
-    phone_other: null,
+    // phone_mobile: null,
+    // phone_other: null,
 
     // {
     //     "note": "Consulta de Triagem para inicio de tratamento", done
@@ -62,6 +76,7 @@ const PopUp = ({
   // Clinic_id, essa parte tem que ser conversada, pq se um paciente estiver relacionado com mais de uma clínica.
   return (
     <>
+      <ToastContainer />
       <Dialog
         onClose={handleClose}
         aria-labelledby="simple-dialog-title"
@@ -76,49 +91,55 @@ const PopUp = ({
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              // values.picture = userPhoto;
-              // if (isAuthenticated()) {
-              //   dispatch(
-              //     userAction.editProfile(
-              //       values,
-              //       getToken(),
-              //       "editUserLoading",
-              //       (error) => {
-              //         setSubmitting(false);
-              //         if (error) {
-              //           Utils.showError(error);
-              //           return;
-              //         }
-              //         Utils.showToast({
-              //           type: "success",
-              //           description: "Usuário editado com sucesso!",
-              //         });
-              //         setTimeout(function () {
-              //           dispatch(
-              //             userAction.getDataProfile(
-              //               getToken(),
-              //               "dataUserLoading",
-              //               (error) => {
-              //                 if (error) {
-              //                   Utils.showError(error);
-              //                   return;
-              //                 }
-              //               }
-              //             )
-              //           );
-              //         }, 2000);
-              //         // props.comeback();
-              //       }
-              //     )
-              //   );
-              // } else {
-              //   Utils.showError("Não autenticado!");
-              //   setTimeout(function () {
-              //     props.history.push("/login");
-              //   }, 3000);
-              // }
+              values.userregistered_id = localStorage.getItem("userid");
+              if (isAuthenticated()) {
+                dispatch(
+                  appointmentAction.addAppointment(
+                    values,
+                    getToken(),
+
+                    "addAppointmentLoading",
+                    (error) => {
+                      setSubmitting(false);
+
+                      if (error) {
+                        Utils.showError(error);
+                        return;
+                      }
+
+                      Utils.showToast({
+                        type: "success",
+                        description: "Consulta cadastrada com sucesso!",
+                      });
+
+                      setTimeout(function () {
+                        dispatch(
+                          appointmentAction.getAllAppointments(
+                            getToken(),
+                            "dataAppointmentsLoading",
+                            (error) => {
+                              if (error) {
+                                Utils.showError(error);
+                                return;
+                              }
+                            }
+                          )
+                        );
+                        handleClose();
+                      }, 3000);
+
+                      // props.comeback();
+                    }
+                  )
+                );
+              } else {
+                Utils.showError("Não autenticado!");
+                setTimeout(function () {
+                  history.push("/login");
+                }, 3000);
+              }
             }}
-            render={({ submitForm, setFieldValue }) => {
+            render={({ submitForm, setFieldValue, values }) => {
               return (
                 <Form>
                   <Grid container spacing={3}>
@@ -150,7 +171,36 @@ const PopUp = ({
                         type="scheduler"
                       />
                     </Grid>
-
+                    <Grid item md={6} xs={12}>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={pt}>
+                        <DateTimePicker
+                          label="Data Inicial"
+                          inputVariant="outlined"
+                          name="StartTime"
+                          format="MM/dd/yyyy HH:mm"
+                          // value={selectedDate}
+                          value={values.StartTime}
+                          onChange={(value) =>
+                            setFieldValue("StartTime", value)
+                          }
+                          // onChange={handleDateChange}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={pt}>
+                        <DateTimePicker
+                          label="Data Final"
+                          inputVariant="outlined"
+                          name="EndTime"
+                          format="MM/dd/yyyy HH:mm"
+                          // value={selectedDate}
+                          value={values.EndTime}
+                          onChange={(value) => setFieldValue("EndTime", value)}
+                          // onChange={handleDateChange}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Grid>
                     <Grid item md={6} xs={12}>
                       <RegisterSelect
                         label={"Departamento"}
@@ -159,12 +209,12 @@ const PopUp = ({
                         type="department"
                       />
                     </Grid>
-                    <Grid item md={6} xs={12}>
+                    {/* <Grid item md={6} xs={12}>
                       <RegisterInputText
                         label={"Celular outro"}
                         name="phone_other"
                       />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
 
                   <Box display="flex" justifyContent="flex-end" p={2}>
@@ -178,7 +228,7 @@ const PopUp = ({
                       // disabled={loginCreateLoading}
                       onClick={submitForm}
                     >
-                      {false ? (
+                      {addAppointmentLoading ? (
                         <CircularProgress
                           style={{ height: 14, width: 14, marginRight: 8 }}
                           color={"#fff"}
@@ -199,4 +249,4 @@ const PopUp = ({
   );
 };
 
-export default PopUp;
+export default withRouter(PopUp);

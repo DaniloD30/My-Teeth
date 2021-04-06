@@ -22,6 +22,7 @@ const INITIAL_STATE = {
     editUserLoading: false,
     dataAppointmentsLoading: false,
     appointmentTypeLoading: false,
+    addAppointmentLoading: false
   },
 };
 

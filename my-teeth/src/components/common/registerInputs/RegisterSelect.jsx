@@ -22,7 +22,6 @@ const RegisterSelect = (props) => {
   const error = props.errors && props.errors[props.name];
   const touched = props.touched && props.touched[props.name];
 
-  console.log("options ->", options);
   return (
     <Box className="register-field">
       <FormControl fullWidth margin="dense">
