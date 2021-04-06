@@ -48,6 +48,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
   const departmentData = [{ text: "DENTISTA", Id: 1, Color: "#9e5fff" }];
   const [dentistas, setDentista] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [flagEdit, setFlagEdit] = useState(false);
   const [paciente, setPaciente] = useState([]);
   const [args, setArgs] = useState(null);
   // const [data, setData] = useState([]);
@@ -246,7 +247,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   const onActionBegin = (args) => {
     console.log("args ->", args);
-    //AQUI SO VAI SER IMPLEMENTADO O DELETE 
+    //AQUI SO VAI SER IMPLEMENTADO O DELETE
 
     //CRUD HERE
 
@@ -371,12 +372,17 @@ const SchedulerComponent = ({ dataAppointment }) => {
   //Field funciona como o mapeamento
 
   const openModal = (e) => {
+    console.log("e ->", e)
+    if(e?.event?.note){
+      setFlagEdit(true)
+    }
     setArgs(e);
     setFlag(true);
   };
 
   const closeModal = () => {
     setFlag(false);
+    setFlagEdit(false)
   };
 
   // const testE = (e) => {
@@ -398,6 +404,9 @@ const SchedulerComponent = ({ dataAppointment }) => {
         // popupOpen={onPopupOpen.bind(this)}
         // editorTemplate={editorTemplate.bind(this)}
         actionBegin={onActionBegin.bind(this)}
+        eventClick={(args) => {
+          openModal(args);
+        }}
         cellClick={(e) => {
           openModal(e);
         }}
@@ -461,6 +470,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
         pacientes={paciente}
         departmentData={departmentData}
         dataArg={args}
+        flagEdit={flagEdit}
       />
     </>
   );

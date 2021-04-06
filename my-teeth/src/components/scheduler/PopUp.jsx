@@ -27,14 +27,22 @@ const PopUp = ({
   pacientes,
   departmentData,
   dataArg,
+  flagEdit,
 }) => {
+  // dataArg é o nome do objeto que vem com os dados da consulta para edição
+
   const appointmentsType = useSelector(
     (state) => state.appointmentType?.appointmentsType
   );
   const addAppointmentLoading = useSelector(
     (state) => state.app?.loading?.addAppointmentLoading
   );
+
+  const editAppointmentLoading = useSelector(
+    (state) => state.app?.loading?.editAppointmentLoading
+  );
   const dispatch = useDispatch();
+  // const [flagEdit, setFlagEdit] = useState(false);
   let history = useHistory();
   const { location } = history;
   // const [department, setDepartment] = useState([]);
@@ -47,15 +55,15 @@ const PopUp = ({
   }, [appointmentsType]);
 
   let user = {
-    note: "",
-    appointmentsType_id: null,
-    userdentist_id: null,
-    userpatient_id: null,
+    note: "" || dataArg?.event?.note,
+    appointmentsType_id: null || dataArg?.event?.appointmentsType_id,
+    userdentist_id: null || dataArg?.event?.userdentist_id,
+    userpatient_id: null || dataArg?.event?.userpatient_id,
     clinic_id: 4,
     // DepartmentID: null, // por enquanto estou adicionando o departamento no useEffect do getAppointment
     userregistered_id: null, // localStorage
-    StartTime: dataArg?.startTime,
-    EndTime: dataArg?.endTime,
+    StartTime: dataArg?.startTime || dataArg?.event?.StartTime, // no editar é a mesma data que vem do banco
+    EndTime: dataArg?.endTime || dataArg?.event?.EndTime,
     // picture: null,
     // phone_mobile: null,
     // phone_other: null,
@@ -92,51 +100,99 @@ const PopUp = ({
             }}
             onSubmit={(values, { setSubmitting }) => {
               values.userregistered_id = localStorage.getItem("userid");
-              if (isAuthenticated()) {
-                dispatch(
-                  appointmentAction.addAppointment(
-                    values,
-                    getToken(),
+              if (flagEdit) {
+                if (isAuthenticated()) {
+                  dispatch(
+                    appointmentAction.editAppointment(
+                      values,
+                      getToken(),
+                      dataArg?.event?.id,
+                      "editAppointmentLoading",
+                      (error) => {
+                        setSubmitting(false);
 
-                    "addAppointmentLoading",
-                    (error) => {
-                      setSubmitting(false);
+                        if (error) {
+                          Utils.showError(error);
+                          return;
+                        }
 
-                      if (error) {
-                        Utils.showError(error);
-                        return;
-                      }
-
-                      Utils.showToast({
-                        type: "success",
-                        description: "Consulta cadastrada com sucesso!",
-                      });
-
-                      setTimeout(function () {
-                        dispatch(
-                          appointmentAction.getAllAppointments(
-                            getToken(),
-                            "dataAppointmentsLoading",
-                            (error) => {
-                              if (error) {
-                                Utils.showError(error);
-                                return;
+                        Utils.showToast({
+                          type: "success",
+                          description: "Consulta editada com sucesso!",
+                        });
+                        setTimeout(function () {
+                          dispatch(
+                            appointmentAction.getAllAppointments(
+                              getToken(),
+                              "dataAppointmentsLoading",
+                              (error) => {
+                                if (error) {
+                                  Utils.showError(error);
+                                  return;
+                                }
                               }
-                            }
-                          )
-                        );
-                        handleClose();
-                      }, 3000);
+                            )
+                          );
+                          handleClose();
+                        }, 3000);
 
-                      // props.comeback();
-                    }
-                  )
-                );
+                        // props.comeback();
+                      }
+                    )
+                  );
+                } else {
+                  Utils.showError("Não autenticado!");
+                  setTimeout(function () {
+                    history.push("/login");
+                  }, 3000);
+                }
               } else {
-                Utils.showError("Não autenticado!");
-                setTimeout(function () {
-                  history.push("/login");
-                }, 3000);
+                if (isAuthenticated()) {
+                  dispatch(
+                    appointmentAction.addAppointment(
+                      values,
+                      getToken(),
+
+                      "addAppointmentLoading",
+                      (error) => {
+                        setSubmitting(false);
+
+                        if (error) {
+                          Utils.showError(error);
+                          return;
+                        }
+
+                        Utils.showToast({
+                          type: "success",
+                          description: "Consulta cadastrada com sucesso!",
+                        });
+
+                        setTimeout(function () {
+                          dispatch(
+                            appointmentAction.getAllAppointments(
+                              getToken(),
+                              "dataAppointmentsLoading",
+                              (error) => {
+                                if (error) {
+                                  Utils.showError(error);
+                                  return;
+                                }
+                              }
+                            )
+                          );
+                          handleClose();
+                        }, 3000);
+
+                        // props.comeback();
+                      }
+                    )
+                  );
+                } else {
+                  Utils.showError("Não autenticado!");
+                  setTimeout(function () {
+                    history.push("/login");
+                  }, 3000);
+                }
               }
             }}
             render={({ submitForm, setFieldValue, values }) => {
@@ -228,7 +284,7 @@ const PopUp = ({
                       // disabled={loginCreateLoading}
                       onClick={submitForm}
                     >
-                      {addAppointmentLoading ? (
+                      {addAppointmentLoading || editAppointmentLoading ? (
                         <CircularProgress
                           style={{ height: 14, width: 14, marginRight: 8 }}
                           color={"#fff"}
@@ -236,7 +292,7 @@ const PopUp = ({
                       ) : (
                         <SaveIcon />
                       )}
-                      Salvar
+                      {flagEdit ? "Editar" : "Salvar"}
                     </Button>
                   </Box>
                 </Form>
