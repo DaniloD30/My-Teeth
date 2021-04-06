@@ -61,8 +61,8 @@ const ProfileForm = (props) => {
       array[i] = raw.charCodeAt(i);
     }
     var image = [];
-    for (var i = 0; i < rawlenght; i++) {
-      image.push(array[i]);
+    for (let y = 0; y < rawlenght; y++) {
+      image.push(array[y]);
     }
     // let img = `data:image/png;base64, ${userDataProfile?.picture}`;
     // setImage(d);

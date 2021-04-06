@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import { ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import RegisterInputText from "~/components/common/registerInputs/RegisterInputText";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SaveIcon from "@material-ui/icons/Save";
 import { isAuthenticated, getToken } from "~/services/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import Utils from "~/helpers/Utils";
 import appointmentAction from "~/actions/appointmentAction";
 import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
 import { Formik, Form } from "formik";
+import DeleteIcon from "@material-ui/icons/Delete";
 // import {
 //   MuiPickersUtilsProvider,
 //   KeyboardTimePicker,
@@ -41,10 +42,13 @@ const PopUp = ({
   const editAppointmentLoading = useSelector(
     (state) => state.app?.loading?.editAppointmentLoading
   );
+
+  const DeleteAppointmentLoading = useSelector(
+    (state) => state.app?.loading?.DeleteAppointmentLoading
+  );
   const dispatch = useDispatch();
   // const [flagEdit, setFlagEdit] = useState(false);
   let history = useHistory();
-  const { location } = history;
   // const [department, setDepartment] = useState([]);
   // console.log("props d -->", departmentData);
 
@@ -81,6 +85,50 @@ const PopUp = ({
     // }
   };
 
+  const deletEvent = () => {
+    if (isAuthenticated()) {
+      dispatch(
+        appointmentAction.deleteAppointment(
+          getToken(),
+          dataArg?.event?.id,
+          "DeleteAppointmentLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+
+            Utils.showToast({
+              type: "success",
+              description: "Consulta deletada com sucesso!",
+            });
+            setTimeout(function () {
+              dispatch(
+                appointmentAction.getAllAppointments(
+                  getToken(),
+                  "dataAppointmentsLoading",
+                  (error) => {
+                    if (error) {
+                      Utils.showError(error);
+                      return;
+                    }
+                  }
+                )
+              );
+              handleClose();
+            }, 3000);
+
+            // props.comeback();
+          }
+        )
+      );
+    } else {
+      Utils.showError("Não autenticado!");
+      setTimeout(function () {
+        history.push("/login");
+      }, 3000);
+    }
+  };
   // Clinic_id, essa parte tem que ser conversada, pq se um paciente estiver relacionado com mais de uma clínica.
   return (
     <>
@@ -273,27 +321,59 @@ const PopUp = ({
                     </Grid> */}
                   </Grid>
 
-                  <Box display="flex" justifyContent="flex-end" p={2}>
-                    <Button
-                      id="speeding-filter-period-save-button"
-                      className="report-save-button"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                      // disabled={loginCreateLoading}
-                      onClick={submitForm}
-                    >
-                      {addAppointmentLoading || editAppointmentLoading ? (
-                        <CircularProgress
-                          style={{ height: 14, width: 14, marginRight: 8 }}
-                          color={"#fff"}
-                        />
-                      ) : (
-                        <SaveIcon />
-                      )}
-                      {flagEdit ? "Editar" : "Salvar"}
-                    </Button>
+                  <Box display="flex" justifyContent="flex-end">
+                    <Grid container spacing={3}>
+                      <Grid item md={6} xs={12}>
+                        {flagEdit ? (
+                          <Button
+                            id="speeding-filter-period-save-button"
+                            style={{ backgroundColor: "#ff5858" }}
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            disableElevation
+                            // disabled={loginCreateLoading}
+                            onClick={deletEvent}
+                          >
+                            {DeleteAppointmentLoading ? (
+                              <CircularProgress
+                                style={{
+                                  height: 14,
+                                  width: 14,
+                                  marginRight: 8,
+                                }}
+                                color={"#fff"}
+                              />
+                            ) : (
+                              <DeleteIcon />
+                            )}
+                            Apagar Consulta
+                          </Button>
+                        ) : null}
+                      </Grid>
+                      <Grid item md={6} xs={12}>
+                        <Button
+                          id="speeding-filter-period-save-button"
+                          className="report-save-button"
+                          fullWidth
+                          variant="contained"
+                          color="primary"
+                          disableElevation
+                          // disabled={loginCreateLoading}
+                          onClick={submitForm}
+                        >
+                          {addAppointmentLoading || editAppointmentLoading ? (
+                            <CircularProgress
+                              style={{ height: 14, width: 14, marginRight: 8 }}
+                              color={"#fff"}
+                            />
+                          ) : (
+                            <SaveIcon />
+                          )}
+                          {flagEdit ? "Editar" : "Salvar"}
+                        </Button>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Form>
               );
