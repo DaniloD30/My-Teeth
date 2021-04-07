@@ -9,23 +9,10 @@ import appointmentTypeAction from "~/actions/appointmentTypeAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@material-ui/core";
 import Utils from "~/helpers/Utils";
+import { ToastContainer } from "react-toastify";
 const Scheduler = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
-
-  // const dataS = [
-  //   {
-  //     Id: 5,
-  //     Subject: "ISA Annual Conference",
-  //     StartTime: "2020-07-13T17:00:00.000Z",
-  //     EndTime: "2020-07-13T18:00:00.000Z",
-  //     EventType: "commercial-event",
-  //     City: "USA",
-  //     CategoryColor: "#00bdae",
-  //   },
-  // ];
-
- 
 
   const dataAllUserLoading = useSelector(
     (state) => state.app?.loading?.dataAllUserLoading
@@ -97,11 +84,7 @@ const Scheduler = (props) => {
   useEffect(() => {
     if (appointmentsData.length > 0) {
       appointmentsData.map((item) => (
-        item.DepartmentID = 1
-    
-       
-        
-      ));
+        item.DepartmentID = 1 ));
     }
   }, [appointmentsData]);
 
@@ -128,6 +111,7 @@ const Scheduler = (props) => {
   }, [dispatch, history, addAppointmentLoading]);
   return (
     <>
+     <ToastContainer />
       <Page>
         {dataAllUserLoading ||
         dataAppointmentsLoading ||

@@ -13,6 +13,7 @@ import { CircularProgress } from "@material-ui/core";
 // import logo from '../../assets/logo.svg';
 import Utils from "~/helpers/Utils";
 import { getToken } from "~/services/auth";
+import { ToastContainer } from "react-toastify";
 export default function Logon() {
   const [dataLogin, setDataLogin] = useState({ values: {} });
   const loginLoading = useSelector((state) => state.app?.loading?.loginLoading);
@@ -58,7 +59,7 @@ export default function Logon() {
 
   return (
     <div className="loginRoot">
-      {" "}
+      <ToastContainer />{" "}
       <div className="logonContainer">
         <section className="form">
           {/* <img className="logoImg" src={logo2} alt="Be the hero" /> */}
