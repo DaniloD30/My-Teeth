@@ -16,7 +16,9 @@ import ButtonStyled from "~/components/common/button/ButtonStyled";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import logo2 from "~/assets/images/tpcLogo3.jpg";
+// import logo2 from "~/assets/images/tpcLogo3.jpg";
+import myteeth01 from "~/assets/images/Myteeth01.png";
+import myteeth02 from "~/assets/images/Myteeth02.png";
 import Menu from "~/components/app/menu/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import loginAction from "~/actions/loginAction";
@@ -70,7 +72,9 @@ const AuthenticatedLayout = (props) => {
   useEffect(() => {
     if (userDataProfile?.picture) {
       // let file = Utils.ab2str(userDataProfile?.picture?.data);
-      let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(userDataProfile?.picture?.data)}`;
+      let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(
+        userDataProfile?.picture?.data
+      )}`;
       setImage(file);
     }
   }, [userDataProfile]);
@@ -84,12 +88,15 @@ const AuthenticatedLayout = (props) => {
       <Box className="ceabs-layout">
         <Box className="ceabs-header">
           <Toolbar>
-            {/* <div className="icon-menu-list">
-              <ListIcon onClick={handleToogleToolbar} />
-            </div> */}
+            <div className="icon-menu-list">
+              {/* <ListIcon onClick={handleToogleToolbar} />
+               */}
+              {/* <Typography variant="h3">Nome da clínica</Typography> */}
+              <img className="logoImg" src={myteeth02} alt={"ceabs1"} width={110} height={70} />
+            </div>
 
             <div className="icon-menu-logo">
-              <img className="logoImg" src={logo2} alt={"ceabs"} />
+              <img className="logoImg" src={myteeth01} alt={"ceabs"} />
             </div>
 
             <aside>
@@ -141,8 +148,17 @@ const AuthenticatedLayout = (props) => {
         <Box className="ceabs-main">
           <Box
             className="ceabs-menu"
+            // style={{
+            //   background: " #3d5564",
+            // background:
+            //  linear-gradient(
+            //   45deg
+            //    ,#cccccc,#2e3192,#29abe2, transparent);
+            //   }
+            // }}
             style={{
-              background: " #3d5564",
+              background:
+                "linear-gradient(231deg,#cccccc,#2e3192,#29abe2, transparent)",
             }}
           >
             <Menu />

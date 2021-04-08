@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import _ from "lodash";
 import PrivateRoute from "~/components/app/routers/PrivateRoute";
 import routes from "~/config/routes/routes";
+// import NotFound from "../../../views/notFound/NotFound";
 // import Utils from "~/helpers/Utils";
 
 export const Authenticated = (props) => {
@@ -56,6 +57,7 @@ export const Anonymous = (props) => {
           )
       )}
       <Redirect to="/login" />
+      {/* <Redirect to="/not-found" exact={true} component={<NotFound/>} /> */}
     </Switch>
   );
 };

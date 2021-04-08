@@ -28,6 +28,8 @@ import { enableRipple } from "@syncfusion/ej2-base";
 import { useSelector } from "react-redux";
 // import { Box, TextField } from "@material-ui/core";
 import PopUp from "./PopUp";
+import { Avatar } from "@material-ui/core";
+import Utils from "~/helpers/Utils";
 // import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
 // import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 enableRipple(true);
@@ -110,7 +112,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
           (item.Text = item?.person?.name),
           (item.Id = item?.id),
           (item.GroupId = 1),
-          (item.Color = "#bbdc00"),
+          (item.Color = "#bbdc00"), //Cada dentista tem que ter uma cor 
           (item.Designation = "Dentista")
         )
       );
@@ -139,8 +141,8 @@ const SchedulerComponent = ({ dataAppointment }) => {
   };
 
   const getConsultantImage = (value) => {
-    let resourceName = getConsultantName(value);
-    return resourceName;
+    let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(value?.resourceData?.person?.picture)}`;
+    return file;
   };
 
   const getConsultantDesignation = (value) => {
@@ -151,7 +153,8 @@ const SchedulerComponent = ({ dataAppointment }) => {
     return (
       <div className="template-wrap">
         <div className="specialist-category">
-          <div className={"specialist-image " + getConsultantImage(props)} />
+          {/* <div className={"specialist-image " + getConsultantImage(props)} /> */}
+          <Avatar src={getConsultantImage(props)} />
           <div className="specialist-name">{getConsultantName(props)}</div>
           <div className="specialist-designation">
             {getConsultantDesignation(props)}
@@ -247,8 +250,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   const onActionBegin = (args) => {
     console.log("args ->", args);
-    //AQUI SO VAI SER IMPLEMENTADO O DELETE
-
+    // Consigo obter as actions do scheduler aqui
     //CRUD HERE
 
     /*
@@ -372,7 +374,6 @@ const SchedulerComponent = ({ dataAppointment }) => {
   //Field funciona como o mapeamento
 
   const openModal = (e) => {
-    console.log("e ->", e)
     if(e?.event?.note){
       setFlagEdit(true)
     }
@@ -395,7 +396,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
         // cssClass="schedule-drag-drop"
         width="100%"
         height="650px"
-        // currentView="Day"
+        currentView="Week"
         selectedDate={new Date(2020, 6, 13)}
         ref={scheduler}
         popupOpen={(args) => {

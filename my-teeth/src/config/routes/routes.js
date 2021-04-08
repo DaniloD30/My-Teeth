@@ -31,7 +31,16 @@ import EventIcon from '@material-ui/icons/Event';
 // import Dashboard from "~/assets/icons/menuSide/dashboard.svg";
 import { subRoutesUsers } from "./subRoutes";
 import Profile from "~/views/profile/Profile";
+import NotFound from "../../views/notFound/NotFound";
 export const routes = [
+  {
+    path: "/not-found",
+    exact: true,
+    title: () => "not found",
+    view: () => <NotFound />,
+    onlyAuthorized: false,
+    showOnMenu: false,
+  },
   {
     path: "/login",
     exact: true,
