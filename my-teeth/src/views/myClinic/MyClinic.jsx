@@ -37,7 +37,7 @@ const MyClinic = (props) => {
   }, [dispatch, history]);
 
   useEffect(() => {
-    if (clinicUser?.length > 0) {
+    if (clinicUser) {
       setClinicUser(clinicUser);
     }
   }, [clinicUser]);
@@ -51,8 +51,7 @@ const MyClinic = (props) => {
             <CircularProgress />
           </Box>
         ) : (
-          // <MyClinicForm />
-          <div>dsd</div>
+          <MyClinicForm  data={dataClinicUser}/>
         )}
       </Page>
     </>

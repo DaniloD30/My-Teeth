@@ -15,7 +15,7 @@ export default function clinicaReducer(state = INITIAL_STATE, action) {
       case Constants.GET_CLINIC:
         return {
           ...state,
-          clinicUser: action?.payload.rows,
+          clinicUser: action?.payload,
         };
     default:
       return state;

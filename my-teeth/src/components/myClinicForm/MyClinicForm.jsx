@@ -15,11 +15,11 @@ import {
 import { Formik, Form } from "formik";
 import SaveIcon from "@material-ui/icons/Save";
 import RegisterInputText from "~/components/common/registerInputs/RegisterInputText";
-import userAction from "~/actions/userAction";
+import clinicAction from "~/actions/clinicAction";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticated, getToken } from "~/services/auth";
 import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
 import { ToastContainer } from "react-toastify";
 import Utils from "~/helpers/Utils";
@@ -28,74 +28,58 @@ const useStyles = makeStyles(() => ({
   root: {},
 }));
 
-const MyClinicForm = ({ className, props, ...rest }) => {
+const MyClinicForm = ({ data }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // let history = useHistory();
-  // const [values, setValues] = useState({
-  //   firstName: "Katarina",
-  //   lastName: "Smith",
-  //   email: "demo@devias.io",
-  //   phone: "",
-  //   state: "Alabama",
-  //   country: "USA",
-  // });
-  const userDataProfile = useSelector((state) => state.user?.userDataProfile);
-  const userPhoto = useSelector((state) => state.user?.userPhoto);
-  const editUserLoading = useSelector(
-    (state) => state.app?.loading?.editUserLoading
-  );
-  // const handleChange = (event) => {
-  //   setValues({
-  //     ...values,
-  //     [event.target.name]: event.target.value,
-  //   });
-  // };
+  let history = useHistory();
 
-  let user = {
-    name: "Teste ds",
-    birthday: null,
-    genre: "M",
-    rg: null,
-    cpf: null,
-    // picture: null,
-    phone_mobile: null,
-    phone_other: null,
+  const editClinicLoading = useSelector(
+    (state) => state.app?.loading?.editClinicLoading
+  );
+
+  let clinic = {
+    company_name: "Clinica ",
+    main_office: "Sim",
+    cnpj: "12345678910123",
+    state_registration: "1234321",
+    municipal_registration: "34565432",
+    site: "www.clinicadenison.com.br",
+    type: 1,
+    due_date: "10",
+    service_rate: 1,
+    login_wirecard: "Sim",
+    payment_slip: 0,
+    payment_transfer: 0,
+    payment_card: 1,
+    clinic_type_id: 1,
   };
-  // console.log("userDataProfile ->", userDataProfile);
-  if (userDataProfile) {
-    user = userDataProfile;
+
+  if (data) {
+    clinic = data;
   }
-  // "name": "Teste",
-  //   "birthday": null,
-  //   "genre": "M",
-  //   "rg": null,
-  //   "cpf": null,
-  //   "picture": null,
-  //   "phone_mobile": null,
-  //   "phone_other": null,
+
   return (
-    <form autoComplete="off" noValidate className={classes.root} {...rest}>
+    <form autoComplete="off" noValidate className={classes.root}>
       <ToastContainer />
       <Card>
-        <CardHeader subheader="A informação pode ser editada" title="Perfil" />
+        <CardHeader subheader="A informação pode ser editada" title="Clínica" />
         <Divider />
         <CardContent>
           <Formik
-            initialValues={{ ...user }}
+            initialValues={{ ...clinic }}
             validate={(values) => {
               const errors = {};
 
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              values.picture = userPhoto;
               if (isAuthenticated()) {
                 dispatch(
-                  userAction.editProfile(
+                  clinicAction.editClinic(
                     values,
                     getToken(),
-                    "editUserLoading",
+                    localStorage.getItem("clinic_id"),
+                    "editClinicLoading",
                     (error) => {
                       setSubmitting(false);
 
@@ -106,24 +90,23 @@ const MyClinicForm = ({ className, props, ...rest }) => {
 
                       Utils.showToast({
                         type: "success",
-                        description: "Usuário editado com sucesso!",
+                        description: "Clínica editada com sucesso!",
                       });
 
                       setTimeout(function () {
                         dispatch(
-                          userAction.getDataProfile(
+                          clinicAction.getClinicUser(
                             getToken(),
-                            "dataUserLoading",
+                            "dataClinicLoading",
                             (error) => {
                               if (error) {
                                 Utils.showError(error);
                                 return;
                               }
-
                             }
                           )
                         );
-                      }, 2000);
+                      }, 3000);
 
                       // props.comeback();
                     }
@@ -132,97 +115,183 @@ const MyClinicForm = ({ className, props, ...rest }) => {
               } else {
                 Utils.showError("Não autenticado!");
                 setTimeout(function () {
-                  props.history.push("/login");
+                  history.push("/login");
                 }, 3000);
               }
-              // dispatch(
-              //   loginAction.createAccount(
-              //     values,
-              //     "loginCreateLoading",
-              //     (error) => {
-              //       setSubmitting(false);
-              //       if (error) {
-              //         Utils.showError(error);
-              //         return;
-              //       }
-              //       // console.log("ENTROU NO CALLBACK");
-              //       Utils.showToast({
-              //         type: "success",
-              //         description: "Usuário cadastrado com sucesso",
-              //       });
-              //     }
-              //   )
-              // );
             }}
             render={({ submitForm, setFieldValue }) => {
               return (
-                <Form>
-                  <Grid container spacing={3}>
-                    <Grid item md={6} xs={12}>
-                      <RegisterInputText label={"Nome"} name="name" />
+                <Form className="ceabs-register-form">
+                  <Grid
+                    container
+                    direction="row"
+                    alignItems="stretch"
+                    spacing={0}
+                  >
+                    <Grid container spacing={3}>
+                      <Grid item xs={4}>
+                        {/* {location?.state ? null : ( */}
+                        <RegisterInputText
+                          label={"Nome da Clínica"}
+                          name="company_name"
+                          maxL="255"
+                        />
+                        {/* )} */}
+                      </Grid>
+                      <Grid item xs={8}>
+                        <RegisterInputText
+                          label={"Main Office"}
+                          name="main_office"
+                          maxL="3"
+                        />
+                        {/* <RegisterImageInput
+                        name={"foto"}    
+                        placholderIcon={
+                          <img src={UserIcon} alt={"Icon Close"} {...props} />
+                        }
+                        accept=".jpg, .png, .jpeg"
+                      /> */}
+                      </Grid>
                     </Grid>
-                    <Grid item md={6} xs={12}>
-                      <RegisterInputText
-                        label={"Data de Nascimento"}
-                        name="birthday"
-                      />
+
+                    <Grid container spacing={3}>
+                      <Grid item xs={4}>
+                        <RegisterMaskedTextInput
+                          label={"cnpj"}
+                          name="cnpj"
+                          mask="99.999.999/9999-99"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"Municipal Registration"}
+                          name="municipal_registration"
+                          maxL="20"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"State Registration"}
+                          name="state_registration"
+                          maxL="20"
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item md={6} xs={12}>
-                      <RegisterInputText label={"Gênero"} name="genre" />
+
+                    <Grid container spacing={3}>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"Site"}
+                          name="site"
+                          maxL="20"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"type"}
+                          name="type"
+                          maxL="20"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"Due date"}
+                          name="due_date"
+                          maxL="20"
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item md={6} xs={12}>
-                      <RegisterMaskedTextInput
-                        label={"RG"}
-                        name="rg"
-                        mask="99.999.999-9"
-                      />
+
+                    <Grid container spacing={3}>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"service_rate"}
+                          name="service_rate"
+                          maxL="20"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"login_wirecard"}
+                          name="login_wirecard"
+                          maxL="20"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"payment_slip"}
+                          name="payment_slip"
+                          maxL="20"
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item md={6} xs={12}>
-                      <RegisterMaskedTextInput
-                        label={"CPF"}
-                        name="cpf"
-                        mask="999.999.999-99"
-                      />
+
+                    <Grid container spacing={3}>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"payment_transfer"}
+                          name="payment_transfer"
+                          maxL="20"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"payment_card"}
+                          name="payment_card"
+                          maxL="20"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <RegisterInputText
+                          label={"clinic_type_id"}
+                          name="clinic_type_id"
+                          maxL="20"
+                        />
+                      </Grid>
                     </Grid>
-                    {/* <Grid item md={6} xs={12}>
-                      <RegisterInputText label={"Picture"} name="picture" />
-                    </Grid> */}
-                    <Grid item md={6} xs={12}>
-                      <RegisterInputText
-                        label={"Celular"}
-                        name="phone_mobile"
-                      />
-                    </Grid>
-                    <Grid item md={6} xs={12}>
-                      <RegisterInputText
-                        label={"Celular outro"}
-                        name="phone_other"
-                      />
+
+                    {/* <Grid item xs={12} md={2}></Grid> */}
+
+                    <Grid
+                      container
+                      // direction="row"
+                      justify="flex-end"
+                      spacing={4}
+                    >
+                      <Grid item xs={2}>
+                        <Box className="button-form">
+                          <Button
+                            id="driver-submit-button"
+                            variant="contained"
+                            className="save-button"
+                            color="primary"
+                            size="large"
+                            fullWidth
+                            disableElevation
+                            disabled={editClinicLoading}
+                            onClick={submitForm}
+                            // disabled={loading.driver}
+                            // startIcon={loading.driver ? <CircularProgress size={18} /> : <ConfirmIcon />}
+                            // startIcon={<ConfirmIcon />}
+                          >
+                            {editClinicLoading ? (
+                              <CircularProgress
+                                style={{
+                                  height: 14,
+                                  width: 14,
+                                  marginRight: 8,
+                                }}
+                                color={"#fff"}
+                              />
+                            ) : (
+                              <SaveIcon />
+                            )}
+                            Atualizar
+                          </Button>
+                        </Box>
+                      </Grid>
                     </Grid>
                   </Grid>
-
-                  <Box display="flex" justifyContent="flex-end" p={2}>
-                    <Button
-                      id="speeding-filter-period-save-button"
-                      className="report-save-button"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                      // disabled={loginCreateLoading}
-                      onClick={submitForm}
-                    >
-                      {editUserLoading ? (
-                        <CircularProgress
-                          style={{ height: 14, width: 14, marginRight: 8 }}
-                          color={"#fff"}
-                        />
-                      ) : (
-                        <SaveIcon />
-                      )}
-                      Atualizar
-                    </Button>
-                  </Box>
                 </Form>
               );
             }}
