@@ -106,7 +106,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
   // );
 
   useEffect(() => {
-    if (dentistasData.length > 0) {
+    if (dentistasData?.length > 0) {
       dentistasData.map(
         (item, index) => (
           (item.Text = item?.person?.name),
@@ -118,7 +118,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
       );
       setDentista(dentistasData);
     }
-    if (pacientesData.length > 0) {
+    if (pacientesData?.length > 0) {
       pacientesData.map((item, index) => (item.Text = item?.person?.name));
       setPaciente(pacientesData);
     }

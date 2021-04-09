@@ -20,18 +20,18 @@
 		.MuiTypography-root {
 			color: #fff;
 
-			font-size: 11px;
-			line-height: 29x;
+			font-size: 12px;
 			font-weight: normal;
 			text-decoration: none;
 		}
 
 		&.active {
 			.MuiTypography-root {
-				color: #fff;
+				color: rgb(0, 0, 0);
+				font-weight: bold;
 			}
 
-			background-color: #1d84b1;
+			background-color: #cccccc;
 			// #2e3192,#29abe2
 			// background: linear-gradient(45deg,#2e3192,transparent)
 		}

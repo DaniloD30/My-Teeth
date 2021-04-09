@@ -82,7 +82,7 @@ const Scheduler = (props) => {
   }, [dispatch, history]);
 
   useEffect(() => {
-    if (appointmentsData.length > 0) {
+    if (appointmentsData?.length > 0) {
       appointmentsData.map((item) => (
         item.DepartmentID = 1 ));
     }

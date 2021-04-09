@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -21,7 +22,7 @@ html,
 	padding: 0;
 	background: #f2f3f5;
 	font-size: 1em;
-	font-family: Trebuchet MS, sans-serif;
+	font-family: Roboto, sans-serif;
 	font-weight: normal;
 }
 
@@ -68,7 +69,7 @@ html,
   select,
   textarea,
   button {
-	font: 400 1rem 'Montserrat', sans-serif;
+	font: 400 1rem Roboto, sans-serif;
   }
   
   button {

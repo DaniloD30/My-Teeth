@@ -53,7 +53,7 @@ const PopUp = ({
   // console.log("props d -->", departmentData);
 
   useEffect(() => {
-    if (appointmentsType.length > 0) {
+    if (appointmentsType?.length > 0) {
       appointmentsType.map((item) => (item.Text = item?.description));
     }
   }, [appointmentsType]);

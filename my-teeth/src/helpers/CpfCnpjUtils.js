@@ -10,7 +10,7 @@ export const validateCNPJ = (cnpj) => {
 	if (cnpj === "" || cnpj === undefined) return false;
 	cnpj = cnpj.replace(/[^\d]+/g, "");
 
-	if (cnpj.length !== 14) return false;
+	if (cnpj?.length !== 14) return false;
 
 	if (
 		cnpj === "00000000000000" ||
@@ -60,7 +60,7 @@ export const validateCPF = (cpf) => {
 	cpf = cpf.replace(/[^\d]+/g, "");
 
 	if (
-		cpf.length !== 11 ||
+		cpf?.length !== 11 ||
 		cpf === "00000000000" ||
 		cpf === "11111111111" ||
 		cpf === "22222222222" ||

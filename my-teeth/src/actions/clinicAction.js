@@ -2,6 +2,7 @@ import Utils from "~/helpers/Utils";
 import {
   getClinic,
   deleteClinicService,
+  getClinicService,
   addClinicService,
   editClinicService,
 } from "~/services/clinicaService";
@@ -41,6 +42,28 @@ export const getAllCinics = (
       if (response) {
         dispatch({
           type: Constants.GET_ALL_CLINICS,
+          payload: response?.data,
+        });
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+    });
+};
+
+export const getClinicUser = (
+  token,
+  LOADING_IDENTIFICATOR = "",
+  fnCallback = () => {}
+) => (dispatch) => {
+  dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+
+  getClinicService(token, localStorage.getItem("clinic_id"))
+    .then((response) => {
+      if (response) {
+        dispatch({
+          type: Constants.GET_CLINIC,
           payload: response?.data,
         });
       }
@@ -97,6 +120,7 @@ export const deleteClinic = (
 
 const clinicAction = {
   getAllCinics,
+  getClinicUser,
   addClinic,
   editClinic,
   deleteClinic,

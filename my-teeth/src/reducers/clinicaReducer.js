@@ -2,6 +2,7 @@ import Constants from "~/helpers/enums/Constants";
 
 const INITIAL_STATE = {
   clinics: [],
+  clinicUser: []
 };
 
 export default function clinicaReducer(state = INITIAL_STATE, action) {
@@ -11,7 +12,11 @@ export default function clinicaReducer(state = INITIAL_STATE, action) {
         ...state,
         clinics: action?.payload.rows,
       };
-
+      case Constants.GET_CLINIC:
+        return {
+          ...state,
+          clinicUser: action?.payload.rows,
+        };
     default:
       return state;
   }

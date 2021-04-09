@@ -55,7 +55,7 @@ const ProfileForm = (props) => {
   const savePhoto = (d) => {
     const data = d.split(",")[1];
     var raw = window.atob(data);
-    var rawlenght = raw.length;
+    var rawlenght = raw?.length;
     var array = new Uint8Array(new ArrayBuffer(rawlenght));
     for (var i = 0; i < rawlenght; i++) {
       array[i] = raw.charCodeAt(i);

@@ -18,7 +18,7 @@ const INITIAL_STATE = {
     deleteProcedureLoading: false,
     addProcedureLoading: false,
     editProcedureLoading: false,
-
+    dataClinicLoading: false,
     editUserLoading: false,
     dataAppointmentsLoading: false,
     appointmentTypeLoading: false,

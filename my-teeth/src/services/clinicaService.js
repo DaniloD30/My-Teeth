@@ -18,6 +18,14 @@ export const getClinic = (token) => {
     });
 };
 
+export const getClinicService = (token, id) => {
+    return new Promise((resolve, reject) => {
+        http.get(`${CLINIC}/${id}`, {headers: {'x-access-token': token}})
+            .then(response => resolve(response))
+            .catch(error => reject(error));
+    });
+};
+
 export const deleteClinicService = (token, id) => {
     return new Promise((resolve, reject) => {
         http.delete(`${CLINIC}/${id}`, {headers: {'x-access-token': token}})
@@ -37,6 +45,7 @@ export const editClinicService = (data, token, id) => {
 const clinicaService = {
     addClinicService,
     getClinic,
+    getClinicService,
     deleteClinicService,
     editClinicService
 }

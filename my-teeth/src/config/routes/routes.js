@@ -22,7 +22,9 @@ import RegisterProcedure from "~/views/procedures/register/RegisterProcedure";
 import Dashboard from "~/assets/icons/dashboard.svg";
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import EventIcon from '@material-ui/icons/Event';
+import ApartmentIcon from '@material-ui/icons/Apartment';
 // import PersonAddIcon from "@material-ui/icons/PersonAdd";
 // import AccountBoxIcon from "@material-ui/icons/AccountBox";
 // import DescriptionIcon from "@material-ui/icons/Description";
@@ -32,6 +34,7 @@ import EventIcon from '@material-ui/icons/Event';
 import { subRoutesUsers } from "./subRoutes";
 import Profile from "~/views/profile/Profile";
 import NotFound from "../../views/notFound/NotFound";
+import MyClinic from "../../views/myClinic/MyClinic";
 export const routes = [
   {
     path: "/not-found",
@@ -62,7 +65,7 @@ export const routes = [
     exact: true,
     title: () => "Home",
     menu: () => "Home",
-    icon: Dashboard,
+    iconMaterial:<DashboardIcon fontSize="large" />,
     view: () => <Home />,
     onlyAuthorized: true,
     profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
@@ -79,6 +82,7 @@ export const routes = [
     profilesAuthorized: ["Administrador", "Dentista", "Atendente"],
     subRoutes: subRoutesUsers,
   },
+
   {
     path: "/register/clinicList",
     exact: true,
@@ -173,6 +177,18 @@ export const routes = [
     menu: () => "Agenda",
     iconMaterial: <EventIcon fontSize="large"/>,
     view: () => <Scheduler />,
+    onlyAuthorized: true,
+    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
+    showOnMenu: true,
+    // mainPage: true,
+  },
+  {
+    path: "/myClinic",
+    exact: true,
+    title: () => "Minha Clínica",
+    menu: () => "Minha Clínica",
+    iconMaterial: <ApartmentIcon fontSize="large"/>,
+    view: () => <MyClinic />,
     onlyAuthorized: true,
     profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
     showOnMenu: true,

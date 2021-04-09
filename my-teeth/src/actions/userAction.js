@@ -15,6 +15,7 @@ export const getDataProfile = (
           type: Constants.GET_DADOS_PROFILE,
           payload: response.data,
         });
+        localStorage.setItem("clinic_id", response?.data?.clinic_id);
       }
     })
     .catch((error) => {
