@@ -19,7 +19,7 @@ import RegisterProcedure from "~/views/procedures/register/RegisterProcedure";
 // import Resources from "~/views/resources/Resources";
 // import CloneProfile from "~/views/cloneProfile/CloneProfile";
 
-import Dashboard from "~/assets/icons/dashboard.svg";
+// import Dashboard from "~/assets/icons/dashboard.svg";
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -35,6 +35,8 @@ import { subRoutesUsers } from "./subRoutes";
 import Profile from "~/views/profile/Profile";
 import NotFound from "../../views/notFound/NotFound";
 import MyClinic from "../../views/myClinic/MyClinic";
+import RegisteredClinicType from "../../views/clinicType/finder/RegisteredClinicType";
+import RegisterClinicType from "../../views/clinicType/register/RegisterClinicType";
 export const routes = [
   {
     path: "/not-found",
@@ -117,6 +119,44 @@ export const routes = [
     // menu: () => "Usuários",
     // iconMaterial: <PersonAddIcon fontSize="large" />,
     view: () => <RegisterClinic />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/register/clinicListType",
+    exact: true,
+    title: () => "Tipo de Clínica",
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisteredClinicType />,
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Tipo de Clínica" }],
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // subMenu: true,
+    // subRoutes: subRoutesUsers,
+    // mainPage: false,
+  },
+  {
+    path: "/register/clinicTypeInsert",
+    exact: true,
+    title: () => "Tipo de Clínica",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Tipo de Clínica" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterClinicType />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/register/clinicTypeInsert/:Id",
+    exact: true,
+    title: () => "Tipo de Clínica",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Tipo de Clínica" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterClinicType />,
     onlyAuthorized: true,
     showOnMenu: false,
     // mainPage: false,

@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
 import app from "~/reducers/appReducer";
 import login from "~/reducers/loginReducer";
 import clinic from "~/reducers/clinicaReducer";
+import clinicType from "~/reducers/clinicTypeReducer";
 import user from "~/reducers/userReducer";
 import procedure from "~/reducers/procedureReducer";
 import appointment from "~/reducers/appointmentReducer";
@@ -14,6 +15,7 @@ export default combineReducers({
   app,
   login,
   clinic,
+  clinicType,
   user,
   appointment,
   appointmentType,

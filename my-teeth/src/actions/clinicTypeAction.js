@@ -1,14 +1,13 @@
 import Utils from "~/helpers/Utils";
 import {
-  getClinic,
-  deleteClinicService,
-  getClinicService,
-  addClinicService,
-  editClinicService,
-} from "~/services/clinicaService";
+  addClinicTypeService,
+  getClinicType,
+  deleteClinicTypeService,
+  editClinicTypeService,
+} from "~/services/clinicTypeService"; 
 import Constants from "~/helpers/enums/Constants";
 
-export const addClinic = (
+export const addClinicType = (
   params = "",
   token,
   LOADING_IDENTIFICATOR = "",
@@ -16,7 +15,7 @@ export const addClinic = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  addClinicService(params, token)
+  addClinicTypeService(params, token)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -30,18 +29,18 @@ export const addClinic = (
     });
 };
 
-export const getAllClinics = (
+export const getAllClinicsType = (
   token,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  getClinic(token)
+  getClinicType(token)
     .then((response) => {
       if (response) {
         dispatch({
-          type: Constants.GET_ALL_CLINICS,
+          type: Constants.GET_ALL_CLINICS_TYPES,
           payload: response?.data,
         });
       }
@@ -52,29 +51,7 @@ export const getAllClinics = (
     });
 };
 
-export const getClinicUser = (
-  token,
-  LOADING_IDENTIFICATOR = "",
-  fnCallback = () => {}
-) => (dispatch) => {
-  dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-
-  getClinicService(token, localStorage.getItem("clinic_id"))
-    .then((response) => {
-      if (response) {
-        dispatch({
-          type: Constants.GET_CLINIC,
-          payload: response?.data,
-        });
-      }
-    })
-    .catch(() => {})
-    .finally(() => {
-      dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
-    });
-};
-
-export const editClinic = (
+export const editClinicType = (
   data,
   token,
   id,
@@ -83,7 +60,7 @@ export const editClinic = (
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-  editClinicService(data, token, id)
+  editClinicTypeService(data, token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -97,14 +74,14 @@ export const editClinic = (
     });
 };
 
-export const deleteClinic = (
+export const deleteClinicType = (
   token,
   id,
   LOADING_IDENTIFICATOR = "",
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-  deleteClinicService(token, id)
+  deleteClinicTypeService(token, id)
     .then((response) => {
       if (response) {
         fnCallback();
@@ -118,11 +95,10 @@ export const deleteClinic = (
     });
 };
 
-const clinicAction = {
-  getAllClinics,
-  getClinicUser,
-  addClinic,
-  editClinic,
-  deleteClinic,
+const clinicTypeAction = {
+  getAllClinicsType,
+  addClinicType,
+  editClinicType,
+  deleteClinicType,
 };
-export default clinicAction;
+export default clinicTypeAction;

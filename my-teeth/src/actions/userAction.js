@@ -81,7 +81,37 @@ export const getAllDataProfile = (
         let atendente = [];
         let cliente = [];
         let dentista = [];
-        response?.data?.rows.map((item) => {
+        // response?.data?.rows.map((item) => {
+        //   if (item?.profile?.name === "Administrador") {
+        //     admnistrador.push(item);
+        //   }
+        //   if (item?.profile?.name === "Dentista") {
+        //     dentista.push(item);
+        //   }
+        //   if (item?.profile?.name === "Atendente") {
+        //     atendente.push(item);
+        //   }
+        //   if (item?.profile?.name === "Cliente") {
+        //     cliente.push(item);
+        //   }
+        // });
+        // for (const item of response?.data?.rows) {
+        //   console.log("item =>", item)
+        //   if (item?.profile?.name === "Administrador") {
+        //     admnistrador.push(item);
+        //   }
+        //   if (item?.profile?.name === "Dentista") {
+        //     dentista.push(item);
+        //   }
+        //   if (item?.profile?.name === "Atendente") {
+        //     atendente.push(item);
+        //   }
+        //   if (item?.profile?.name === "Cliente") {
+        //     cliente.push(item);
+        //   }
+        // }
+        response?.data?.rows.forEach((item) => {
+          // console.log("item =>", item)
           if (item?.profile?.name === "Administrador") {
             admnistrador.push(item);
           }

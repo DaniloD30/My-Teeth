@@ -64,7 +64,7 @@ const Menu = (props) => {
         break;
       default:
     }
-  });
+  }, [setProfile]);
 
   return (
     <ClickAwayListener

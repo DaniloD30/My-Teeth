@@ -9,11 +9,13 @@ const INITIAL_STATE = {
     getClinicsLoading: false,
     deleteClinicLoading: false,
     addClinicLoading: false,
+    addClinicTypeLoading: false,
+    editClinicTypeLoading: false,
     editClinicLoading: false,
-
+    getClinicsTypeLoading: false,
     dataUserLoading: false,
     dataAllUserLoading: false,
-
+    deleteClinicTypeLoading: false,
     getProceduresLoading: false,
     deleteProcedureLoading: false,
     addProcedureLoading: false,

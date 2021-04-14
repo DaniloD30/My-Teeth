@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 // import profileAction from "../../../actions/profileAction";
-import clinicAction from "~/actions/clinicAction";
+import clinicTypeAction from "~/actions/clinicTypeAction";
 import { isAuthenticated, getToken } from "~/services/auth";
 import Page from "~/components/common/page/Page";
 import Table from "~/components/common/table/Table";
@@ -19,26 +19,26 @@ import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
-const RegisteredClinic = (props) => {
+const RegisteredClinicType = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
-  const clinics = useSelector((state) => state.clinic?.clinics);
+  const clinics = useSelector((state) => state.clinicType?.clinicsType);
   const [IdrowDelete, setIdRowDelete] = React.useState();
   const [isDelete, setIsDelete] = React.useState(false);
   const [modal, setFlagModal] = React.useState(false);
 
-  const getClinicsLoading = useSelector(
-    (state) => state.app?.loading?.getClinicsLoading
+  const getClinicsTypeLoading = useSelector(
+    (state) => state.app?.loading?.getClinicsTypeLoading
   );
 
-  const deleteClinicLoading = useSelector(
-    (state) => state.app?.loading?.deleteClinicLoading
+  const deleteClinicTypeLoading = useSelector(
+    (state) => state.app?.loading?.deleteClinicTypeLoading
   );
 
   useEffect(() => {
     if (isDelete) {
       if (isAuthenticated()) {
-        dispatch(clinicAction.getAllClinics(getToken(), "getClinicsLoading"));
+        dispatch(clinicTypeAction.getAllClinicsType(getToken(), "getClinicsTypeLoading"));
       } else {
         Utils.showError("Não autenticado!");
         setTimeout(function () {
@@ -48,37 +48,33 @@ const RegisteredClinic = (props) => {
     }
     setIsDelete(false);
   }, [dispatch, isDelete, history]);
-
+  // "description": "Qualquer coisa",
+  //     "active": true,
   const SENT_COLUMNS = [
     {
-      name: "cnpj",
-      label: "CNPJ",
-      render: (cnpj) => <strong>{cnpj}</strong>,
+      name: "name",
+      label: "Nome",
+      render: (name) => <span>{name}</span>,
     },
     {
-      name: "company_name",
-      label: "Nome da Clínica",
-      render: (company) => <span>{company}</span>,
-    },
-    {
-      name: "site",
-      label: "Site da Clínica",
-      render: (site) => <span>{site}</span>,
-    },
+      name: "description",
+      label: "Descrição",
+      render: (description) => <strong>{description}</strong>,
+    }
   ];
 
   const openForm = () => {
-    history.push("/register/clinicInsert");
+    history.push("/register/clinicTypeInsert");
   };
 
   const handlePage = (event, value) => {
     // change page
-    // dispatch(profileAction.getProfiles("deleteClinicLoading", value));
+    // dispatch(profileAction.getProfiles("deleteClinicTypeLoading", value));
   };
 
   useEffect(() => {
     if (isAuthenticated()) {
-      dispatch(clinicAction.getAllClinics(getToken(), "getClinicsLoading"));
+      dispatch(clinicTypeAction.getAllClinicsType(getToken(), "getClinicsTypeLoading"));
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
@@ -90,7 +86,7 @@ const RegisteredClinic = (props) => {
   const edit = (id, row) => {
     history.push(
       {
-        pathname: `/register/clinicInsert/${id}`,
+        pathname: `/register/clinicTypeInsert/${id}`,
       },
       row
     );
@@ -104,10 +100,10 @@ const RegisteredClinic = (props) => {
   const confirmDeleteRow = () => {
     if (isAuthenticated()) {
       dispatch(
-        clinicAction.deleteClinic(
+        clinicTypeAction.deleteClinicType(
           getToken(),
           IdrowDelete,
-          "deleteClinicLoading",
+          "deleteClinicTypeLoading",
           (error) => {
             if (error) {
               Utils.showError(error);
@@ -116,7 +112,7 @@ const RegisteredClinic = (props) => {
 
             Utils.showToast({
               type: "success",
-              description: "Clínica deletada com sucesso",
+              description: "Tipo de Clínica deletada com sucesso",
             });
 
             setTimeout(function () {
@@ -168,17 +164,17 @@ const RegisteredClinic = (props) => {
                         src={AddIcon}
                         style={{ height: "auto", width: 20, padding: 3 }}
                       />
-                      Adicionar Clínica
+                      Adicionar Tipo de Clínica
                     </Button>
                   </Box>
                 </div>
-                {getClinicsLoading || deleteClinicLoading ? (
+                {getClinicsTypeLoading || deleteClinicTypeLoading ? (
                   <Box style={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>
                 ) : clinics?.length < 1 ? (
                   <Typography variant="h3" style={{ textAlign: "center" }}>
-                    Nenhuma clínica encontrado!
+                    Nenhum tipo de clínica encontrado!
                   </Typography>
                 ) : (
                   <Table
@@ -213,4 +209,4 @@ const RegisteredClinic = (props) => {
     </>
   );
 };
-export default withRouter(RegisteredClinic);
+export default withRouter(RegisteredClinicType);

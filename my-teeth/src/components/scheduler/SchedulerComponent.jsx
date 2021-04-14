@@ -111,7 +111,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
         (item, index) => (
           (item.Text = item?.person?.name),
           (item.Id = item?.id),
-          (item.GroupId = 1),
+          (item.GroupId = 1), // grupo de dentistas 
           (item.Color = "#bbdc00"), //Cada dentista tem que ter uma cor 
           (item.Designation = "Dentista")
         )
@@ -141,6 +141,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
   };
 
   const getConsultantImage = (value) => {
+    // Testar imagem do dentista 
     let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(value?.resourceData?.person?.picture)}`;
     return file;
   };
