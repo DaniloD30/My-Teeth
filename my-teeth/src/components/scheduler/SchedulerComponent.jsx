@@ -107,15 +107,25 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   useEffect(() => {
     if (dentistasData?.length > 0) {
-      dentistasData.map(
-        (item, index) => (
-          (item.Text = item?.person?.name),
-          (item.Id = item?.id),
-          (item.GroupId = 1), // grupo de dentistas 
-          (item.Color = "#bbdc00"), //Cada dentista tem que ter uma cor 
-          (item.Designation = "Dentista")
-        )
-      );
+      dentistasData.forEach((item) => {
+        if (item) {
+          item.Text = item?.person?.name;
+          item.Id = item?.id;
+          item.GroupId = 1; // grupo de dentistas
+          item.Color = "#bbdc00"; //Cada dentista tem que ter uma cor
+          item.Designation = "Dentista"; // necessario isso para o scheduler
+        }
+      });
+      // dentistasData.map((item, index) => {
+      //   if (item) {
+      //     item.Text = item?.person?.name;
+      //     item.Id = item?.id;
+      //     item.GroupId = 1; // grupo de dentistas
+      //     item.Color = "#bbdc00"; //Cada dentista tem que ter uma cor
+      //     item.Designation = "Dentista";
+      //   }
+
+      // });
       setDentista(dentistasData);
     }
     if (pacientesData?.length > 0) {
@@ -141,8 +151,10 @@ const SchedulerComponent = ({ dataAppointment }) => {
   };
 
   const getConsultantImage = (value) => {
-    // Testar imagem do dentista 
-    let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(value?.resourceData?.person?.picture)}`;
+    // Testar imagem do dentista
+    let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(
+      value?.resourceData?.person?.picture
+    )}`;
     return file;
   };
 
@@ -375,8 +387,8 @@ const SchedulerComponent = ({ dataAppointment }) => {
   //Field funciona como o mapeamento
 
   const openModal = (e) => {
-    if(e?.event?.note){
-      setFlagEdit(true)
+    if (e?.event?.note) {
+      setFlagEdit(true);
     }
     setArgs(e);
     setFlag(true);
@@ -384,7 +396,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   const closeModal = () => {
     setFlag(false);
-    setFlagEdit(false)
+    setFlagEdit(false);
   };
 
   // const testE = (e) => {
