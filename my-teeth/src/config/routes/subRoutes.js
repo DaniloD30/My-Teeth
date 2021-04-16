@@ -12,4 +12,8 @@ export const subRoutesUsers = [
     label: "Tipo de Clínica",
     path: "/register/clinicListType",
   },
+  {
+    label: "Tipo de Consulta",
+    path: "/register/appointmentsTypeList"
+  }
 ];

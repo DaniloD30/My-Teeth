@@ -37,6 +37,8 @@ import NotFound from "../../views/notFound/NotFound";
 import MyClinic from "../../views/myClinic/MyClinic";
 import RegisteredClinicType from "../../views/clinicType/finder/RegisteredClinicType";
 import RegisterClinicType from "../../views/clinicType/register/RegisterClinicType";
+import RegisteredAppointmentType from "../../views/appointmentsType/finder/RegisteredAppointmentType";
+import RegisterAppointmentType from "../../views/appointmentsType/register/RegisterAppointmentType";
 export const routes = [
   {
     path: "/not-found",
@@ -157,6 +159,44 @@ export const routes = [
     // menu: () => "Usuários",
     // iconMaterial: <PersonAddIcon fontSize="large" />,
     view: () => <RegisterClinicType />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/register/appointmentsTypeList",
+    exact: true,
+    title: () => "Tipos de Consulta",
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisteredAppointmentType />,
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Tipo de Consulta" }],
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // subMenu: true,
+    // subRoutes: subRoutesUsers,
+    // mainPage: false,
+  },
+  {
+    path: "/register/appointmentsTypeInsert",
+    exact: true,
+    title: () => "Tipo de Clínica",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Tipo de Consulta" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterAppointmentType />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/register/appointmentsTypeInsert/:Id",
+    exact: true,
+    title: () => "Tipo de Clínica",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Tipo de Consulta" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterAppointmentType />,
     onlyAuthorized: true,
     showOnMenu: false,
     // mainPage: false,

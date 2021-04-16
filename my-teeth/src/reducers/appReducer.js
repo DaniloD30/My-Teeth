@@ -22,8 +22,11 @@ const INITIAL_STATE = {
     editProcedureLoading: false,
     dataClinicLoading: false,
     editUserLoading: false,
+    deleteAppointmentTypeLoading: false,
     dataAppointmentsLoading: false,
     appointmentTypeLoading: false,
+    editAppointmentTypeLoading: false,
+    addAppointmentTypeLoading: false,
     addAppointmentLoading: false,
     editAppointmentLoading: false,
     DeleteAppointmentLoading: false
