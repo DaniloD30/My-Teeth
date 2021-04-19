@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 // import profileAction from "../../../actions/profileAction";
-import procedureAction from "~/actions/procedureAction";
+import userAction from "~/actions/userAction";
 import { isAuthenticated, getToken } from "~/services/auth";
 import Page from "~/components/common/page/Page";
 import Table from "~/components/common/table/Table";
@@ -19,35 +19,35 @@ import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
-const RegisteredProcedure = (props) => {
+const RegisteredPacients = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
-  const procedures = useSelector((state) => state.procedure?.procedures);
+  const pacient = useSelector((state) => state.user?.cliente);
   const [IdrowDelete, setIdRowDelete] = React.useState();
   const [isDelete, setIsDelete] = React.useState(false);
   const [modal, setFlagModal] = React.useState(false);
+  const [data, setData] = React.useState();
 
-  const getProceduresLoading = useSelector(
-    (state) => state.app?.loading?.getProceduresLoading
+  const dataAllUserLoading = useSelector(
+    (state) => state.app?.loading?.dataAllUserLoading
   );
 
-  const deleteProcedureLoading = useSelector(
-    (state) => state.app?.loading?.deleteProcedureLoading
+  const deleteAppointmentTypeLoading = useSelector(
+    (state) => state.app?.loading?.deleteAppointmentTypeLoading
   );
 
   useEffect(() => {
     if (isDelete) {
       if (isAuthenticated()) {
         dispatch(
-          procedureAction.getAllProcedures(
+          userAction.getAllDataProfile(
             getToken(),
-            "getProceduresLoading",
+            "dataAllUserLoading",
             (error) => {
               if (error) {
                 Utils.showError(error);
                 return;
               }
-
             }
           )
         );
@@ -61,40 +61,46 @@ const RegisteredProcedure = (props) => {
     setIsDelete(false);
   }, [dispatch, isDelete, history]);
 
-  // "id": 1,
-  // "description": "Limpeza",
-  // "value": "50",
   const SENT_COLUMNS = [
     {
-      name: "id",
-      label: "ID",
-      render: (id) => <strong>{id}</strong>,
+      name: "name",
+      label: "Nome",
+      render: (name) => <strong>{name}</strong>,
     },
     {
-      name: "description",
-      label: "Descrição",
-      render: (description) => <span>{description}</span>,
+      name: "cpf",
+      label: "Cpf",
+      render: (cpf) => <span>{cpf}</span>,
     },
     {
-      name: "value",
-      label: "Valor",
-      render: (value) => <span>{value}</span>,
+      name: "phone_mobile",
+      label: "Celular",
+      render: (phone_mobile) => <span>{phone_mobile}</span>,
     },
   ];
 
   const openForm = () => {
-    history.push("/register/procedureInsert");
+    history.push("/register/appointmentsTypeInsert");
   };
 
   const handlePage = (event, value) => {
     // change page
-    // dispatch(profileAction.getProfiles("deleteProcedureLoading", value));
+    // dispatch(profileAction.getProfiles("deleteClinicLoading", value));
   };
 
   useEffect(() => {
     if (isAuthenticated()) {
       dispatch(
-        procedureAction.getAllProcedures(getToken(), "getProceduresLoading")
+        userAction.getAllDataProfile(
+          getToken(),
+          "dataAllUserLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+          }
+        )
       );
     } else {
       Utils.showError("Não autenticado!");
@@ -104,10 +110,21 @@ const RegisteredProcedure = (props) => {
     }
   }, [dispatch, history]);
 
+  useEffect(() => {
+    if (pacient) {
+      let arrayPerson = [];
+      pacient.forEach((item) => {
+        arrayPerson.push(item?.person);
+      });
+
+      setData(arrayPerson);
+    }
+  }, [pacient]);
+
   const edit = (id, row) => {
     history.push(
       {
-        pathname: `/register/procedureInsert/${id}`,
+        pathname: `/register/appointmentsTypeInsert/${id}`,
       },
       row
     );
@@ -118,32 +135,33 @@ const RegisteredProcedure = (props) => {
     setFlagModal(true);
   };
 
+  const handleDetail = (row) => {
+    // setIdRowDelete(row?.id);
+    // setFlagModal(true);
+  };
   const confirmDeleteRow = () => {
     if (isAuthenticated()) {
-      dispatch(
-        procedureAction.deleteProcedure(
-          getToken(),
-          IdrowDelete,
-          "deleteProcedureLoading",
-          (error) => {
-            if (error) {
-              Utils.showError(error);
-              return;
-            }
-
-            Utils.showToast({
-              type: "success",
-              description: "Procedimento deletado com sucesso",
-            });
-
-            setTimeout(function () {
-              setIsDelete(true);
-            }, 3000);
-
-            // props.comeback();
-          }
-        )
-      );
+      // dispatch(
+      //   appointmentTypeAction.deleteAppointmentType(
+      //     getToken(),
+      //     IdrowDelete,
+      //     "deleteAppointmentTypeLoading",
+      //     (error) => {
+      //       if (error) {
+      //         Utils.showError(error);
+      //         return;
+      //       }
+      //       Utils.showToast({
+      //         type: "success",
+      //         description: "Tipo de consulta deletada com sucesso",
+      //       });
+      //       setTimeout(function () {
+      //         setIsDelete(true);
+      //       }, 3000);
+      //       // props.comeback();
+      //     }
+      //   )
+      // );
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
@@ -185,26 +203,28 @@ const RegisteredProcedure = (props) => {
                         src={AddIcon}
                         style={{ height: "auto", width: 20, padding: 3 }}
                       />
-                      Adicionar Procedimento
+                      Adicionar Paciente
                     </Button>
                   </Box>
                 </div>
-                {getProceduresLoading || deleteProcedureLoading ? (
+                {dataAllUserLoading || deleteAppointmentTypeLoading ? (
                   <Box style={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>
-                ) : procedures?.length < 1 ? (
+                ) : pacient?.length < 1 ? (
                   <Typography variant="h3" style={{ textAlign: "center" }}>
-                    Nenhum procedimento encontrado!
+                    Nenhum paciente encontrado!
                   </Typography>
                 ) : (
                   <Table
                     columns={SENT_COLUMNS}
-                    dataSource={procedures}
+                    dataSource={data}
                     edit={edit}
                     del={handleDelete}
-                    excluir={true}
-                    editar={true}
+                    handleD={handleDetail}
+                    detail={true}
+                    excluir={false}
+                    editar={false}
                   />
                 )}
                 <Box
@@ -232,4 +252,4 @@ const RegisteredProcedure = (props) => {
     </>
   );
 };
-export default withRouter(RegisteredProcedure);
+export default withRouter(RegisteredPacients);

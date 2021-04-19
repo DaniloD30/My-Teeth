@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import { ReactComponent as EditIcon } from "~/assets/icons/edit.svg";
 import { ReactComponent as DeleteIcon } from "~/assets/icons/delete.svg";
 import Search from "~/components/common/search/Search";
+import SearchIcon from "@material-ui/icons/Search";
 import MenuRange from "~/components/common/menuRange/MenuRange";
 
 import Utils from "~/helpers/Utils";
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Table = (props) => {
-  const { dataSource } = props;
+  const { dataSource, detail, excluir, editar } = props;
   const styleProps = { background: props.backgroundChanged };
   const classes = useStyles(styleProps);
   const [selectedRow, setSelectedRow] = React.useState("");
@@ -163,36 +164,59 @@ const Table = (props) => {
 
                   <StyledTableCell align="center">
                     <span>
-                      <span
-                        style={{
-                          color: "#6EC8AF",
-                          marginRight: 10,
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          props.edit(iRow, row);
-                        }}
-                      >
-                        <EditIcon />
-                        Editar
-                      </span>
-                      <span
-                        style={{
-                          borderLeft: "1px solid #AFC3D2",
-                          paddingLeft: 10,
-                          color: "#AFC3D2",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          props.del(row);
-                          //   props.delete(row);
-                        }}
-                      >
-                        <DeleteIcon
-                          style={{ height: 14, width: "auto", fill: "red" }}
-                        />
-                        Excluir
-                      </span>
+                      {editar && (
+                        <span
+                          style={{
+                            color: "#6EC8AF",
+                            marginRight: 10,
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            props.edit(iRow, row);
+                          }}
+                        >
+                          <EditIcon />
+                          Editar
+                        </span>
+                      )}
+
+                      {excluir && (
+                        <span
+                          style={{
+                            borderLeft: "1px solid #AFC3D2",
+                            paddingLeft: 10,
+                            color: "#AFC3D2",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            props.del(row);
+                            //   props.delete(row);
+                          }}
+                        >
+                          <DeleteIcon
+                            style={{ height: 14, width: "auto", fill: "red" }}
+                          />
+                          Excluir
+                        </span>
+                      )}
+
+                      {detail && (
+                        <span
+                          style={{
+                            borderLeft: "1px solid #AFC3D2",
+                            paddingLeft: 10,
+                            color: "#AFC3D2",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            props.handleD(row);
+                            //   props.delete(row);
+                          }}
+                        >
+                          <SearchIcon />
+                          Detalhar
+                        </span>
+                      )}
                     </span>
                   </StyledTableCell>
                 </TableRow>

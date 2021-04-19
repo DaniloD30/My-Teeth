@@ -182,6 +182,8 @@ const RegisteredClinicType = (props) => {
                     dataSource={clinics}
                     edit={edit}
                     del={handleDelete}
+                    excluir={true}
+                    editar={true}
                   />
                 )}
                 <Box

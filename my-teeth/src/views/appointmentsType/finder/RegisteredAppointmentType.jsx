@@ -182,6 +182,8 @@ const RegisteredAppointmentType = (props) => {
                     dataSource={appointmentsType}
                     edit={edit}
                     del={handleDelete}
+                    excluir={true}
+                    editar={true}
                   />
                 )}
                 <Box

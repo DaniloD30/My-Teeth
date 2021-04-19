@@ -87,7 +87,7 @@ const Menu = (props) => {
               // ROUTE PERMISSION
               // route.permission === 1 && profile 1 ?
 
-              route.profilesAuthorized.includes(profile) ? (
+              route?.profilesAuthorized?.includes(profile) ? (
                 <ListItem
                   id={route.menu()}
                   key={index}
@@ -106,7 +106,7 @@ const Menu = (props) => {
                     {route.icon ? (
                       <img
                         src={route.icon}
-                        style={{ height: "auto", width: 20 }}
+                        style={{ height: "auto", width: 30 }}
                         alt={route.menu()}
                       />
                     ) : (

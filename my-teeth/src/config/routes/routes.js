@@ -19,7 +19,7 @@ import RegisterProcedure from "~/views/procedures/register/RegisterProcedure";
 // import Resources from "~/views/resources/Resources";
 // import CloneProfile from "~/views/cloneProfile/CloneProfile";
 
-// import Dashboard from "~/assets/icons/dashboard.svg";
+import Patient from "~/assets/icons/patient.svg";
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -39,6 +39,7 @@ import RegisteredClinicType from "../../views/clinicType/finder/RegisteredClinic
 import RegisterClinicType from "../../views/clinicType/register/RegisterClinicType";
 import RegisteredAppointmentType from "../../views/appointmentsType/finder/RegisteredAppointmentType";
 import RegisterAppointmentType from "../../views/appointmentsType/register/RegisterAppointmentType";
+import RegisteredPacients from "../../views/pacients/finder/RegisteredPacients";
 export const routes = [
   {
     path: "/not-found",
@@ -199,6 +200,21 @@ export const routes = [
     view: () => <RegisterAppointmentType />,
     onlyAuthorized: true,
     showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/pacients/pacientsList",
+    exact: true,
+    title: () => "Pacientes",
+    menu: () => "Pacientes",
+    icon: Patient,
+    view: () => <RegisteredPacients />,
+    breadcrumbs: [{ label: "Pacientes" }, { label: "Lista de Pacientes" }],
+    onlyAuthorized: true,
+    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
+    showOnMenu: true,
+    // subMenu: true,
+    // subRoutes: subRoutesUsers,
     // mainPage: false,
   },
   {
