@@ -55,11 +55,11 @@ const AuthenticatedLayout = (props) => {
   const autheticatedTheme = createMuiTheme({
     palette: {
       primary: {
-        main: "#90caf9",
+        main: "#29ABE2",
         contrastText: "#fff",
       },
       secondary: {
-        main: "#90caf9",
+        main: "#29ABE2",
         contrastText: "#fff",
       },
     },

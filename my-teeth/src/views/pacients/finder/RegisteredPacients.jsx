@@ -136,9 +136,14 @@ const RegisteredPacients = (props) => {
   };
 
   const handleDetail = (row) => {
-    // setIdRowDelete(row?.id);
-    // setFlagModal(true);
+    history.push(
+      {
+        pathname: `/pacients/details`,
+      },
+      row
+    );
   };
+  
   const confirmDeleteRow = () => {
     if (isAuthenticated()) {
       // dispatch(

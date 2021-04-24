@@ -40,6 +40,7 @@ import RegisterClinicType from "../../views/clinicType/register/RegisterClinicTy
 import RegisteredAppointmentType from "../../views/appointmentsType/finder/RegisteredAppointmentType";
 import RegisterAppointmentType from "../../views/appointmentsType/register/RegisterAppointmentType";
 import RegisteredPacients from "../../views/pacients/finder/RegisteredPacients";
+import RegisteredDetails from "../../views/pacients/details/RegisteredDetails";
 export const routes = [
   {
     path: "/not-found",
@@ -215,6 +216,18 @@ export const routes = [
     showOnMenu: true,
     // subMenu: true,
     // subRoutes: subRoutesUsers,
+    // mainPage: false,
+  },
+  {
+    path: "/pacients/details",
+    exact: true,
+    title: () => "Detalhes",
+    breadcrumbs: [{ label: "Pacientes" }, { label: "Detalhes" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisteredDetails />,
+    onlyAuthorized: true,
+    showOnMenu: false,
     // mainPage: false,
   },
   {
