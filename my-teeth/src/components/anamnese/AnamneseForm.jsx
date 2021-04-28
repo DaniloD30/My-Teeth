@@ -41,7 +41,7 @@ const AnamneseForm = (props) => {
       valueLabel: ["teste", "teste2"],
     },
   ];
-
+  // PARA O OUTRO, TEREI QUE PASSAR UMA PROP TBM, Ex: OtherDor
   return (
     <>
       <Box>

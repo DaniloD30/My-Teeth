@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
+import { withRouter } from "react-router";
 import AnamneseForm from "../../../../components/anamnese/AnamneseForm";
 
-const Anamnese = (props) => {
+const About = (props) => {
   useEffect(() => {}, []);
 
   return (
@@ -10,4 +11,4 @@ const Anamnese = (props) => {
     </>
   );
 };
-export default Anamnese;
+export default About;

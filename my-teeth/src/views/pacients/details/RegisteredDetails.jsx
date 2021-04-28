@@ -5,15 +5,19 @@ import Page from "~/components/common/page/Page";
 import ExitToAppTwoToneIcon from "@material-ui/icons/ExitToAppTwoTone";
 import Anamnese from "./anamnese/Anamnese";
 import TabsCommon from "../../../components/common/tabs/TabsCommon";
+import AboutCard from "../../../components/about/AboutCard";
+import { useHistory } from "react-router-dom";
 
 const RegisteredDetails = (props) => {
   useEffect(() => {}, []);
+  let history = useHistory();
+  const { location } = history;
 
   const comeBack = () => {
     props.history.push("/pacients/pacientsList");
   };
 
-  const arrayTab = ["Anamnese", "Tratamentos", "Consultas"];
+  const arrayTab = ["Sobre", "Anamnese", "Tratamentos", "Consultas"];
 
   const arrayComponents = (key) => {
     // if (key === 0) {
@@ -21,11 +25,13 @@ const RegisteredDetails = (props) => {
     // }
     switch (key) {
       case 0:
-        return <Anamnese />;
+        return <AboutCard statePacient={location?.state}/>;
       case 1:
-        return "Tratamentos";
+        return <Anamnese />;
       case 2:
-        return "Consultas";
+        return "Tratamentos ou Procedimentos (Ja existe a table Procedimentos)";
+      case 3:
+        return "Consultas (Consultas agendadas)";
       default:
         break;
     }

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paperSearch: {
     marginBottom: 10,
-    height: 42,
+    // height: 42,
     display: "flex",
     justifyContent: "space-between",
     padding: 5,

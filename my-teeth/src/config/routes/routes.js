@@ -221,7 +221,7 @@ export const routes = [
   {
     path: "/pacients/details",
     exact: true,
-    title: () => "Detalhes",
+    title: () => "Detalhes do paciente",
     breadcrumbs: [{ label: "Pacientes" }, { label: "Detalhes" }],
     // menu: () => "Usuários",
     // iconMaterial: <PersonAddIcon fontSize="large" />,
