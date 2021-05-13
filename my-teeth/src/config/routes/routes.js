@@ -25,6 +25,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EventIcon from '@material-ui/icons/Event';
 import ApartmentIcon from '@material-ui/icons/Apartment';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 // import PersonAddIcon from "@material-ui/icons/PersonAdd";
 // import AccountBoxIcon from "@material-ui/icons/AccountBox";
 // import DescriptionIcon from "@material-ui/icons/Description";
@@ -40,6 +41,7 @@ import RegisterClinicType from "../../views/clinicType/register/RegisterClinicTy
 import RegisteredAppointmentType from "../../views/appointmentsType/finder/RegisteredAppointmentType";
 import RegisterAppointmentType from "../../views/appointmentsType/register/RegisterAppointmentType";
 import RegisteredPacients from "../../views/pacients/finder/RegisteredPacients";
+import RegisteredConsults from "../../views/myConsults/finder/RegisteredConsults";
 import RegisteredDetails from "../../views/pacients/details/RegisteredDetails";
 export const routes = [
   {
@@ -302,6 +304,21 @@ export const routes = [
     profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
     showOnMenu: true,
     // mainPage: true,
+  },
+  {
+    path: "/consults",
+    exact: true,
+    title: () => "Consultas",
+    menu: () => "Consultas",
+    iconMaterial: <AssignmentIcon fontSize="large" />,
+    view: () => <RegisteredConsults />,
+    breadcrumbs: [{ label: "Consultas" }],
+    onlyAuthorized: true,
+    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
+    showOnMenu: true,
+    // subMenu: true,
+    // subRoutes: subRoutesUsers,
+    // mainPage: false,
   },
 ];
 
