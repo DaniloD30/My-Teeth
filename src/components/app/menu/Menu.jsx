@@ -83,11 +83,12 @@ const Menu = (props) => {
         <List>
           {routes
             .filter((r) => r.showOnMenu)
-            .map((route, index) =>
-              // ROUTE PERMISSION
-              // route.permission === 1 && profile 1 ?
+            .map(
+              (route, index) => (
+                // ROUTE PERMISSION
+                // route.permission === 1 && profile 1 ?
 
-              route?.profilesAuthorized?.includes(profile) ? (
+                // route?.profilesAuthorized?.includes(profile) ? (
                 <ListItem
                   id={route.menu()}
                   key={index}
@@ -117,7 +118,8 @@ const Menu = (props) => {
                   </ListItemIcon>
                   <ListItemText primary={route.menu()} />
                 </ListItem>
-              ) : null
+              )
+              // ) : null
             )}
         </List>
       </div>

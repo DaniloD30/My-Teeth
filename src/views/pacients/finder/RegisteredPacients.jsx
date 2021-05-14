@@ -194,22 +194,22 @@ const RegisteredPacients = (props) => {
               <Grid item xs={12}>
                 <div style={{ marginBottom: "40px", display: "flex" }}>
                   <Box>
-                    <Button
+                    {/* <Button
                       id="add-button-driver"
                       className="report-save-button"
                       variant="contained"
                       color="primary"
                       disableElevation
                       onClick={openForm}
-                    >
+                    > */}
                       {/* <AddIcon /> */}
-                      <img
+                      {/* <img
                         alt="addIcon"
                         src={AddIcon}
                         style={{ height: "auto", width: 20, padding: 3 }}
                       />
                       Adicionar Paciente
-                    </Button>
+                    </Button> */}
                   </Box>
                 </div>
                 {dataAllUserLoading || deleteAppointmentTypeLoading ? (
