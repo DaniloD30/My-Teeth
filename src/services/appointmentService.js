@@ -20,6 +20,28 @@ export const getAppointment = (token) => {
   });
 };
 
+export const getAppointmentTypeByIdDentist = (token, idDentist) => {
+  return new Promise((resolve, reject) => {
+    http
+      .get(`${APPOINTMENT}?userdentist_id=${idDentist}`, {
+        headers: { "x-access-token": token },
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+
+export const getAppointmentTypeByIdPacient = (token, idPacient) => {
+  return new Promise((resolve, reject) => {
+    http
+      .get(`${APPOINTMENT}?userpatient_id=${idPacient}`, {
+        headers: { "x-access-token": token },
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+
 export const deleteAppointmentService = (token, id) => {
   return new Promise((resolve, reject) => {
     http
@@ -43,6 +65,8 @@ export const editAppointmentService = (data, token, id) => {
 const appointmentService = {
   addAppointmentService,
   getAppointment,
+  getAppointmentTypeByIdDentist,
+  getAppointmentTypeByIdPacient,
   deleteAppointmentService,
   editAppointmentService,
 };

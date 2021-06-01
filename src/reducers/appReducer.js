@@ -27,6 +27,8 @@ const INITIAL_STATE = {
     appointmentTypeLoading: false,
     editAppointmentTypeLoading: false,
     addAppointmentTypeLoading: false,
+    getAllAppointmentsDentists: false,
+    getAppointmentPacientLoading: false,
     addAppointmentLoading: false,
     editAppointmentLoading: false,
     DeleteAppointmentLoading: false

@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withRouter } from "react-router";
 import { Container, Button } from "@material-ui/core";
 import Page from "~/components/common/page/Page";
 import ExitToAppTwoToneIcon from "@material-ui/icons/ExitToAppTwoTone";
 import Anamnese from "./anamnese/Anamnese";
+import ScheduledAppointments from "./scheduledAppointments/ScheduledAppointments";
 import TabsCommon from "../../../components/common/tabs/TabsCommon";
 import AboutCard from "../../../components/about/AboutCard";
 import { useHistory } from "react-router-dom";
 
 const RegisteredDetails = (props) => {
-  useEffect(() => {}, []);
   let history = useHistory();
   const { location } = history;
+
+ 
 
   const comeBack = () => {
     props.history.push("/pacients/pacientsList");
@@ -25,13 +27,13 @@ const RegisteredDetails = (props) => {
     // }
     switch (key) {
       case 0:
-        return <AboutCard statePacient={location?.state}/>;
+        return <AboutCard statePacient={location?.state} />;
       case 1:
         return <Anamnese />;
       case 2:
         return "Tratamentos ou Procedimentos (Ja existe a table Procedimentos)";
       case 3:
-        return "Consultas (Consultas agendadas)";
+        return <ScheduledAppointments statePacient={location?.state}/>;
       default:
         break;
     }
