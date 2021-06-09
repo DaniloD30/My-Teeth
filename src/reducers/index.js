@@ -10,6 +10,7 @@ import user from "~/reducers/userReducer";
 import procedure from "~/reducers/procedureReducer";
 import appointment from "~/reducers/appointmentReducer";
 import appointmentType from "~/reducers/appointmentTypeReducer";
+import appointmentStatus from "~/reducers/appointmentStatusReducer";
 
 export default combineReducers({
   app,
@@ -19,5 +20,6 @@ export default combineReducers({
   user,
   appointment,
   appointmentType,
-  procedure
-}); 
+  appointmentStatus,
+  procedure,
+});

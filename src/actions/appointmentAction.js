@@ -32,10 +32,25 @@ export const getAllAppointments =
   (token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
   (dispatch) => {
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-
+    // necessario passar o ID da clinic aqui. Cada clinica responsavel apenas pelo dados
+    // da sua clinica.
     getAppointment(token)
       .then((response) => {
         if (response) {
+          response.data.rows.forEach((item) => {
+            let d = new Date(item?.StartTime);
+            let e = new Date(item?.EndTime);
+            let horaStart =
+              d.getHours() < 10 ? `${d.getHours()}0` : d.getHours();
+            let minStart =
+              d.getMinutes() < 10 ? `${d.getMinutes()}0` : d.getMinutes();
+            let horaEnd = e.getHours() < 10 ? `${e.getHours()}0` : e.getHours();
+            let minEnd =
+              e.getMinutes() < 10 ? `${e.getMinutes()}0` : e.getMinutes();
+
+            item.date = `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
+          });
+
           dispatch({
             type: Constants.GET_ALL_APPOINTMENTS,
             payload: response.data,
@@ -60,6 +75,7 @@ export const getAllAppointmentsDentists =
         if (response) {
           response.data.rows.forEach((item) => {
             let data = new Date(item?.StartTime);
+            // item.pacient = item
             item.day = `${data?.getDate()}/${
               data?.getMonth() + 1
             }/${data?.getFullYear()}`;

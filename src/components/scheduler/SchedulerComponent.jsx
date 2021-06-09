@@ -28,7 +28,7 @@ import { enableRipple } from "@syncfusion/ej2-base";
 import { useSelector } from "react-redux";
 // import { Box, TextField } from "@material-ui/core";
 import PopUp from "./PopUp";
-import { Avatar } from "@material-ui/core";
+import { Avatar, Typography } from "@material-ui/core";
 import Utils from "~/helpers/Utils";
 // import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
 // import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
@@ -101,6 +101,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   const dentistasData = useSelector((state) => state.user?.dentista);
   const pacientesData = useSelector((state) => state.user?.cliente);
+
   // const appointmentsData = useSelector(
   //   (state) => state.appointment?.appointments
   // );
@@ -113,6 +114,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
           item.Id = item?.id;
           item.GroupId = 1; // grupo de dentistas
           item.Color = "#bbdc00"; //Cada dentista tem que ter uma cor
+          // pode vim DO BACKEND ( MELHOR )
           item.Designation = "Dentista"; // necessario isso para o scheduler
         }
       });
@@ -278,114 +280,6 @@ const SchedulerComponent = ({ dataAppointment }) => {
     // }
   };
 
-  // const editorTemplate = (props) => {
-  //   return props !== undefined ? (
-  //     <table
-  //       className="custom-event-editor"
-  //       style={{ width: "100%", cellpadding: "5" }}
-  //     >
-  //       <tbody>
-  //         <tr>
-  //           <td className="e-textlabel">Summary</td>
-  //           <td style={{ colspan: "4" }}>
-  //             <input
-  //               id="Summary"
-  //               className="e-field e-input"
-  //               type="text"
-  //               name="Subject"
-  //               style={{ width: "100%" }}
-  //             />
-  //           </td>
-  //         </tr>
-  //         <tr>
-  //           <td className="e-textlabel">Status</td>
-  //           <td style={{ colspan: "4" }}>
-  //             <DropDownListComponent
-  //               id="EventType"
-  //               placeholder="Choose status"
-  //               data-name="EventType"
-  //               className="e-field"
-  //               style={{ width: "100%" }}
-  //               dataSource={["New", "Requested", "Confirmed"]}
-  //             ></DropDownListComponent>
-  //           </td>
-  //         </tr>
-  //         <tr>
-  //           <td className="e-textlabel">From</td>
-  //           <td style={{ colspan: "4" }}>
-  //             <DateTimePickerComponent
-  //               id="StartTime"
-  //               format="dd/MM/yy hh:mm a"
-  //               data-name="StartTime"
-  //               value={new Date(props.startTime || props.StartTime)}
-  //               className="e-field"
-  //             ></DateTimePickerComponent>
-  //           </td>
-  //         </tr>
-  //         <tr>
-  //           <td className="e-textlabel">To</td>
-  //           <td style={{ colspan: "4" }}>
-  //             <DateTimePickerComponent
-  //               id="EndTime"
-  //               format="dd/MM/yy hh:mm a"
-  //               data-name="EndTime"
-  //               value={new Date(props.endTime || props.EndTime)}
-  //               className="e-field"
-  //             ></DateTimePickerComponent>
-  //           </td>
-  //         </tr>
-  //         <tr>
-  //           <td className="e-textlabel">Reason</td>
-  //           <td style={{ colspan: "4" }}>
-  //             <textarea
-  //               id="Description"
-  //               className="e-field e-input"
-  //               name="Description"
-  //               rows={3}
-  //               cols={50}
-  //               style={{
-  //                 width: "100%",
-  //                 height: "60px !important",
-  //                 resize: "vertical",
-  //               }}
-  //             ></textarea>
-  //           </td>
-  //         </tr>
-  //         <tr>
-  //           <td className="e-textlabel">dentista</td>
-  //           <td style={{ colspan: "4" }}>
-  //             <DropDownListComponent
-  //               id="userdentist_id"
-  //               placeholder="Choose status"
-  //               data-name="userdentist_id"
-  //               className="e-field"
-  //               style={{ width: "100%" }}
-  //               dataSource={dentistas.map((item) => item?.Text)}
-  //             ></DropDownListComponent>
-  //           </td>
-  //         </tr>
-  //         <tr>
-  //           <td className="e-textlabel">departamento</td>
-  //           <td style={{ colspan: "4" }}>
-  //             <DropDownListComponent
-  //               id="DepartmentID"
-  //               placeholder="Choose status"
-  //               data-name="DepartmentID"
-  //               className="e-field"
-  //               style={{ width: "100%" }}
-  //               dataSource={departmentData.map((e) => e?.Text)}
-  //             ></DropDownListComponent>
-  //           </td>
-  //         </tr>
-  //       </tbody>
-  //     </table>
-  //   ) : (
-  //     <div></div>
-  //   );
-  // };
-
-  //Field funciona como o mapeamento
-
   const openModal = (e) => {
     if (e?.event?.note) {
       setFlagEdit(true);
@@ -399,6 +293,19 @@ const SchedulerComponent = ({ dataAppointment }) => {
     setFlagEdit(false);
   };
 
+  const template = (props) => {
+    // console.log("props ->", props);
+    return (
+      <div>
+        <Typography>{props.note}</Typography>
+        <Typography>
+          {props.date} || &nbsp;&nbsp;{props.appointments_status?.status}
+        </Typography>
+        {/* <div>{props.appointments_status?.status}</div> */}
+      </div>
+    );
+  };
+
   // const testE = (e) => {
   //   console.log("teste double", e)
   // }
@@ -409,8 +316,8 @@ const SchedulerComponent = ({ dataAppointment }) => {
         // cssClass="schedule-drag-drop"
         width="100%"
         height="650px"
-        currentView="Week"
-        selectedDate={new Date(2020, 6, 13)}
+        currentView="Day"
+        // selectedDate={new Date(2020, 6, 13)}
         ref={scheduler}
         popupOpen={(args) => {
           args.cancel = true;
@@ -430,6 +337,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
         resourceHeaderTemplate={resourceHeaderTemplate.bind(this)}
         eventSettings={{
           dataSource: dataAppointment,
+          template: template.bind(this),
           fields: {
             id: "Id",
             subject: { name: "note" },

@@ -35,6 +35,11 @@ const PopUp = ({
   const appointmentsType = useSelector(
     (state) => state.appointmentType?.appointmentsType
   );
+
+  const appointmentStatus = useSelector(
+    (state) => state.appointmentStatus?.appointmentsStatus
+  );
+
   const addAppointmentLoading = useSelector(
     (state) => state.app?.loading?.addAppointmentLoading
   );
@@ -51,6 +56,7 @@ const PopUp = ({
   let history = useHistory();
   // const [department, setDepartment] = useState([]);
   // console.log("props d -->", departmentData);
+  // console.log("status ->", dataArg?.event)
 
   useEffect(() => {
     if (appointmentsType?.length > 0) {
@@ -58,11 +64,18 @@ const PopUp = ({
     }
   }, [appointmentsType]);
 
+  useEffect(() => {
+    if (appointmentStatus?.length > 0) {
+      appointmentStatus.map((item) => (item.Text = item?.status));
+    }
+  }, [appointmentStatus]);
+
   let user = {
     note: "" || dataArg?.event?.note,
     appointmentsType_id: null || dataArg?.event?.appointmentsType_id,
     userdentist_id: null || dataArg?.event?.userdentist_id,
     userpatient_id: null || dataArg?.event?.userpatient_id,
+    appointmentsStatus_id: null || dataArg?.event?.appointmentsStatus_id,
     clinic_id: 4,
     // DepartmentID: null, // por enquanto estou adicionando o departamento no useEffect do getAppointment
     userregistered_id: null, // localStorage
@@ -263,6 +276,15 @@ const PopUp = ({
                         label={"Paciente"}
                         name="userpatient_id"
                         options={pacientes}
+                        type="scheduler"
+                      />
+                    </Grid>
+
+                    <Grid item md={6} xs={12}>
+                      <RegisterSelect
+                        label={"Status"}
+                        name="appointmentsStatus_id"
+                        options={appointmentStatus}
                         type="scheduler"
                       />
                     </Grid>

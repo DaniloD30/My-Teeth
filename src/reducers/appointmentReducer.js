@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   appointments: [],
   appointmentsByIdDentist: [],
   appointmentByIdPacient: [],
+  appointmentByClinic: [],
 };
 
 export default function appointmentReducer(state = INITIAL_STATE, action) {
@@ -22,6 +23,11 @@ export default function appointmentReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         appointmentByIdPacient: action?.payload.rows,
+      };
+    case Constants.GET_ALL_APPOINTMENTS_CLINIC:
+      return {
+        ...state,
+        appointmentByClinic: action?.payload.rows,
       };
     default:
       return state;

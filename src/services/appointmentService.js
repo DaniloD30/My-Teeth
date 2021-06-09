@@ -31,6 +31,17 @@ export const getAppointmentTypeByIdDentist = (token, idDentist) => {
   });
 };
 
+export const getAppointmentTypeByClinic = (token, idClinic) => {
+  return new Promise((resolve, reject) => {
+    http
+      .get(`${APPOINTMENT}?clinic_id=${idClinic}`, {
+        headers: { "x-access-token": token },
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+
 export const getAppointmentTypeByIdPacient = (token, idPacient) => {
   return new Promise((resolve, reject) => {
     http
@@ -66,6 +77,7 @@ const appointmentService = {
   addAppointmentService,
   getAppointment,
   getAppointmentTypeByIdDentist,
+  getAppointmentTypeByClinic,
   getAppointmentTypeByIdPacient,
   deleteAppointmentService,
   editAppointmentService,

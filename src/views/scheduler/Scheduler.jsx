@@ -6,10 +6,12 @@ import Page from "~/components/common/page/Page";
 import userAction from "~/actions/userAction";
 import appointmentAction from "~/actions/appointmentAction";
 import appointmentTypeAction from "~/actions/appointmentTypeAction";
+import appointmentStatusAction from "~/actions/appointmentStatusAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@material-ui/core";
 import Utils from "~/helpers/Utils";
 import { ToastContainer } from "react-toastify";
+
 const Scheduler = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
@@ -30,10 +32,14 @@ const Scheduler = (props) => {
     (state) => state.appointment?.addAppointmentLoading
   );
 
+  const getStatusLoading = useSelector(
+    (state) => state.app?.loading?.getStatusLoading
+  );
+
   const appointmentTypeLoading = useSelector(
     (state) => state.app?.loading?.appointmentTypeLoading
   );
-  
+
   useEffect(() => {
     // appointmentTypeAction
     if (isAuthenticated()) {
@@ -73,6 +79,19 @@ const Scheduler = (props) => {
           }
         )
       );
+
+      dispatch(
+        appointmentStatusAction.getAllAppointmentsStatus(
+          getToken(),
+          "getStatusLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+          }
+        )
+      );
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
@@ -83,8 +102,7 @@ const Scheduler = (props) => {
 
   useEffect(() => {
     if (appointmentsData?.length > 0) {
-      appointmentsData.map((item) => (
-        item.DepartmentID = 1 ));
+      appointmentsData.map((item) => (item.DepartmentID = 1));
     }
   }, [appointmentsData]);
 
@@ -111,11 +129,12 @@ const Scheduler = (props) => {
   }, [dispatch, history, addAppointmentLoading]);
   return (
     <>
-     <ToastContainer />
+      <ToastContainer />
       <Page>
         {dataAllUserLoading ||
         dataAppointmentsLoading ||
-        appointmentTypeLoading ? (
+        appointmentTypeLoading ||
+        getStatusLoading ? (
           <Box style={{ display: "flex", justifyContent: "center" }}>
             <CircularProgress />
           </Box>

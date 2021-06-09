@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     loginLoading: false,
 
     getClinicsLoading: false,
+    getStatusLoading: false,
     deleteClinicLoading: false,
     addClinicLoading: false,
     addClinicTypeLoading: false,
