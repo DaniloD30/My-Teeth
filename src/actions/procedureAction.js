@@ -22,7 +22,9 @@ export const addProcedure = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -46,7 +48,9 @@ export const getAllProcedures = (
       }
     })
     .catch((error) => {
-      fnCallback(error)
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -69,7 +73,9 @@ export const editProcedure = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -90,7 +96,9 @@ export const deleteProcedure = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));

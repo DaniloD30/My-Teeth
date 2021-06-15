@@ -76,7 +76,7 @@ const PopUp = ({
     userdentist_id: null || dataArg?.event?.userdentist_id,
     userpatient_id: null || dataArg?.event?.userpatient_id,
     appointmentsStatus_id: null || dataArg?.event?.appointmentsStatus_id,
-    clinic_id: 4,
+    clinic_id: localStorage.getItem("clinic_id"), // localStorage
     // DepartmentID: null, // por enquanto estou adicionando o departamento no useEffect do getAppointment
     userregistered_id: null, // localStorage
     StartTime: dataArg?.startTime || dataArg?.event?.StartTime, // no editar é a mesma data que vem do banco

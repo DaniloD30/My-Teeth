@@ -99,8 +99,6 @@ const ClinicForm = (props) => {
             }}
             onSubmit={(values, { setSubmitting }) => {
               if (location?.state) {
-                console.log("entrou edit");
-                console.log("location state ->", location?.state);
                 if (isAuthenticated()) {
                   dispatch(
                     clinicAction.editClinic(

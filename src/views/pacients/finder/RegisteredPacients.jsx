@@ -42,6 +42,7 @@ const RegisteredPacients = (props) => {
         dispatch(
           userAction.getAllDataProfile(
             getToken(),
+            null,
             "dataAllUserLoading",
             (error) => {
               if (error) {
@@ -93,6 +94,7 @@ const RegisteredPacients = (props) => {
       dispatch(
         userAction.getAllDataProfile(
           getToken(),
+          null,
           "dataAllUserLoading",
           (error) => {
             if (error) {

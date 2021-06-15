@@ -22,7 +22,9 @@ export const addAppointmentType = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -46,7 +48,9 @@ export const getAllAppointmentsType = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -69,7 +73,9 @@ export const editAppointmentType = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -90,7 +96,9 @@ export const deleteAppointmentType = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));

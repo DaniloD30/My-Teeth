@@ -53,6 +53,7 @@ const ProfileForm = (props) => {
   // const [imgResult, setImageResult] = useState("");
 
   const savePhoto = (d) => {
+    setImage(d);
     const data = d.split(",")[1];
     var raw = window.atob(data);
     var rawlenght = raw?.length;
@@ -67,6 +68,7 @@ const ProfileForm = (props) => {
     // let img = `data:image/png;base64, ${userDataProfile?.picture}`;
     // setImage(d);
     // console.log("save ->", d)
+
     dispatch(userAction.savePhoto(image));
   };
 
@@ -76,6 +78,7 @@ const ProfileForm = (props) => {
     reader.onload = function (event) {
       // O arquivo de texto será impresso aqui
       // setImageResult()
+
       savePhoto(event.target.result);
       // console.log(event.target.result)
     };

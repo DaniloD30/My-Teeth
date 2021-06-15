@@ -21,7 +21,9 @@ export const addAppointment =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -34,7 +36,7 @@ export const getAllAppointments =
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
     // necessario passar o ID da clinic aqui. Cada clinica responsavel apenas pelo dados
     // da sua clinica.
-    getAppointment(token)
+    getAppointment(token, localStorage.getItem("clinic_id"))
       .then((response) => {
         if (response) {
           response.data.rows.forEach((item) => {
@@ -58,7 +60,9 @@ export const getAllAppointments =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -87,7 +91,9 @@ export const getAllAppointmentsDentists =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -117,7 +123,9 @@ export const getAllAppointmentsPacients =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -136,7 +144,9 @@ export const editAppointment =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -154,7 +164,9 @@ export const deleteAppointment =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));

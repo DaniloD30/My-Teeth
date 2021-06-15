@@ -31,6 +31,7 @@ const Scheduler = (props) => {
   const addAppointmentLoading = useSelector(
     (state) => state.appointment?.addAppointmentLoading
   );
+  const profileData = useSelector((state) => state.login.profileId);
 
   const getStatusLoading = useSelector(
     (state) => state.app?.loading?.getStatusLoading
@@ -46,6 +47,7 @@ const Scheduler = (props) => {
       dispatch(
         userAction.getAllDataProfile(
           getToken(),
+          profileData === 2 && localStorage.getItem("userid"),
           "dataAllUserLoading",
           (error) => {
             if (error) {

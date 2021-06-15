@@ -23,7 +23,9 @@ export const addClinic = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -46,7 +48,11 @@ export const getAllClinics = (
         });
       }
     })
-    .catch(() => {})
+    .catch((error) => {
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
+    })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
     });
@@ -68,7 +74,11 @@ export const getClinicUser = (
         });
       }
     })
-    .catch(() => {})
+    .catch((error) => {
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
+    })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
     });
@@ -90,7 +100,9 @@ export const editClinic = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -111,7 +123,9 @@ export const deleteClinic = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));

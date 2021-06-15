@@ -19,7 +19,9 @@ export const addAppointmentStatus =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -41,7 +43,9 @@ export const getAllAppointmentsStatus =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -60,7 +64,9 @@ export const editAppointmentStatus =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -78,7 +84,9 @@ export const deleteAppointmentStatus =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));

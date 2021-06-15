@@ -22,7 +22,9 @@ export const addClinicType = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -67,7 +69,9 @@ export const editClinicType = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -88,7 +92,9 @@ export const deleteClinicType = (
       }
     })
     .catch((error) => {
-      fnCallback(error);
+      if (error.response) {
+        fnCallback(error.response.data.message);
+      }
     })
     .finally(() => {
       dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));

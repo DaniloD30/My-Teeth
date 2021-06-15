@@ -113,7 +113,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
           item.Text = item?.person?.name;
           item.Id = item?.id;
           item.GroupId = 1; // grupo de dentistas
-          item.Color = "#bbdc00"; //Cada dentista tem que ter uma cor
+          item.Color = "#f00"; //Cada dentista tem que ter uma cor
           // pode vim DO BACKEND ( MELHOR )
           item.Designation = "Dentista"; // necessario isso para o scheduler
         }
@@ -154,8 +154,9 @@ const SchedulerComponent = ({ dataAppointment }) => {
 
   const getConsultantImage = (value) => {
     // Testar imagem do dentista
+    // console.log("props image ->",  value?.resourceData)
     let file = `data:image/png;base64, ${Utils._arrayBufferToBase64(
-      value?.resourceData?.person?.picture
+      value?.resourceData?.person?.picture?.data
     )}`;
     return file;
   };
@@ -297,9 +298,12 @@ const SchedulerComponent = ({ dataAppointment }) => {
     // console.log("props ->", props);
     return (
       <div>
-        <Typography>{props.note}</Typography>
-        <Typography>
-          {props.date} || &nbsp;&nbsp;{props.appointments_status?.status}
+        <Typography variant="h5">{props.note}</Typography>
+        <Typography variant="h7">
+          {props.date} ||{" "}
+          <span style={{ fontWeight: "bolder" }}>
+            &nbsp;{props.appointments_status?.status}
+          </span>
         </Typography>
         {/* <div>{props.appointments_status?.status}</div> */}
       </div>
@@ -361,7 +365,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
         }}
       >
         <ResourcesDirective>
-          <ResourceDirective
+          {/* <ResourceDirective
             field="DepartmentID"
             title="Department"
             name="Departments"
@@ -370,7 +374,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
             textField="Text"
             idField="Id"
             colorField="Color"
-          />
+          /> */}
           <ResourceDirective
             field="userdentist_id"
             title="Dentista"

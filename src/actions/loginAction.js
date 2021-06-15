@@ -21,7 +21,9 @@ export const createAccount =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
@@ -43,7 +45,7 @@ export const createLogin =
             payload: response?.data,
           });
           login(response?.data?.token);
-          dispatch(addProfileId( response?.data?.profileid));
+          dispatch(addProfileId(response?.data?.profileid));
           // console.log("response?.data?.profileid", response?.data?.profileid);
           // localStorage.setItem("profile_id", response?.data?.profileid);
 
@@ -52,7 +54,10 @@ export const createLogin =
         }
       })
       .catch((error) => {
-        fnCallback(error);
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
+        // console.log("Login erro ->")
       })
       .finally(() => {
         dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
