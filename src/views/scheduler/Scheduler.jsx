@@ -69,6 +69,7 @@ const Scheduler = (props) => {
           }
         )
       );
+      console.log("ele executa isso aqui depois do add ")
       dispatch(
         appointmentAction.getAllAppointments(
           getToken(),
@@ -102,33 +103,42 @@ const Scheduler = (props) => {
     }
   }, [dispatch, history]);
 
-  useEffect(() => {
-    if (appointmentsData?.length > 0) {
-      appointmentsData.map((item) => (item.DepartmentID = 1));
-    }
-  }, [appointmentsData]);
+  // useEffect(() => {
+  //   if (appointmentsData?.length > 0) {
+  //     appointmentsData.map((item) => (item.DepartmentID = 1));
+  //   }
+  // }, [appointmentsData]);
 
-  useEffect(() => {
-    if (isAuthenticated()) {
-      dispatch(
-        appointmentAction.getAllAppointments(
-          getToken(),
-          "dataAppointmentsLoading",
-          (error) => {
-            if (error) {
-              Utils.showError(error);
-              return;
-            }
-          }
-        )
-      );
-    } else {
-      Utils.showError("Não autenticado!");
-      setTimeout(function () {
-        history.push("/login");
-      }, 3000);
-    }
-  }, [dispatch, history, addAppointmentLoading]);
+  // useEffect(() => {
+  //   DISPATCH COM FLAG DE ADD ONDE SO VAI EXECUTAR O GET SE A FLAG ESTIVER COMO TRUE
+  //   FUNÇÃO QUE SÓ EXECUTA COM A ACTION
+
+  //   VERIFICAR EM QUAIS PARTES DO SISTEMA, TEM ESSE USEeFFECT SOLTO,
+  //   ONDE ACABA TENDO CHAMADAS REPETIDAS ...
+
+  //   if (isAuthenticated()) {
+  //     addAppointmentLoading &&
+  //     console.log("entrou no dispatch do add appointment")
+  //       dispatch(
+  //         appointmentAction.getAllAppointments(
+  //           getToken(),
+  //           "dataAppointmentsLoading",
+  //           (error) => {
+  //             if (error) {
+  //               Utils.showError(error);
+  //               return;
+  //             }
+  //           }
+  //         )
+  //       );
+  //   } else {
+  //     Utils.showError("Não autenticado!");
+  //     setTimeout(function () {
+  //       history.push("/login");
+  //     }, 3000);
+  //   }
+  // }, [dispatch, history, addAppointmentLoading]);
+
   return (
     <>
       <ToastContainer />

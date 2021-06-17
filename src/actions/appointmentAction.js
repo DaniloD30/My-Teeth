@@ -39,23 +39,24 @@ export const getAllAppointments =
     getAppointment(token, localStorage.getItem("clinic_id"))
       .then((response) => {
         if (response) {
-          response.data.rows.forEach((item) => {
+          response.data.appointments.rows.forEach((item) => {
             let d = new Date(item?.StartTime);
             let e = new Date(item?.EndTime);
             let horaStart =
-              d.getHours() < 10 ? `${d.getHours()}0` : d.getHours();
+              d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
             let minStart =
-              d.getMinutes() < 10 ? `${d.getMinutes()}0` : d.getMinutes();
-            let horaEnd = e.getHours() < 10 ? `${e.getHours()}0` : e.getHours();
+              d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+
+            let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
             let minEnd =
-              e.getMinutes() < 10 ? `${e.getMinutes()}0` : e.getMinutes();
+              e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
 
             item.date = `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
           });
 
           dispatch({
             type: Constants.GET_ALL_APPOINTMENTS,
-            payload: response.data,
+            payload: response.data.appointments,
           });
         }
       })
@@ -74,19 +75,44 @@ export const getAllAppointmentsDentists =
   (dispatch) => {
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
 
-    getAppointmentTypeByIdDentist(token, id)
+    getAppointmentTypeByIdDentist(token, id, localStorage.getItem("clinic_id"))
       .then((response) => {
         if (response) {
-          response.data.rows.forEach((item) => {
+          response.data.appointments.rows.forEach((item) => {
+            item.pacientName = item?.person?.name;
+
+            // DATA
             let data = new Date(item?.StartTime);
             // item.pacient = item
-            item.day = `${data?.getDate()}/${
-              data?.getMonth() + 1
-            }/${data?.getFullYear()}`;
+            // a data tbm tem que verificar se é menor que 10
+            let day =
+              data?.getDate() < 10
+                ? `0${data?.getDate()}`
+                : `${data?.getDate()}`;
+            let month =
+              data?.getMonth() + 1 < 10
+                ? `0${data?.getMonth() + 1}`
+                : `${data?.getMonth() + 1}`;
+            let year = `${data?.getFullYear()}`;
+            item.day = `${day}/${month}/${year}`;
+
+            // HORA
+            let d = new Date(item?.StartTime);
+            let e = new Date(item?.EndTime);
+            let horaStart =
+              d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+            let minStart =
+              d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+
+            let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
+            let minEnd =
+              e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
+
+            item.hour = `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
           });
           dispatch({
             type: Constants.GET_ALL_APPOINTMENTS_DENTIST,
-            payload: response.data,
+            payload: response.data.appointments,
           });
         }
       })
@@ -104,21 +130,48 @@ export const getAllAppointmentsPacients =
   (token, id, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
   (dispatch) => {
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-
-    getAppointmentTypeByIdPacient(token, id)
+    // NÃO SERÁ APENAS UMA CLÍNICA, O PACIENTE TERÁ UM ARRAY DE CLÍNICAS
+    getAppointmentTypeByIdPacient(token, id, localStorage.getItem("clinic_id"))
       .then((response) => {
         if (response) {
-          response.data.rows.forEach((item) => {
-            let data = new Date(item?.StartTime);
+          response.data.appointments.rows.forEach((item) => {
+            // nameDentist
+            response.data.nameDentist.rows.forEach((itemDentist) => {
+              // itemDentist?.id  === item?.userdentist_id && item.dentistName = itemDentist?.person?.name
+              if (itemDentist?.id === item?.userdentist_id) {
+                item.dentistName = itemDentist?.person?.name;
+              }
+            });
             item.clinicName = item?.clinic?.company_name;
-            item.day = `${data?.getDate()}/${
-              data?.getMonth() + 1
-            }/${data?.getFullYear()}`;
+            let data = new Date(item?.StartTime);
+            let day =
+              data?.getDate() < 10
+                ? `0${data?.getDate()}`
+                : `${data?.getDate()}`;
+            let month =
+              data?.getMonth() + 1 < 10
+                ? `0${data?.getMonth() + 1}`
+                : `${data?.getMonth() + 1}`;
+            let year = `${data?.getFullYear()}`;
+            item.day = `${day}/${month}/${year}`;
+
+            let d = new Date(item?.StartTime);
+            let e = new Date(item?.EndTime);
+            let horaStart =
+              d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+            let minStart =
+              d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+
+            let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
+            let minEnd =
+              e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
+
+            item.hour = `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
           });
 
           dispatch({
             type: Constants.GET_ALL_APPOINTMENTS_PACIENT,
-            payload: response.data,
+            payload: response.data.appointments,
           });
         }
       })

@@ -156,6 +156,18 @@ const PopUp = ({
             initialValues={{ ...user }}
             validate={(values) => {
               const errors = {};
+              if (!values.note) {
+                errors.note = "Nota Obrigatória";
+              }
+              if (!values.userdentist_id) {
+                errors.userdentist_id = "Selecione um dentista";
+              }
+              if (!values.userpatient_id) {
+                errors.userpatient_id = "Selecione um paciente";
+              }
+              if (!values.appointmentsStatus_id) {
+                errors.appointmentsStatus_id = "Selecione um Status";
+              }
 
               return errors;
             }}
@@ -327,14 +339,14 @@ const PopUp = ({
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
-                    <Grid item md={6} xs={12}>
+                    {/* <Grid item md={6} xs={12}>
                       <RegisterSelect
                         label={"Departamento"}
                         name="DepartmentID"
                         options={departmentData}
                         type="department"
                       />
-                    </Grid>
+                    </Grid> */}
                     {/* <Grid item md={6} xs={12}>
                       <RegisterInputText
                         label={"Celular outro"}

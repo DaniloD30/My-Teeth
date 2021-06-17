@@ -72,12 +72,17 @@ const ScheduledAppointments = (props) => {
       render: (data) => <strong>{data}</strong>,
     },
     {
+      name: "hour",
+      label: "Hora",
+      render: (data) => <strong>{data}</strong>,
+    },
+    {
       name: "clinicName",
       label: "Clínica",
       render: (clinic) => <strong>{clinic}</strong>,
     },
     {
-      name: "userdentist_id",
+      name: "dentistName",
       label: "Dentista",
       render: (dentista) => <span>{dentista}</span>,
     },

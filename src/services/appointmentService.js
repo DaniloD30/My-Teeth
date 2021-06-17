@@ -14,16 +14,18 @@ export const addAppointmentService = (data, token) => {
 export const getAppointment = (token, idClinic) => {
   return new Promise((resolve, reject) => {
     http
-      .get(`${APPOINTMENT}?clinic_id=${idClinic}`, { headers: { "x-access-token": token } })
+      .get(`${APPOINTMENT}?clinic_id=${idClinic}`, {
+        headers: { "x-access-token": token },
+      })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
 };
 
-export const getAppointmentTypeByIdDentist = (token, idDentist) => {
+export const getAppointmentTypeByIdDentist = (token, idDentist, idClinic) => {
   return new Promise((resolve, reject) => {
     http
-      .get(`${APPOINTMENT}?userdentist_id=${idDentist}`, {
+      .get(`${APPOINTMENT}?clinic_id=${idClinic}&userdentist_id=${idDentist}`, {
         headers: { "x-access-token": token },
       })
       .then((response) => resolve(response))
@@ -42,12 +44,12 @@ export const getAppointmentTypeByClinic = (token, idClinic) => {
   });
 };
 
-export const getAppointmentTypeByIdPacient = (token, idPacient) => {
+export const getAppointmentTypeByIdPacient = (token, idPacient, idClinic) => {
   return new Promise((resolve, reject) => {
     http
-      .get(`${APPOINTMENT}?userpatient_id=${idPacient}`, {
+      .get(`${APPOINTMENT}?clinic_id=${idClinic}&userpatient_id=${idPacient}`, {
         headers: { "x-access-token": token },
-      })
+      }) // O PACIENTE TERÁ UM ARRAY DE CLÍNICAS, ELE SERÁ ASSOCIADO A VÁRIAS CLÍNICAS
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

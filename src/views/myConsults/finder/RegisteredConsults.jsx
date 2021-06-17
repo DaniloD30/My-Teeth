@@ -20,6 +20,7 @@ import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
+
 const RegisteredConsults = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
@@ -34,7 +35,9 @@ const RegisteredConsults = (props) => {
   const getAppointmentsDentist = useSelector(
     (state) => state.app?.loading?.getAppointmentsDentist
   );
-
+  const dataAppointmentsLoading = useSelector(
+    (state) => state.app?.loading?.dataAppointmentsLoading
+  );
   const deleteClinicLoading = useSelector(
     (state) => state.app?.loading?.deleteClinicLoading
   );
@@ -65,7 +68,12 @@ const RegisteredConsults = (props) => {
       render: (data) => <strong>{data}</strong>,
     },
     {
-      name: "userpatient_id",
+      name: "hour",
+      label: "Hora",
+      render: (data) => <strong>{data}</strong>,
+    },
+    {
+      name: "pacientName",
       label: "Paciente",
       render: (dentista) => <span>{dentista}</span>,
     },
@@ -85,21 +93,34 @@ const RegisteredConsults = (props) => {
     // Provavelmente terá uma regra para cada tipo de profile aqui... ex: "ADM": Irá vizualizar todas as consultas
     // "Dentista": apenas as consultas dele ... "Secretário": Todas as consultas, talvez filtrando ....
 
-   
     if (isAuthenticated()) {
       if (profileData === 2) {
-        // APENAS DA CLINICA DELES
-        
         dispatch(
           appointmentAction.getAllAppointmentsDentists(
             getToken(),
             localStorage.getItem("userid"),
-            "getAppointmentsDentist"
+            "getAppointmentsDentist",
+            (error) => {
+              if (error) {
+                Utils.showError(error);
+                return;
+              }
+            }
           )
         );
       } else {
-        // APENAS DA CLINICA DELES
-
+        dispatch(
+          appointmentAction.getAllAppointments(
+            getToken(),
+            "dataAppointmentsLoading",
+            (error) => {
+              if (error) {
+                Utils.showError(error);
+                return;
+              }
+            }
+          )
+        );
       }
       // CONSULTAS REFERENTES AO DENTISTA
       // CRIAR UMA CONTA "DENTISTA" ...
@@ -113,19 +134,19 @@ const RegisteredConsults = (props) => {
     }
   }, [dispatch, history]);
 
-  const edit = (id, row) => {
-    history.push(
-      {
-        pathname: `/register/clinicInsert/${id}`,
-      },
-      row
-    );
-  };
+  // const edit = (id, row) => {
+  //   history.push(
+  //     {
+  //       pathname: `/register/clinicInsert/${id}`,
+  //     },
+  //     row
+  //   );
+  // };
 
-  const handleDelete = (row) => {
-    setIdRowDelete(row?.id);
-    setFlagModal(true);
-  };
+  // const handleDelete = (row) => {
+  //   setIdRowDelete(row?.id);
+  //   setFlagModal(true);
+  // };
 
   const confirmDeleteRow = () => {
     if (isAuthenticated()) {
@@ -198,7 +219,7 @@ const RegisteredConsults = (props) => {
                     </Button>
                   </Box>
                 </div>
-                {getAppointmentsDentist ? (
+                {getAppointmentsDentist || dataAppointmentsLoading ? (
                   <Box style={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>

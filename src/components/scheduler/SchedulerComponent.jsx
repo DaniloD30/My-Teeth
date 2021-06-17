@@ -110,6 +110,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
     if (dentistasData?.length > 0) {
       dentistasData.forEach((item) => {
         if (item) {
+          // console.log("item ->", item)
           item.Text = item?.person?.name;
           item.Id = item?.id;
           item.GroupId = 1; // grupo de dentistas
@@ -265,7 +266,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
   // };
 
   const onActionBegin = (args) => {
-    console.log("args ->", args);
+    // console.log("args ->", args);
     // Consigo obter as actions do scheduler aqui
     //CRUD HERE
 
