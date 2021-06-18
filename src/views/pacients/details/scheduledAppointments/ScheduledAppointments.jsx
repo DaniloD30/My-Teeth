@@ -103,7 +103,13 @@ const ScheduledAppointments = (props) => {
         appointmentAction.getAllAppointmentsPacients(
           getToken(),
           statePacient?.id,
-          "getAppointmentPacientLoading"
+          "getAppointmentPacientLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+          }
         )
       );
     } else {

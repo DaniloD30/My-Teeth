@@ -38,7 +38,18 @@ const RegisteredClinicType = (props) => {
   useEffect(() => {
     if (isDelete) {
       if (isAuthenticated()) {
-        dispatch(clinicTypeAction.getAllClinicsType(getToken(), "getClinicsTypeLoading"));
+        dispatch(
+          clinicTypeAction.getAllClinicsType(
+            getToken(),
+            "getClinicsTypeLoading",
+            (error) => {
+              if (error) {
+                Utils.showError(error);
+                return;
+              }
+            }
+          )
+        );
       } else {
         Utils.showError("Não autenticado!");
         setTimeout(function () {
@@ -60,7 +71,7 @@ const RegisteredClinicType = (props) => {
       name: "description",
       label: "Descrição",
       render: (description) => <strong>{description}</strong>,
-    }
+    },
   ];
 
   const openForm = () => {
@@ -74,7 +85,18 @@ const RegisteredClinicType = (props) => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      dispatch(clinicTypeAction.getAllClinicsType(getToken(), "getClinicsTypeLoading"));
+      dispatch(
+        clinicTypeAction.getAllClinicsType(
+          getToken(),
+          "getClinicsTypeLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+          }
+        )
+      );
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {

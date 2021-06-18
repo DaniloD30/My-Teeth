@@ -47,7 +47,6 @@ const RegisteredProcedure = (props) => {
                 Utils.showError(error);
                 return;
               }
-
             }
           )
         );
@@ -94,7 +93,16 @@ const RegisteredProcedure = (props) => {
   useEffect(() => {
     if (isAuthenticated()) {
       dispatch(
-        procedureAction.getAllProcedures(getToken(), "getProceduresLoading")
+        procedureAction.getAllProcedures(
+          getToken(),
+          "getProceduresLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+          }
+        )
       );
     } else {
       Utils.showError("Não autenticado!");

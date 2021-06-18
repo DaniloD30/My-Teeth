@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 // import profileAction from "../../../actions/profileAction";
-import appointmentTypeAction from "~/actions/appointmentTypeAction"
+import appointmentTypeAction from "~/actions/appointmentTypeAction";
 import { isAuthenticated, getToken } from "~/services/auth";
 import Page from "~/components/common/page/Page";
 import Table from "~/components/common/table/Table";
@@ -22,7 +22,9 @@ import Utils from "~/helpers/Utils";
 const RegisteredAppointmentType = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
-  const appointmentsType = useSelector((state) => state.appointmentType?.appointmentsType);
+  const appointmentsType = useSelector(
+    (state) => state.appointmentType?.appointmentsType
+  );
   const [IdrowDelete, setIdRowDelete] = React.useState();
   const [isDelete, setIsDelete] = React.useState(false);
   const [modal, setFlagModal] = React.useState(false);
@@ -38,7 +40,18 @@ const RegisteredAppointmentType = (props) => {
   useEffect(() => {
     if (isDelete) {
       if (isAuthenticated()) {
-        dispatch(appointmentTypeAction.getAllAppointmentsType(getToken(), "appointmentTypeLoading"));
+        dispatch(
+          appointmentTypeAction.getAllAppointmentsType(
+            getToken(),
+            "appointmentTypeLoading",
+            (error) => {
+              if (error) {
+                Utils.showError(error);
+                return;
+              }
+            }
+          )
+        );
       } else {
         Utils.showError("Não autenticado!");
         setTimeout(function () {
@@ -59,8 +72,7 @@ const RegisteredAppointmentType = (props) => {
       name: "value",
       label: "Valor",
       render: (value) => <span>{value}</span>,
-    }
-   
+    },
   ];
 
   const openForm = () => {
@@ -74,7 +86,18 @@ const RegisteredAppointmentType = (props) => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      dispatch(appointmentTypeAction.getAllAppointmentsType(getToken(), "appointmentTypeLoading"));
+      dispatch(
+        appointmentTypeAction.getAllAppointmentsType(
+          getToken(),
+          "appointmentTypeLoading",
+          (error) => {
+            if (error) {
+              Utils.showError(error);
+              return;
+            }
+          }
+        )
+      );
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
@@ -210,5 +233,5 @@ const RegisteredAppointmentType = (props) => {
       </Page>
     </>
   );
-};  
+};
 export default withRouter(RegisteredAppointmentType);

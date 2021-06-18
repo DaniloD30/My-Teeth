@@ -38,7 +38,18 @@ const RegisteredClinic = (props) => {
   useEffect(() => {
     if (isDelete) {
       if (isAuthenticated()) {
-        dispatch(clinicAction.getAllClinics(getToken(), "getClinicsLoading"));
+        dispatch(
+          clinicAction.getAllClinics(
+            getToken(),
+            "getClinicsLoading",
+            (error) => {
+              if (error) {
+                Utils.showError(error);
+                return;
+              }
+            }
+          )
+        );
       } else {
         Utils.showError("Não autenticado!");
         setTimeout(function () {
@@ -78,7 +89,14 @@ const RegisteredClinic = (props) => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      dispatch(clinicAction.getAllClinics(getToken(), "getClinicsLoading"));
+      dispatch(
+        clinicAction.getAllClinics(getToken(), "getClinicsLoading", (error) => {
+          if (error) {
+            Utils.showError(error);
+            return;
+          }
+        })
+      );
     } else {
       Utils.showError("Não autenticado!");
       setTimeout(function () {
