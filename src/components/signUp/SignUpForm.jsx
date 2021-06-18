@@ -141,7 +141,7 @@ export default function SignUpForm(props) {
                     // console.log("ENTROU NO CALLBACK");
                     Utils.showToast({
                       type: "success",
-                      description: "Usuário cadastrado com sucesso",
+                      description: "Usuário cadastrado com sucesso, e-mail de ativação enviado ao login cadastrado!",
                     });
                   }
                 )
