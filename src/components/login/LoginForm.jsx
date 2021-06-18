@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { FiLogIn } from 'react-icons/fi';
 import { Link } from "react-router-dom";
 // import logo2 from "~/assets/images/tpcLogo1.jpg";
@@ -13,13 +13,23 @@ import { CircularProgress } from "@material-ui/core";
 // import logo from '../../assets/logo.svg';
 import Utils from "~/helpers/Utils";
 import { getToken } from "~/services/auth";
+import { useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 export default function Logon() {
   const [dataLogin, setDataLogin] = useState({ values: {} });
   const loginLoading = useSelector((state) => state.app?.loading?.loginLoading);
-
+  let history = useHistory();
+  const { location } = history;
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    // console.log("Location ->", location.pathname);
+    location.pathname === "/login?redirect=true" &&
+      Utils.showToast({
+        type: "success",
+        description: "Conta ativada com sucesso!",
+      });
+  }, [location]);
+  
   const handleLogin = () => {
     dispatch(
       loginAction.createLogin(dataLogin?.values, "loginLoading", (error) => {
