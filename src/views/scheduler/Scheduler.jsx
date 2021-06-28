@@ -101,7 +101,7 @@ const Scheduler = (props) => {
         history.push("/login");
       }, 3000);
     }
-  }, [dispatch, history]);
+  }, [dispatch, history, profileData]);
 
   // useEffect(() => {
   //   if (appointmentsData?.length > 0) {

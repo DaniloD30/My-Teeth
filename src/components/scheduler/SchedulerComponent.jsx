@@ -301,7 +301,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
       <div>
         <Typography variant="h5">{props.note}</Typography>
         <Typography variant="h7">
-          {props.date} ||{" "}
+          {props.hour} ||{" "}
           <span style={{ fontWeight: "bolder" }}>
             &nbsp;{props.appointments_status?.status}
           </span>

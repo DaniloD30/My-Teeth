@@ -38,8 +38,11 @@ const RegisteredConsults = (props) => {
   const dataAppointmentsLoading = useSelector(
     (state) => state.app?.loading?.dataAppointmentsLoading
   );
-  const deleteClinicLoading = useSelector(
-    (state) => state.app?.loading?.deleteClinicLoading
+  // const deleteClinicLoading = useSelector(
+  //   (state) => state.app?.loading?.deleteClinicLoading
+  // );
+  const appointmentsData = useSelector(
+    (state) => state.appointment?.appointments
   );
 
   // useEffect(() => {
@@ -69,7 +72,7 @@ const RegisteredConsults = (props) => {
     },
     {
       name: "hour",
-      label: "Hora",
+      label: "Horário",
       render: (data) => <strong>{data}</strong>,
     },
     {
@@ -109,6 +112,7 @@ const RegisteredConsults = (props) => {
           )
         );
       } else {
+        console.log("entrou no get all")
         dispatch(
           appointmentAction.getAllAppointments(
             getToken(),
@@ -132,7 +136,7 @@ const RegisteredConsults = (props) => {
         history.push("/login");
       }, 3000);
     }
-  }, [dispatch, history]);
+  }, [dispatch, history, profileData]);
 
   // const edit = (id, row) => {
   //   history.push(
@@ -223,14 +227,19 @@ const RegisteredConsults = (props) => {
                   <Box style={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>
-                ) : appointmentsByIdDentist?.length < 1 ? (
+                ) : appointmentsByIdDentist?.length < 1 &&
+                  appointmentsData?.length < 1 ? (
                   <Typography variant="h3" style={{ textAlign: "center" }}>
                     Nenhuma consulta encontrada!
                   </Typography>
                 ) : (
                   <Table
                     columns={SENT_COLUMNS}
-                    dataSource={appointmentsByIdDentist}
+                    dataSource={
+                      appointmentsByIdDentist?.length < 1
+                        ? appointmentsData
+                        : appointmentsByIdDentist
+                    }
                   />
                 )}
                 <Box

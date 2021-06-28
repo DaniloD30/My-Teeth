@@ -40,18 +40,19 @@ export const getAllAppointments =
       .then((response) => {
         if (response) {
           response.data.appointments.rows.forEach((item) => {
-            let d = new Date(item?.StartTime);
-            let e = new Date(item?.EndTime);
-            let horaStart =
-              d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
-            let minStart =
-              d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+            // let d = new Date(item?.StartTime);
+            // let e = new Date(item?.EndTime);
+            // let horaStart =
+            //   d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+            // let minStart =
+            //   d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
 
-            let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
-            let minEnd =
-              e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
-
-            item.date = `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
+            // let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
+            // let minEnd =
+            //   e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
+            item.pacientName = item?.person?.name;
+            item.hour = Utils.getFormatHour(item?.StartTime, item?.EndTime);
+            item.day = Utils.getFormatDay(item?.StartTime);
           });
 
           dispatch({
@@ -80,35 +81,34 @@ export const getAllAppointmentsDentists =
         if (response) {
           response.data.appointments.rows.forEach((item) => {
             item.pacientName = item?.person?.name;
+            item.day = Utils.getFormatDay(item?.StartTime);
+            item.hour = Utils.getFormatHour(item?.StartTime, item?.EndTime);
 
             // DATA
-            let data = new Date(item?.StartTime);
+            // let data = new Date(item?.StartTime);
             // item.pacient = item
             // a data tbm tem que verificar se é menor que 10
-            let day =
-              data?.getDate() < 10
-                ? `0${data?.getDate()}`
-                : `${data?.getDate()}`;
-            let month =
-              data?.getMonth() + 1 < 10
-                ? `0${data?.getMonth() + 1}`
-                : `${data?.getMonth() + 1}`;
-            let year = `${data?.getFullYear()}`;
-            item.day = `${day}/${month}/${year}`;
+            // let day =
+            //   data?.getDate() < 10
+            //     ? `0${data?.getDate()}`
+            //     : `${data?.getDate()}`;
+            // let month =
+            //   data?.getMonth() + 1 < 10
+            //     ? `0${data?.getMonth() + 1}`
+            //     : `${data?.getMonth() + 1}`;
+            // let year = `${data?.getFullYear()}`;
 
             // HORA
-            let d = new Date(item?.StartTime);
-            let e = new Date(item?.EndTime);
-            let horaStart =
-              d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
-            let minStart =
-              d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+            // let d = new Date(item?.StartTime);
+            // let e = new Date(item?.EndTime);
+            // let horaStart =
+            //   d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+            // let minStart =
+            //   d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
 
-            let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
-            let minEnd =
-              e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
-
-            item.hour = `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
+            // let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
+            // let minEnd =
+            //   e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
           });
           dispatch({
             type: Constants.GET_ALL_APPOINTMENTS_DENTIST,
@@ -143,30 +143,31 @@ export const getAllAppointmentsPacients =
               }
             });
             item.clinicName = item?.clinic?.company_name;
-            let data = new Date(item?.StartTime);
-            let day =
-              data?.getDate() < 10
-                ? `0${data?.getDate()}`
-                : `${data?.getDate()}`;
-            let month =
-              data?.getMonth() + 1 < 10
-                ? `0${data?.getMonth() + 1}`
-                : `${data?.getMonth() + 1}`;
-            let year = `${data?.getFullYear()}`;
-            item.day = `${day}/${month}/${year}`;
+            item.day =Utils.getFormatDay(item?.StartTime)
+            item.hour = Utils.getFormatHour(item?.StartTime, item?.EndTime)
+            // let data = new Date(item?.StartTime);
+            // let day =
+            //   data?.getDate() < 10
+            //     ? `0${data?.getDate()}`
+            //     : `${data?.getDate()}`;
+            // let month =
+            //   data?.getMonth() + 1 < 10
+            //     ? `0${data?.getMonth() + 1}`
+            //     : `${data?.getMonth() + 1}`;
+            // let year = `${data?.getFullYear()}`;
+            
 
-            let d = new Date(item?.StartTime);
-            let e = new Date(item?.EndTime);
-            let horaStart =
-              d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
-            let minStart =
-              d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+            // let d = new Date(item?.StartTime);
+            // let e = new Date(item?.EndTime);
+            // let horaStart =
+            //   d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+            // let minStart =
+            //   d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
 
-            let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
-            let minEnd =
-              e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
+            // let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
+            // let minEnd =
+            //   e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
 
-            item.hour = `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
           });
 
           dispatch({

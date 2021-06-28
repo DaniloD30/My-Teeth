@@ -11,27 +11,27 @@ export default function loginReducer(state = INITIAL_STATE, action) {
     case Constants.CREATE_ACCOUNT:
       return {
         ...state,
-        accountCreateSuccess: true
+        accountCreateSuccess: true,
 
         // clinicaAdd: action?.payload?.data,
       };
     case Constants.CREATE_LOGIN:
       return {
         ...state,
-        auth: action?.payload.auth
+        auth: action?.payload.auth,
         // clinicaAdd: action?.payload?.data,
       };
-      case Constants.SAVE_PROFILE_ID:
-        return {
-          ...state,
-          profileId: action?.payload
-          // clinicaAdd: action?.payload?.data,
-        };
-    case Constants.LOGOUT:
+    case Constants.SAVE_PROFILE_ID:
       return {
         ...state,
-        auth: false
-      }
+        profileId: action?.payload,
+        // clinicaAdd: action?.payload?.data,
+      };
+    case Constants.LOGOUT:
+      return {
+        INITIAL_STATE,
+        auth: false,
+      };
     default:
       return state;
   }

@@ -95,6 +95,30 @@ const ab2str = (buf) => {
   return String.fromCharCode.apply(null, new Uint16Array(buf));
 };
 
+export const getFormatHour = (startTime, endTime) => {
+  let d = new Date(startTime);
+  let e = new Date(endTime);
+  let horaStart = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+  let minStart = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+
+  let horaEnd = e.getHours() < 10 ? `0${e.getHours()}` : e.getHours();
+  let minEnd = e.getMinutes() < 10 ? `0${e.getMinutes()}` : e.getMinutes();
+
+  return `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
+};
+
+export const getFormatDay = (startTime) => {
+  let data = new Date(startTime);
+  // item.pacient = item
+  // a data tbm tem que verificar se é menor que 10
+  let day = data?.getDate() < 10 ? `0${data?.getDate()}` : `${data?.getDate()}`;
+  let month =
+    data?.getMonth() + 1 < 10
+      ? `0${data?.getMonth() + 1}`
+      : `${data?.getMonth() + 1}`;
+  let year = `${data?.getFullYear()}`;
+  return `${day}/${month}/${year}`;
+};
 const Utils = {
   endLoading,
   startLoading,
@@ -105,6 +129,8 @@ const Utils = {
   fileToBase64,
   base64ToArrayBuffer,
   showToast,
+  getFormatDay,
+  getFormatHour,
   showError,
   ab2str,
   _arrayBufferToBase64,

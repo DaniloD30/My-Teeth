@@ -65,10 +65,13 @@ export const createLogin =
   };
 
 const logoutUser = () => (dispatch) => {
+  // dispatch({ type: Constants.CLEAR_REDUCER_APPOINTMENTS });
+  // dispatch({ type: Constants.CLEAR_REDUCER_APPOINTMENTS });
   localStorage.removeItem("profile_id");
   localStorage.removeItem("userid");
+  // dispatch({ type: Constants.LOGOUT });
   logout();
-  dispatch({ type: Constants.LOGOUT });
+  dispatch({ type: Constants.RESET_STORE });
 };
 
 const addProfileId = (data) => (dispatch) => {

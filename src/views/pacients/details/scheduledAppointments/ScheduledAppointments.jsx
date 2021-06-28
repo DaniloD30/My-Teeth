@@ -73,7 +73,7 @@ const ScheduledAppointments = (props) => {
     },
     {
       name: "hour",
-      label: "Hora",
+      label: "Horário",
       render: (data) => <strong>{data}</strong>,
     },
     {
