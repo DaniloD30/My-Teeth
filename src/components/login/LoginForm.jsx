@@ -22,16 +22,12 @@ export default function Logon() {
   const { location } = history;
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("Location ->", location.pathname);
-    if(location.pathname === "/login/"){
-      console.log("entrou no login /login/?redirect=true")
-    }
-    //  "/login/?redirect=true"
-    location.pathname === "/login/?redirect=true" &&
+    if (location.pathname === "/login/") {
       Utils.showToast({
         type: "success",
         description: "Conta ativada com sucesso!",
       });
+    }
   }, [location]);
 
   const handleLogin = () => {

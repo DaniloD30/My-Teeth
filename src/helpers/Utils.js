@@ -18,6 +18,28 @@ const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
+const isCpf = (strCPF) => {
+  var Soma;
+  var Resto;
+  Soma = 0;
+  if (strCPF === "00000000000") return false;
+
+  for (let i = 1; i <= 9; i += 1)
+    Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+  Resto = (Soma * 10) % 11;
+
+  if (Resto === 10 || Resto === 11) Resto = 0;
+  if (Resto !== parseInt(strCPF.substring(9, 10))) return false;
+
+  Soma = 0;
+  for (let i = 1; i <= 10; i += 1)
+    Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+  Resto = (Soma * 10) % 11;
+
+  if (Resto === 10 || Resto === 11) Resto = 0;
+  if (Resto !== parseInt(strCPF.substring(10, 11))) return false;
+  return true;
+};
 const filterData = (items, val) => {
   let searchedItems = items.filter((item) => {
     return Object.keys(item).some((key) => {
@@ -107,6 +129,22 @@ export const getFormatHour = (startTime, endTime) => {
   return `${horaStart}:${minStart} - ${horaEnd}:${minEnd}`;
 };
 
+const Trim = strTexto => {
+  // Substitúi os espaços vazios no inicio e no fim da string por vazio.
+  return strTexto.replace(/^s+|s+$/g, '');
+};
+
+export const isCEP = (strCEP, blnVazio) => {
+  // Caso o CEP não esteja nesse formato ele é inválido!
+  var objER = /^[0-9]{2}.[0-9]{3}-[0-9]{3}$/;
+
+  strCEP = Trim(strCEP);
+  if (strCEP.length > 0) {
+    if (objER.test(strCEP)) return true;
+    else return false;
+  } else return blnVazio;
+};
+
 export const getFormatDay = (startTime) => {
   let data = new Date(startTime);
   // item.pacient = item
@@ -129,6 +167,8 @@ const Utils = {
   fileToBase64,
   base64ToArrayBuffer,
   showToast,
+  isCEP,
+  isCpf,
   getFormatDay,
   getFormatHour,
   showError,

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   atendente: [],
   cliente: [],
   userPhoto: "",
+  address: []
 };
 
 export default function userReducer(state = INITIAL_STATE, action) {
@@ -28,6 +29,11 @@ export default function userReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         userPhoto: action?.payload,
+      };
+    case Constants.GET_ADDRESS:
+      return {
+        ...state,
+        address: action?.payload?.rows[0],
       };
     default:
       return state;

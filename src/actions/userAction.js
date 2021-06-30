@@ -1,6 +1,7 @@
 import Utils from "~/helpers/Utils";
 import Constants from "~/helpers/enums/Constants";
 import userService from "~/services/userService";
+
 export const getDataProfile =
   (token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
   (dispatch) => {
@@ -148,10 +149,93 @@ export const getAllDataProfile =
       });
   };
 
+export const editAddress =
+  (data, token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
+    // console.log("Entrou na action profile")
+    dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+    userService
+      .editAddressServ(data, token, data?.id)
+      // console.log("data ->", data)
+      .then((response) => {
+        if (response) {
+          fnCallback();
+          // Utils.SwalFire({
+          //   icon: "success",
+          //   title: "Sucesso",
+          //   text: "Registro Atualizado!",
+          // });
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
+        // Utils.SwalFire({
+        //   icon: "error",
+        //   title: "Erro",
+        //   text: "Tente novamente!",
+        // });
+      })
+      .finally(() => {
+        dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+      });
+  };
+
+export const addAddress =
+  (params = "", token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
+    dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+
+    userService
+      .addAddressService(params, token)
+      .then((response) => {
+        if (response) {
+          fnCallback();
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
+      })
+      .finally(() => {
+        dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+      });
+  };
+
+export const getAddress =
+  (token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
+    dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+
+    userService
+      .getAddressByPersonId(token, localStorage.getItem("userid"))
+      .then((response) => {
+        if (response) {
+          dispatch({
+            type: Constants.GET_ADDRESS,
+            payload: response?.data,
+          });
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
+      })
+      .finally(() => {
+        dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+      });
+  };
+
 const userAction = {
   getDataProfile,
   savePhoto,
   editProfile,
+  addAddress,
+  getAddress,
+  editAddress,
   getAllDataProfile,
 };
 export default userAction;

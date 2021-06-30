@@ -45,7 +45,7 @@ const ClinicForm = (props) => {
   );
 
   let clinic = {
-    company_name: "Clinica dasdadd",
+    company_name: "Clinica TESTE COMPANY",
     main_office: "Sim",
     cnpj: "12345678910123",
     state_registration: "1234321",

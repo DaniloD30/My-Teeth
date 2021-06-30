@@ -32,7 +32,10 @@ const INITIAL_STATE = {
     getAppointmentPacientLoading: false,
     addAppointmentLoading: false,
     editAppointmentLoading: false,
-    DeleteAppointmentLoading: false
+    DeleteAppointmentLoading: false,
+    editAddressLoading: false,
+    addAdressLoading: false,
+    getAdressLoading: false
   },
 };
 
