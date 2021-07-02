@@ -112,7 +112,7 @@ const RegisteredConsults = (props) => {
           )
         );
       } else {
-        console.log("entrou no get all")
+        // console.log("entrou no get all")
         dispatch(
           appointmentAction.getAllAppointments(
             getToken(),

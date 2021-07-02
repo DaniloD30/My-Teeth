@@ -69,7 +69,7 @@ const Scheduler = (props) => {
           }
         )
       );
-      console.log("ele executa isso aqui depois do add ")
+      // console.log("ele executa isso aqui depois do add ")
       dispatch(
         appointmentAction.getAllAppointments(
           getToken(),

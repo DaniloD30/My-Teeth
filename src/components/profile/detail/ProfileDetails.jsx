@@ -63,7 +63,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
     genre: "M",
     rg: null,
     cpf: null,
-    // picture: null,
+    picture: null,
     phone_mobile: null,
     phone_other: null,
     addres: {
