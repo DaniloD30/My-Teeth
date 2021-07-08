@@ -55,8 +55,29 @@ export const getAddressByPersonId = (token, id) => {
   });
 };
 
+export const getCitiesService = (token) => {
+  return new Promise((resolve, reject) => {
+    http
+      .get(`cities/`, { headers: { "x-access-token": token } })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+
+export const getStatesService = (token) => {
+  return new Promise((resolve, reject) => {
+    http
+      .get(`states/`, { headers: { "x-access-token": token } })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+
+
 const userService = {
   getDataUser,
+  getStatesService,
+  getCitiesService,
   getAddressByPersonId,
   addAddressService,
   editProfileServ,

@@ -35,7 +35,9 @@ const INITIAL_STATE = {
     DeleteAppointmentLoading: false,
     editAddressLoading: false,
     addAdressLoading: false,
-    getAdressLoading: false
+    getAdressLoading: false,
+    getStatesLoading: false,
+    getCitiesLoading: false
   },
 };
 

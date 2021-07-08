@@ -23,13 +23,40 @@ const Profile = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { history } = props;
+
   const getAdressLoading = useSelector(
     (state) => state.app?.loading?.getAdressLoading
+  );
+
+  const getCitiesLoading = useSelector(
+    (state) => state.app?.loading?.getCitiesLoading
+  );
+
+  const getStatesLoading = useSelector(
+    (state) => state.app?.loading?.getStatesLoading
   );
   useEffect(() => {
     if (isAuthenticated()) {
       dispatch(
         userAction.getAddress(getToken(), "getAdressLoading", (error) => {
+          if (error) {
+            Utils.showError(error);
+            return;
+          }
+        })
+      );
+
+      dispatch(
+        userAction.getCities(getToken(), "getCitiesLoading", (error) => {
+          if (error) {
+            Utils.showError(error);
+            return;
+          }
+        })
+      );
+
+      dispatch(
+        userAction.getStates(getToken(), "getStatesLoading", (error) => {
           if (error) {
             Utils.showError(error);
             return;
@@ -54,7 +81,7 @@ const Profile = (props) => {
               <ProfileForm />
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
-              {getAdressLoading ? (
+              {getAdressLoading || getCitiesLoading || getStatesLoading ? (
                 <Box style={{ display: "flex", justifyContent: "center" }}>
                   <CircularProgress />
                 </Box>

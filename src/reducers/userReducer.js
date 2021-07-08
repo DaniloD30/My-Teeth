@@ -7,7 +7,9 @@ const INITIAL_STATE = {
   atendente: [],
   cliente: [],
   userPhoto: "",
-  address: []
+  address: [],
+  cities: [],
+  states: [],
 };
 
 export default function userReducer(state = INITIAL_STATE, action) {
@@ -34,6 +36,16 @@ export default function userReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         address: action?.payload?.rows[0],
+      };
+    case Constants.GET_CITIES:
+      return {
+        ...state,
+        cities: action?.payload?.rows,
+      };
+    case Constants.GET_STATES:
+      return {
+        ...state,
+        states: action?.payload?.rows,
       };
     default:
       return state;

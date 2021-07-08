@@ -229,10 +229,69 @@ export const getAddress =
       });
   };
 
+export const getCities =
+  (token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
+    dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+
+    userService
+      .getCitiesService(token)
+      .then((response) => {
+        if (response) {
+          response.data.rows.forEach((item, index) => {
+            item.Text = item.name;
+          });
+          dispatch({
+            type: Constants.GET_CITIES,
+            payload: response?.data,
+          });
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
+      })
+      .finally(() => {
+        dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+      });
+  };
+
+export const getStates =
+  (token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
+    dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+
+    userService
+      .getStatesService(token)
+      .then((response) => {
+        if (response) {
+          response.data.rows.forEach((item, index) => {
+            item.Text = item.name;
+          });
+
+          dispatch({
+            type: Constants.GET_STATES,
+            payload: response?.data,
+          });
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
+      })
+      .finally(() => {
+        dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+      });
+  };
+
 const userAction = {
   getDataProfile,
   savePhoto,
   editProfile,
+  getStates,
+  getCities,
   addAddress,
   getAddress,
   editAddress,

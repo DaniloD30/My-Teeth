@@ -17,6 +17,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import RegisterInputText from "~/components/common/registerInputs/RegisterInputText";
 import userAction from "~/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
 import { isAuthenticated, getToken } from "~/services/auth";
 import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
 // import { useHistory } from "react-router-dom";
@@ -56,6 +57,10 @@ const ProfileDetails = ({ className, props, ...rest }) => {
   const editAddressLoading = useSelector(
     (state) => state.app?.loading?.editAddressLoading
   );
+
+  const cities = useSelector((state) => state.user?.cities);
+
+  const states = useSelector((state) => state.user?.states);
 
   let user = {
     name: "Teste ds",
@@ -129,8 +134,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
           <Formik
             initialValues={{ ...user }}
             validate={(values) => {
-              let errors = {
-              };
+              let errors = {};
               // console.log("values.cpf ->", values.cpf)
               // console.log(
               //   "Utils.isCpf(values.cpf) ->",
@@ -144,7 +148,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
               //   console.log("entrou")
               //   errors.addres.zip_code = "CPF Inválido";
               // }
-              
+
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
@@ -272,9 +276,14 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       <RegisterInputText label={"Nome"} name="name" />
                     </Grid>
                     <Grid item md={6} xs={12}>
-                      <RegisterInputText
+                      {/* <RegisterInputText
                         label={"Data de Nascimento"}
                         name="birthday"
+                      /> */}
+                        <RegisterMaskedTextInput
+                        label={"Data de Nascimento"}
+                        name="birthday"
+                        mask="99/99/9999"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
@@ -298,15 +307,21 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       <RegisterInputText label={"Picture"} name="picture" />
                     </Grid> */}
                     <Grid item md={6} xs={12}>
-                      <RegisterInputText
+                      {/* <RegisterInputText
                         label={"Celular"}
                         name="phone_mobile"
+                      /> */}
+                      <RegisterMaskedTextInput
+                        label={"Celular"}
+                        name="phone_mobile"
+                        mask="(99) 99999-9999"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
-                      <RegisterInputText
+                      <RegisterMaskedTextInput
                         label={"Celular outro"}
                         name="phone_other"
+                        mask="(99) 99999-9999"
                       />
                     </Grid>
                   </Grid>
@@ -321,7 +336,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
 
                     <Grid item md={6} xs={12}>
                       <RegisterInputText
-                        label={"Address"}
+                        label={"Endereço"}
                         name="addres.address"
                         maxL="255"
                       />
@@ -341,7 +356,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
-                      <RegisterMaskedTextInput
+                      <RegisterInputText
                         label={"Distrito"}
                         name="addres.district"
                         maxL="255"
@@ -360,17 +375,29 @@ const ProfileDetails = ({ className, props, ...rest }) => {
     citie_id: 1,
     person_id: 1, */}
                     <Grid item md={6} xs={12}>
-                      <RegisterInputText
+                      {/* <RegisterInputText
                         label={"state_id"}
                         name="addres.state_id"
                         maxL="20"
+                      /> */}
+                      <RegisterSelect
+                        label={"Estado"}
+                        name="addres.state_id"
+                        options={states}
+                        type="scheduler"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
-                      <RegisterInputText
+                      {/* <RegisterInputText
                         label={"citie_id"}
                         name="addres.citie_id"
                         maxL="20"
+                      /> */}
+                      <RegisterSelect
+                        label={"Cidade"}
+                        name="addres.citie_id"
+                        options={cities}
+                        type="scheduler"
                       />
                     </Grid>
                   </Grid>
