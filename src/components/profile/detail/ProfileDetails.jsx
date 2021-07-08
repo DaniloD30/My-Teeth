@@ -72,7 +72,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
       number: "14",
       complement: "Villa Bella",
       district: "Buraquinho",
-      zip_code: "42710120",
+      zip_code: "",
       state_id: 4,
       citie_id: 4,
       person_id: localStorage.getItem("userid"),
@@ -129,19 +129,22 @@ const ProfileDetails = ({ className, props, ...rest }) => {
           <Formik
             initialValues={{ ...user }}
             validate={(values) => {
-              const errors = {};
-
-              // if (!values.addres.zip_code) {
-              //   errors.addres.zip_code = "CEP Obrigatório";
-              // } else if (!Utils.isCEP(values.addres.zip_code)) {
-              //   errors.addres.zip_code = "CEP Inválido";
+              let errors = {
+              };
+              // console.log("values.cpf ->", values.cpf)
+              // console.log(
+              //   "Utils.isCpf(values.cpf) ->",
+              //   Utils.isCpf(values.cpf)
+              // );
+              if (!Utils.isCpf(values.cpf)) {
+                errors.cpf = "CPF Inválido";
+              }
+              //  console.log("zip_code ->", values.addres.zip_code)
+              // if (!Utils.ValidaCep(values.addres.zip_code)) {
+              //   console.log("entrou")
+              //   errors.addres.zip_code = "CPF Inválido";
               // }
-              // if (!values.cpf) {
-              //   errors.cpf = "Cpf Obrigatório";
-              // } else if (!Utils.isCpf(values.cpf)) {
-              //   errors.cpf = "CPF Inválido";
-              // }
-              //CPF RG
+              
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
@@ -348,7 +351,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       <RegisterMaskedTextInput
                         label={"CEP"}
                         name="addres.zip_code"
-                        mask="99999-999"
+                        mask="99.999-999"
                       />
                     </Grid>
                     {/* <Grid item md={6} xs={12}>

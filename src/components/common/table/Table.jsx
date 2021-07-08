@@ -127,7 +127,7 @@ const Table = (props) => {
                       <div>{col.labelRender(props.dataMain)}</div>
                     ) : (
                       <Typography
-                        style={{ fontSize: "16px", color: "#AFC3D2" }}
+                        style={{ fontSize: "18px", color: "#AFC3D2" }}
                       >
                         {col.label}
                       </Typography>
@@ -154,7 +154,7 @@ const Table = (props) => {
                   {props.columns.map((col, iCol) => (
                     <StyledTableCell key={iCol}>
                       <Typography
-                        style={{ fontSize: "12px", color: "#3D5564" }}
+                        style={{ fontSize: "1em", color: "#3D5564" }}
                       >
                         {row[col.name]}
                       </Typography>

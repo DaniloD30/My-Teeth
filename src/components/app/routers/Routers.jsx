@@ -42,7 +42,6 @@ export const Anonymous = (props) => {
     routes,
     (r) => !r.onlyAuthorized || r.onlyAuthorized === "both"
   );
-  console.log("Anonymous ->", anonymousRoutes);
   return (
     <Switch>
       {anonymousRoutes.map(
