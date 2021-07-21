@@ -37,7 +37,7 @@ const INITIAL_STATE = {
     addAdressLoading: false,
     getAdressLoading: false,
     getStatesLoading: false,
-    getCitiesLoading: false
+    getCitiesLoading: false,
   },
 };
 

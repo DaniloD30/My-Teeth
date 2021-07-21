@@ -10,6 +10,8 @@ export const getDataProfile =
       .getDataUser(token, localStorage.getItem("userid"))
       .then((response) => {
         if (response?.data) {
+          // console.log("data ->", response.data)
+
           dispatch({
             type: Constants.GET_DADOS_PROFILE,
             payload: response.data,
@@ -79,6 +81,7 @@ export const getAllDataProfile =
           let atendente = [];
           let cliente = [];
           let dentista = [];
+          let profissionais = [];
           // response?.data?.rows.map((item) => {
           //   if (item?.profile?.name === "Administrador") {
           //     admnistrador.push(item);
@@ -109,7 +112,13 @@ export const getAllDataProfile =
           //     cliente.push(item);
           //   }
           // }
+
           response?.data?.rows.forEach((item) => {
+            item.name = item?.person?.name;
+            item.cargo = item?.profile?.name;
+            item.celPhone = item?.person?.phone_mobile;
+            item.profile_id = item?.profile?.id;
+
             if (item?.profile?.name === "Administrador") {
               admnistrador.push(item);
             }
@@ -121,6 +130,9 @@ export const getAllDataProfile =
               // } else {
               //   dentista.push(item);
               // }
+
+              profissionais.push(item);
+
               idDentist &&
                 parseInt(idDentist, 10) === item?.id &&
                 dentista.push(item);
@@ -128,6 +140,7 @@ export const getAllDataProfile =
             }
             if (item?.profile?.name === "Atendente") {
               atendente.push(item);
+              profissionais.push(item);
             }
             if (item?.profile?.name === "Cliente") {
               cliente.push(item);
@@ -135,7 +148,13 @@ export const getAllDataProfile =
           });
           dispatch({
             type: Constants.GET_ALL_DADOS_PROFILE,
-            payload: { admnistrador, atendente, cliente, dentista },
+            payload: {
+              admnistrador,
+              atendente,
+              cliente,
+              dentista,
+              profissionais,
+            },
           });
         }
       })
@@ -286,6 +305,43 @@ export const getStates =
       });
   };
 
+export const editUser =
+  (
+    data,
+    token,
+    id,
+    isNotEditPass,
+    LOADING_IDENTIFICATOR = "",
+    fnCallback = () => {}
+  ) =>
+  (dispatch) => {
+    // console.log("Entrou na action profile")
+    if (isNotEditPass) {
+      //Flag necessaria, para controlar quando vai enviar a senha do MD5.
+      // Só é necessario passar por aqui, quando ele inserir uma novaSenha
+      // Se passar uma senha que ja está em MD5 novamente no md5, ela mudará.
+      var md5 = require("md5");
+      data.pass = md5(data.pass);
+    }
+
+    dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+    userService
+      .editUserService(data, token, id)
+      // console.log("data ->", data)
+      .then((response) => {
+        if (response) {
+          fnCallback();
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          fnCallback(error.response.data.message);
+        }
+      })
+      .finally(() => {
+        dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+      });
+  };
 const userAction = {
   getDataProfile,
   savePhoto,
@@ -296,5 +352,6 @@ const userAction = {
   getAddress,
   editAddress,
   getAllDataProfile,
+  editUser,
 };
 export default userAction;

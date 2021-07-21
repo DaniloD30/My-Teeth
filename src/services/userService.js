@@ -12,8 +12,8 @@ export const getDataUser = (token, id) => {
 
 export const getAllDataUser = (token) => {
   return new Promise((resolve, reject) => {
-    http
-      .get(`${USER}/`, { headers: { "x-access-token": token } })
+    http 
+      .get(`${USER}?clinic_id=${localStorage.getItem("clinic_id")}`, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
@@ -73,6 +73,14 @@ export const getStatesService = (token) => {
   });
 };
 
+export const editUserService = (data, token, id) => {
+  return new Promise((resolve, reject) => {
+    http
+      .put(`users/${id}`, data, { headers: { "x-access-token": token } })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
 
 const userService = {
   getDataUser,
@@ -83,6 +91,7 @@ const userService = {
   editProfileServ,
   getAllDataUser,
   editAddressServ,
+  editUserService
 };
 
 export default userService;

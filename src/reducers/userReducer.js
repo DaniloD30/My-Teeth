@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   admnistrador: [],
   atendente: [],
   cliente: [],
+  profissionais: [],
   userPhoto: "",
   address: [],
   cities: [],
@@ -26,6 +27,7 @@ export default function userReducer(state = INITIAL_STATE, action) {
         atendente: action?.payload?.atendente,
         cliente: action?.payload?.cliente,
         dentista: action?.payload?.dentista,
+        profissionais: action?.payload?.profissionais
       };
     case Constants.SAVE_PHOTO_USER:
       return {

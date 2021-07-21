@@ -5,7 +5,7 @@ import { Field } from "formik";
 import "./RegisterComponents.scss";
 
 const RegisterInputText = (props) => {
-	const { label, maxL, ...fieldProps  } = props;
+	const { label, maxL, type, ...fieldProps  } = props;
 
 	return (
 		<Box className="register-field">
@@ -14,7 +14,7 @@ const RegisterInputText = (props) => {
 			</Typography>
 			<Field
 				component={TextField}
-				type="text"
+				type={type ? "password" :"text"}
 				fullWidth
 				variant="outlined"
 				margin="dense"

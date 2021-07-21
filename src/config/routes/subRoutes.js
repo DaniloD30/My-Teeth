@@ -15,5 +15,9 @@ export const subRoutesUsers = [
   {
     label: "Tipo de Consulta",
     path: "/register/appointmentsTypeList"
+  },
+  {
+    label: "Profissionais",
+    path: "/register/professionals"
   }
 ];

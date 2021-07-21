@@ -20,12 +20,12 @@ import RegisterProcedure from "~/views/procedures/register/RegisterProcedure";
 // import CloneProfile from "~/views/cloneProfile/CloneProfile";
 
 import Patient from "~/assets/icons/patient.svg";
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import EventIcon from '@material-ui/icons/Event';
-import ApartmentIcon from '@material-ui/icons/Apartment';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import PostAddIcon from "@material-ui/icons/PostAdd";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import EventIcon from "@material-ui/icons/Event";
+import ApartmentIcon from "@material-ui/icons/Apartment";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 // import PersonAddIcon from "@material-ui/icons/PersonAdd";
 // import AccountBoxIcon from "@material-ui/icons/AccountBox";
 // import DescriptionIcon from "@material-ui/icons/Description";
@@ -36,6 +36,8 @@ import { subRoutesUsers } from "./subRoutes";
 import Profile from "~/views/profile/Profile";
 import NotFound from "../../views/notFound/NotFound";
 import MyClinic from "../../views/myClinic/MyClinic";
+import RegisteredProfessionals from "../../views/professionals/finder/RegisteredProfessionals";
+import RegisterProfessionals from "../../views/professionals/register/RegisterProfessionals";
 import RegisteredClinicType from "../../views/clinicType/finder/RegisteredClinicType";
 import RegisterClinicType from "../../views/clinicType/register/RegisterClinicType";
 import RegisteredAppointmentType from "../../views/appointmentsType/finder/RegisteredAppointmentType";
@@ -73,7 +75,7 @@ export const routes = [
     exact: true,
     title: () => "Home",
     menu: () => "Home",
-    iconMaterial:<DashboardIcon fontSize="large" />,
+    iconMaterial: <DashboardIcon fontSize="large" />,
     view: () => <Home />,
     onlyAuthorized: true,
     profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
@@ -163,6 +165,47 @@ export const routes = [
     // menu: () => "Usuários",
     // iconMaterial: <PersonAddIcon fontSize="large" />,
     view: () => <RegisterClinicType />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  // PROFESSIONALS
+  //
+  //
+  {
+    path: "/register/professionals",
+    exact: true,
+    title: () => "Profissionais",
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisteredProfessionals />,
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Profissionais" }],
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // subMenu: true,
+    // subRoutes: subRoutesUsers,
+    // mainPage: false,
+  },
+  {
+    path: "/register/professionalsInsert",
+    exact: true,
+    title: () => "Profissionais",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Profissionais" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterProfessionals />,
+    onlyAuthorized: true,
+    showOnMenu: false,
+    // mainPage: false,
+  },
+  {
+    path: "/register/professionalsInsert/:Id",
+    exact: true,
+    title: () => "Profissionais",
+    breadcrumbs: [{ label: "Cadastro" }, { label: "Profissionais" }],
+    // menu: () => "Usuários",
+    // iconMaterial: <PersonAddIcon fontSize="large" />,
+    view: () => <RegisterProfessionals />,
     onlyAuthorized: true,
     showOnMenu: false,
     // mainPage: false,
@@ -286,7 +329,7 @@ export const routes = [
     exact: true,
     title: () => "Agenda",
     menu: () => "Agenda",
-    iconMaterial: <EventIcon fontSize="large"/>,
+    iconMaterial: <EventIcon fontSize="large" />,
     view: () => <Scheduler />,
     onlyAuthorized: true,
     profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
@@ -298,7 +341,7 @@ export const routes = [
     exact: true,
     title: () => "Minha Clínica",
     menu: () => "Minha Clínica",
-    iconMaterial: <ApartmentIcon fontSize="large"/>,
+    iconMaterial: <ApartmentIcon fontSize="large" />,
     view: () => <MyClinic />,
     onlyAuthorized: true,
     profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],

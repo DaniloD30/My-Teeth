@@ -4,14 +4,8 @@ import { Link } from "react-router-dom";
 import logo1 from "~/assets/images/heroes.png";
 import "./SignUpForm.scss";
 // import "./styles.css";
-import {
-  Grid,
-
-  Button,
-  CircularProgress,
- 
-} from "@material-ui/core";
-import SaveIcon from '@material-ui/icons/Save';
+import { Grid, Button, CircularProgress } from "@material-ui/core";
+import SaveIcon from "@material-ui/icons/Save";
 import { ToastContainer } from "react-toastify";
 import Utils from "~/helpers/Utils";
 import { Formik, Form } from "formik";
@@ -47,9 +41,9 @@ export default function SignUpForm(props) {
     email: "",
     pass: "",
     genre: "",
-    profile_id: "",
-    plan_id: "",
-    clinic_id: "",
+    // profile_id: "",
+    // plan_id: "",
+    // clinic_id: "",
   };
   // async function handleRegister(e) {
   //     e.preventDefault();
@@ -118,12 +112,12 @@ export default function SignUpForm(props) {
               // if (!values.profile_id) {
               //   errors.profile_id = "Tipo de perfil Obrigatória";
               // }
-              if (!values.clinic_id) {
-                errors.clinic_id = "Clínica Obrigatória";
-              }
-              if (!values.plan_id) {
-                errors.plan_id = "Plano Obrigatório";
-              }
+              // if (!values.clinic_id) {
+              //   errors.clinic_id = "Clínica Obrigatória";
+              // }
+              // if (!values.plan_id) {
+              //   errors.plan_id = "Plano Obrigatório";
+              // }
 
               return errors;
             }}
@@ -141,7 +135,8 @@ export default function SignUpForm(props) {
                     // console.log("ENTROU NO CALLBACK");
                     Utils.showToast({
                       type: "success",
-                      description: "Usuário cadastrado com sucesso, e-mail de ativação enviado ao login cadastrado!",
+                      description:
+                        "Usuário cadastrado com sucesso, e-mail de ativação enviado ao login cadastrado!",
                     });
                   }
                 )
@@ -155,7 +150,7 @@ export default function SignUpForm(props) {
                       <RegisterInputText label={"Nome"} name="name" />
                     </Grid>
                     <Grid item xs={6}>
-                      <RegisterInputText label={"Senha"} name="pass" />
+                      <RegisterInputText label={"Senha"} name="pass" type="password" />
                     </Grid>
                     <Grid item xs={8}>
                       <RegisterInputText label={"E-mail"} name="email" />
@@ -163,7 +158,7 @@ export default function SignUpForm(props) {
                     <Grid item xs={4}>
                       <RegisterInputText label={"Gênero"} name="genre" />
                     </Grid>
-                    <Grid item xs={4}>
+                    {/* <Grid item xs={4}>
                       <RegisterInputText label={"Plano"} name="plan_id" />
                     </Grid>
                     <Grid item xs={4}>
@@ -181,7 +176,7 @@ export default function SignUpForm(props) {
                           "Cliente",
                         ]}
                       />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
 
                   <Button
@@ -195,10 +190,13 @@ export default function SignUpForm(props) {
                     onClick={submitForm}
                   >
                     {loginCreateLoading ? (
-												<CircularProgress style={{ height: 14, width: 14, marginRight: 8 }} color={"#fff"} />
-											) : (
-												<SaveIcon />
-											)}
+                      <CircularProgress
+                        style={{ height: 14, width: 14, marginRight: 8 }}
+                        color={"#fff"}
+                      />
+                    ) : (
+                      <SaveIcon />
+                    )}
                     Cadastrar
                   </Button>
                 </Form>
