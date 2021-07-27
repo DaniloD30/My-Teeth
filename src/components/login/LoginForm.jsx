@@ -30,6 +30,39 @@ export default function Logon() {
     }
   }, [location]);
 
+  useEffect(() => {
+    if (localStorage.getItem("x-access-token")) {
+      dispatch(
+        loginAction.loginUserAboutRefreshWindow("loginLoading", (error) => {
+          if (error) {
+            Utils.showError(error);
+            return;
+          }
+          dispatch(
+            userAction.getDataProfile(
+              getToken(),
+              "dataUserLoading",
+              (error) => {
+                if (error) {
+                  Utils.showError(error);
+                  return;
+                }
+
+                // Redireciona para a tela HOME com as permissões
+              }
+            )
+          );
+
+          // Redireciona para a tela HOME com as permissões
+        })
+      );
+    }
+  }, [dispatch]);
+
+  // if (localStorage.getItem("x-access-token")) {
+  // dispatch(loginAction.loginUserAboutRefreshWindow());
+  // }
+
   const handleLogin = () => {
     dispatch(
       loginAction.createLogin(dataLogin?.values, "loginLoading", (error) => {

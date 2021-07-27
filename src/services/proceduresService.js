@@ -14,7 +14,7 @@ export const addProcedureService = (data, token) => {
 export const getProcedureService = (token) => {
   return new Promise((resolve, reject) => {
     http
-      .get(`${PROCEDURE}/`, { headers: { "x-access-token": token } })
+      .get(`${PROCEDURE}?clinic_id=${localStorage.getItem("clinic_id")}`, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

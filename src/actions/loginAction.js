@@ -48,7 +48,7 @@ export const createLogin =
           dispatch(addProfileId(response?.data?.profileid));
           // console.log("response?.data?.profileid", response?.data?.profileid);
           // localStorage.setItem("profile_id", response?.data?.profileid);
-
+          localStorage.setItem("profileid", response?.data?.profileid);
           localStorage.setItem("userid", response?.data?.userid);
           fnCallback();
         }
@@ -64,11 +64,28 @@ export const createLogin =
       });
   };
 
+const loginUserAboutRefreshWindow =
+  (LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
+    dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
+    let data = {
+      auth: true,
+    };
+    dispatch({
+      type: Constants.CREATE_LOGIN,
+      payload: data,
+    });
+    dispatch(addProfileId(parseInt(localStorage.getItem("profileid"), 10)));
+    dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+    fnCallback();
+  };
 const logoutUser = () => (dispatch) => {
   // dispatch({ type: Constants.CLEAR_REDUCER_APPOINTMENTS });
   // dispatch({ type: Constants.CLEAR_REDUCER_APPOINTMENTS });
-  localStorage.removeItem("profile_id");
+  // localStorage.removeItem("profile_id");
+  localStorage.removeItem("profileid");
   localStorage.removeItem("userid");
+  localStorage.removeItem("clinic_id");
   // dispatch({ type: Constants.LOGOUT });
   logout();
   dispatch({ type: Constants.RESET_STORE });
@@ -82,6 +99,7 @@ const addProfileId = (data) => (dispatch) => {
 };
 const loginAction = {
   createAccount,
+  loginUserAboutRefreshWindow,
   createLogin,
   logoutUser,
 };

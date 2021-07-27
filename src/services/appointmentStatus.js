@@ -14,7 +14,7 @@ export const addAppointmentStatusService = (data, token) => {
 export const getAppointmentStatus = (token) => {
   return new Promise((resolve, reject) => {
     http
-      .get(`${APPOINTMENT}/`, { headers: { "x-access-token": token } })
+      .get(`${APPOINTMENT}?clinic_id=${localStorage.getItem("clinic_id")}`, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

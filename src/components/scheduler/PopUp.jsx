@@ -120,6 +120,7 @@ const PopUp = ({
                 appointmentAction.getAllAppointments(
                   getToken(),
                   "dataAppointmentsLoading",
+                  false,
                   (error) => {
                     if (error) {
                       Utils.showError(error);
@@ -198,6 +199,7 @@ const PopUp = ({
                             appointmentAction.getAllAppointments(
                               getToken(),
                               "dataAppointmentsLoading",
+                              false,
                               (error) => {
                                 if (error) {
                                   Utils.showError(error);
@@ -245,6 +247,7 @@ const PopUp = ({
                             appointmentAction.getAllAppointments(
                               getToken(),
                               "dataAppointmentsLoading",
+                              false,
                               (error) => {
                                 if (error) {
                                   Utils.showError(error);

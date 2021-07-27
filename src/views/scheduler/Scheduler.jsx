@@ -28,9 +28,9 @@ const Scheduler = (props) => {
     (state) => state.appointment?.appointments
   );
 
-  const addAppointmentLoading = useSelector(
-    (state) => state.appointment?.addAppointmentLoading
-  );
+  // const addAppointmentLoading = useSelector(
+  //   (state) => state.appointment?.addAppointmentLoading
+  // );
   const profileData = useSelector((state) => state.login.profileId);
 
   const getStatusLoading = useSelector(
@@ -74,6 +74,7 @@ const Scheduler = (props) => {
         appointmentAction.getAllAppointments(
           getToken(),
           "dataAppointmentsLoading",
+          false,
           (error) => {
             if (error) {
               Utils.showError(error);

@@ -31,7 +31,7 @@ export const addAppointment =
   };
 
 export const getAllAppointments =
-  (token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (token, LOADING_IDENTIFICATOR = "", flagMyConsults, fnCallback = () => {}) =>
   (dispatch) => {
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
     // necessario passar o ID da clinic aqui. Cada clinica responsavel apenas pelo dados
@@ -54,7 +54,16 @@ export const getAllAppointments =
             item.hour = Utils.getFormatHour(item?.StartTime, item?.EndTime);
             item.day = Utils.getFormatDay(item?.StartTime);
           });
-
+          if(flagMyConsults){
+            /*
+            ---- Flag necessária para a tela de Consultas.
+            ---- Por enquanto, essa flag só vai ser TRUE, na view myConsults
+            */
+            dispatch({
+              type: Constants.GET_ALL_APPOINTMENTS_MYCONSULTS,
+              payload: response.data.appointments,
+            });
+          }
           dispatch({
             type: Constants.GET_ALL_APPOINTMENTS,
             payload: response.data.appointments,

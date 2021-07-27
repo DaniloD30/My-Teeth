@@ -2,6 +2,7 @@ import Constants from "~/helpers/enums/Constants";
 
 const INITIAL_STATE = {
   appointments: [],
+  appointmentsMyConsults: [],
   appointmentsByIdDentist: [],
   appointmentByIdPacient: [],
   appointmentByClinic: [],
@@ -13,6 +14,11 @@ export default function appointmentReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         appointments: action?.payload.rows,
+      };
+    case Constants.GET_ALL_APPOINTMENTS_MYCONSULTS:
+      return {
+        ...state,
+        appointmentsMyConsults: action?.payload.rows,
       };
     case Constants.GET_ALL_APPOINTMENTS_DENTIST:
       return {

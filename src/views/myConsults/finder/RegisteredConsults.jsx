@@ -42,7 +42,7 @@ const RegisteredConsults = (props) => {
   //   (state) => state.app?.loading?.deleteClinicLoading
   // );
   const appointmentsData = useSelector(
-    (state) => state.appointment?.appointments
+    (state) => state.appointment?.appointmentsMyConsults
   );
 
   // useEffect(() => {
@@ -117,6 +117,7 @@ const RegisteredConsults = (props) => {
           appointmentAction.getAllAppointments(
             getToken(),
             "dataAppointmentsLoading",
+            true,
             (error) => {
               if (error) {
                 Utils.showError(error);
