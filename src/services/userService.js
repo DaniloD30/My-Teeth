@@ -12,8 +12,8 @@ export const getDataUser = (token, id) => {
 
 export const getAllDataUser = (token) => {
   return new Promise((resolve, reject) => {
-    http 
-      .get(`${USER}?clinic_id=${localStorage.getItem("clinic_id")}`, { headers: { "x-access-token": token } })
+    http  //Esse endpoint não precisa filtrar pelo clinic_id, o filtro é feito direto na action
+      .get(`${USER}`, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

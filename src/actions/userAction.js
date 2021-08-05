@@ -114,36 +114,51 @@ export const getAllDataProfile =
           // }
 
           response?.data?.rows.forEach((item) => {
-            item.name = item?.person?.name;
-            item.cargo = item?.profile?.name;
-            item.celPhone = item?.person?.phone_mobile;
-            item.profile_id = item?.profile?.id;
+            // console.log("item -->", item)
+            if (item.clinicaccesses[0]) {
+              let clinicIdUser = item?.clinicaccesses[0].clinic_id;
+              if (
+                parseInt(localStorage.getItem("clinic_id"), 10) === clinicIdUser
+              ) {
+             
+                item.name = item?.person?.name;
+                item.cargo = item?.profile?.name;
+                item.celPhone = item?.person?.phone_mobile;
+                item.profile_id = item?.profile?.id;
 
-            if (item?.profile?.name === "Administrador") {
-              admnistrador.push(item);
-            }
-            if (item?.profile?.name === "Dentista") {
-              // if (idDentist) {
-              //   if (parseInt(idDentist, 10) === item?.id) {
-              //     dentista.push(item);
-              //   }
-              // } else {
-              //   dentista.push(item);
-              // }
+                if (item?.profile?.name === "Administrador") {
+                  admnistrador.push(item);
+                }
+                if (item?.profile?.name === "Dentista") {
+                  profissionais.push(item);
+                  console.log("idDentist ->", idDentist)
+                  console.log("item id", item?.id)
+                  if (idDentist) {
+                    if (parseInt(idDentist, 10) === item?.id) {
+                      dentista.push(item);
+                    }
+                  } else {
+                    dentista.push(item);
+                  }
 
-              profissionais.push(item);
-
-              idDentist &&
-                parseInt(idDentist, 10) === item?.id &&
-                dentista.push(item);
-              !!!idDentist && dentista.push(item);
-            }
-            if (item?.profile?.name === "Atendente") {
-              atendente.push(item);
-              profissionais.push(item);
-            }
-            if (item?.profile?.name === "Cliente") {
-              cliente.push(item);
+                  /*
+              LÓGICA DO DENTISTA NECESSÁRIA, PARA QUE SE FOR O DENTISTA LOGADO NO SISTEMA
+              O SISTEMA APENAS RECONHECERÁ ELE COMO DENTISTA, PARA MOSTRAR NA AGENDA APENAS
+              ELE
+              */
+                  // idDentist &&
+                  //   parseInt(idDentist, 10) === item?.id &&
+                  //   dentista.push(item);
+                  // !!!idDentist && dentista.push(item);
+                }
+                if (item?.profile?.name === "Atendente") {
+                  atendente.push(item);
+                  profissionais.push(item);
+                }
+                if (item?.profile?.name === "Cliente") {
+                  cliente.push(item);
+                }
+              }
             }
           });
           dispatch({
