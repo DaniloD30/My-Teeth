@@ -91,14 +91,14 @@ const Table = (props) => {
                 search={filterDataArray}
               />
             </div>
-            <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+            {/* <div style={{ marginLeft: "10px", marginRight: "10px" }}>
               <MenuRange
                 label={"Status"}
                 value={"Ativos"}
                 // onChange={(event) => handleStatus(event.target.value)}
                 options={["Ativos", "Inativos", "Todos"]}
               />
-            </div>
+            </div> */}
 
             {/* <div style={{ marginLeft: "10px" }}>
             <MenuRange
@@ -156,7 +156,11 @@ const Table = (props) => {
                       <Typography
                         style={{ fontSize: "1em", color: "#3D5564" }}
                       >
-                        {row[col.name]}
+                        {row[col.name] === null ? (
+                          <p style={{color: "#29abe2", fontStyle: "italic"}}>
+                            {col.label} não cadastrado
+                          </p>
+                        ) : row[col.name]}
                       </Typography>
                       {/* )} */}
                     </StyledTableCell>

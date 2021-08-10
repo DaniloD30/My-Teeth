@@ -14,7 +14,7 @@ import Dropdown from "~/components/common/dropdown/Dropdown";
 import Item from "~/components/common/dropdown/Item";
 import ButtonStyled from "~/components/common/button/ButtonStyled";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-
+import Utils from "~/helpers/Utils";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 // import logo2 from "~/assets/images/tpcLogo3.jpg";
 import myteeth01 from "~/assets/images/Myteeth01.png";
@@ -23,7 +23,10 @@ import Menu from "~/components/app/menu/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import loginAction from "~/actions/loginAction";
 import "./Layout.scss";
-import Utils from "~/helpers/Utils";
+import { ToastContainer } from "react-toastify";
+import Countdown from "react-countdown";
+import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router";
 const anonymousTheme = createMuiTheme({
   palette: {
     primary: {
@@ -48,10 +51,10 @@ const AuthenticatedLayout = (props) => {
 
   const userDataProfile = useSelector((state) => state.user?.userDataProfile);
   const [imageUser, setImage] = useState("");
+  let history = useHistory();
   const dataUserLoading = useSelector(
     (state) => state.app?.loading?.dataUserLoading
   );
-
   const autheticatedTheme = createMuiTheme({
     palette: {
       primary: {
@@ -83,20 +86,78 @@ const AuthenticatedLayout = (props) => {
     dispatch(loginAction.logoutUser());
   };
 
+  const profile = () => {
+    history.push("/profile");
+    // history.push("/register/clinicInsert");
+  };
+
+
+  // O token expira em 6 horas
+  // setTimeout(function expireToken() {
+  //   console.log("Deslogou")
+  //   dispatch(loginAction.logoutUser());
+  //   clearTimeout();
+  // }, 60000);
+  //21600000 6h
+  // setTimeout(function expireTokenAlert() {
+  //   console.log("Aviso para deslogar")
+  //   Utils.showError("Relogue no sistema para reativar o token!");
+  //   clearTimeout();
+  // }, 30000 ); 60000
+  //18000000 5h
+
+  const handlerOnCompleteCountdown = () => {
+    dispatch(loginAction.logoutUser());
+  };
+
+  const handlerOnCompleteCountdownAlert = () => {
+    Utils.showError("Relogue no sistema para reativar o token!");
+  };
+
+  const comeBack = () => {
+    history.push("/home")
+    
+  };
+
   return (
     <ThemeProvider theme={autheticatedTheme}>
+      <ToastContainer />
       <Box className="ceabs-layout">
         <Box className="ceabs-header">
           <Toolbar>
+            <div style={{ display: "none" }}>
+              <Countdown
+                // key={keyInterval}
+                date={Date.now() + 21600000}
+                intervalDelay={0}
+                precision={3}
+                onComplete={handlerOnCompleteCountdown}
+              />
+              <Countdown
+                // key={keyInterval}
+                date={Date.now() + 18000000}
+                intervalDelay={0}
+                precision={3}
+                onComplete={handlerOnCompleteCountdownAlert}
+              />
+            </div>
+
             <div className="icon-menu-list">
               {/* <ListIcon onClick={handleToogleToolbar} />
                */}
               {/* <Typography variant="h3">Nome da clínica</Typography> */}
-              <img className="logoImg" src={myteeth02} alt={"ceabs1"} width={110} height={70} />
+              <img
+                className="logoImg"
+                onClick={() => comeBack()}
+                src={myteeth02}
+                alt={"ceabs1"}
+                width={110}
+                height={70}
+              />
             </div>
 
             <div className="icon-menu-logo">
-              <img className="logoImg" src={myteeth01} alt={"ceabs"} />
+              <img className="logoImg" onClick={() => comeBack()} src={myteeth01} alt={"ceabs"} />
             </div>
 
             <aside>
@@ -133,13 +194,16 @@ const AuthenticatedLayout = (props) => {
                   </Typography>
                   <Dropdown>
                     <Item>
+                    <ButtonStyled onClick={() => profile()}>
+                        <Typography>Dados pessoais</Typography>
+                      </ButtonStyled>
                       <ButtonStyled onClick={() => logout()}>
-                        <Typography>Logout</Typography>
+                        <Typography>Sair</Typography>
                       </ButtonStyled>
                     </Item>
                   </Dropdown>
                 </div>
-                <Avatar src={imageUser} />
+                <Avatar style={{width: "45px", height: "45px"}} src={imageUser} />
               </div>
             </aside>
           </Toolbar>
@@ -190,4 +254,5 @@ const baseLayout = {
   AuthenticatedLayout,
   AnonymousLayout,
 };
-export default baseLayout;
+// export default ;
+export default withRouter(baseLayout);

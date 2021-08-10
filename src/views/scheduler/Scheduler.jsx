@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@material-ui/core";
 import Utils from "~/helpers/Utils";
 import { ToastContainer } from "react-toastify";
+import { Typography } from "@material-ui/core";
 
 const Scheduler = (props) => {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ const Scheduler = (props) => {
   const dataAllUserLoading = useSelector(
     (state) => state.app?.loading?.dataAllUserLoading
   );
+
+  const dentistasData = useSelector((state) => state.user?.dentista);
 
   const dataAppointmentsLoading = useSelector(
     (state) => state.app?.loading?.dataAppointmentsLoading
@@ -145,15 +148,25 @@ const Scheduler = (props) => {
       <ToastContainer />
       <Page>
         {dataAllUserLoading ||
-        dataAppointmentsLoading ||
-        appointmentTypeLoading ||
-        getStatusLoading ? (
+          dataAppointmentsLoading ||
+          appointmentTypeLoading ||
+          getStatusLoading ? (
           <Box style={{ display: "flex", justifyContent: "center" }}>
             <CircularProgress />
           </Box>
-        ) : (
-          <SchedulerComponent dataAppointment={appointmentsData} />
-        )}
+        ) :
+          appointmentsData?.length < 1 ? (
+            <Typography variant="h3" style={{ textAlign: "center" }}>
+              Nenhuma consulta encontrada!
+            </Typography>
+          ) :
+            dentistasData?.length < 1 ? (
+              <Typography variant="h3" style={{ textAlign: "center" }}>
+                Nenhum dentista encontrado!
+              </Typography>
+            ) : (
+              <SchedulerComponent dataAppointment={appointmentsData} />
+            )}
       </Page>
     </>
   );

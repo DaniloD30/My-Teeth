@@ -183,7 +183,7 @@ const RegisteredProfessionals = (props) => {
                     dataSource={professionals}
                     edit={edit}
                     del={handleDelete}
-                    excluir={true}
+                    excluir={false}
                     editar={true}
                   />
                 )}
