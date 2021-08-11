@@ -7,6 +7,8 @@ import {
   Button,
   CircularProgress,
   Paper,
+  Switch,
+  FormControlLabel,
   // Typography,
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
@@ -35,6 +37,12 @@ const ProfessionalForm = (props) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const { location } = history;
+  const [state, setState] = React.useState({
+    checkedB: true,
+  });
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
   // const { t } = useTranslation();
   // const { loading } = useSelector((state) => state.app);
   // const getProfilesLoading = useSelector(
@@ -105,12 +113,15 @@ const ProfessionalForm = (props) => {
             onSubmit={(values, { setSubmitting }) => {
               if (location?.state) {
                 let dataUser = {
+                  //Logica da senha necessaria, para quando ser uma nova senha,
+                  // essa nova senha passar pelo MD5
                   pass:
                     values.pass !== location?.state?.pass
                       ? values.pass
                       : location?.state?.pass,
                   profileId: values?.profileId,
                   clinic_id: localStorage.getItem("clinic_id"),
+                  active: state.checkedB ? 1 : 0,
                 };
                 if (isAuthenticated()) {
                   dispatch(
@@ -151,7 +162,7 @@ const ProfessionalForm = (props) => {
                 //               params = "",
                 // token,
                 // LOADING_IDENTIFICATOR = "",
-                values.profile_id = values.profileId
+                values.profile_id = values.profileId;
                 if (isAuthenticated()) {
                   dispatch(
                     loginAction.createAccount(
@@ -248,6 +259,22 @@ const ProfessionalForm = (props) => {
                         ]}
                       />
                     </Grid>
+
+                    {location?.state && (
+                      <Grid item xs={4}>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={state.checkedB}
+                              onChange={handleChange}
+                              name="checkedB"
+                              color="primary"
+                            />
+                          }
+                          label={state.checkedB ? "Ativo" : `Inativo `}
+                        />
+                      </Grid>
+                    )}
                   </Grid>
 
                   <Button

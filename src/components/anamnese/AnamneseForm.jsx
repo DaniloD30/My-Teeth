@@ -1,50 +1,64 @@
-import { Box, Divider } from "@material-ui/core";
+import { Box, Divider, TextField, Button } from "@material-ui/core";
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import RadioMaterialUi from "../common/radioMaterialUi/RadioMaterialUi";
 
 const AnamneseForm = (props) => {
   const [value, setValue] = React.useState({
     data: {
-      sexo: "male",
-      teste: "teste",
+      dor: "",
     },
   });
+
   const handleChange = (event) => {
     event.persist();
-    setValue((formState) => ({
-      ...formState,
+    console.log("event ->", event.target.name);
+    console.log("value ->", event.target.value);
+    setValue((value) => ({
+      ...value,
       data: {
-        ...formState.data,
+        ...value.data,
         [event.target.name]: event.target.value,
       },
     }));
   };
-  //   const handleChange = (event) => {
-  //     setValue(event.target.value);
-  //   };
+
   const valuesArrayRadio = [
     {
       title: "Sente alguma dor nos dentes?",
-      value: value?.data?.sexo,
-      name: "sexo",
+      value: value?.data?.dor,
+      name: "dor",
       handleC: handleChange,
-      label: ["Female", "Male"],
-      valueLabel: ["female", "male"],
-    },
-    {
-      title: "Teste",
-      value: value?.data?.teste,
-      name: "teste",
-      handleC: handleChange,
-      label: ["Teste", "Teste 2"],
-      valueLabel: ["teste", "teste2"],
+      label: ["Sim", "Não"],
+      yesAsk: "Qual intensidade?",
     },
   ];
+
+  const handleSubmit = () => {
+    // dispatch anamnese here
+  };
+
   // PARA O OUTRO, TEREI QUE PASSAR UMA PROP TBM, Ex: OtherDor
   return (
     <>
       <Box>
+        <Box style={{ padding: "10px", width: "50%" }}>
+          <Button
+            id="submit-button"
+            variant="contained"
+            // className="save-button"
+            color="primary"
+            size="large"
+            // fullWidth
+            disableElevation
+            // disabled={addAppointmentTypeLoading || editAppointmentTypeLoading}
+            onClick={handleSubmit}
+            // disabled={loading.driver}
+            // startIcon={loading.driver ? <CircularProgress size={18} /> : <ConfirmIcon />}
+            // startIcon={<ConfirmIcon />}
+          >
+            Salvar
+          </Button>
+        </Box>
         <Box style={{ padding: "10px", width: "50%" }}>
           <TextField
             id="standard-full-width"
@@ -53,6 +67,7 @@ const AnamneseForm = (props) => {
             placeholder="Queixa Principal?"
             // helperText="Full width!"
             fullWidth
+            onChange={handleChange}
             margin="normal"
             InputLabelProps={{
               shrink: true,
@@ -69,6 +84,7 @@ const AnamneseForm = (props) => {
             handleC={handleChange}
             label={item?.label}
             valueLabel={item?.valueLabel}
+            yesAsk={item.yesAsk}
           />
         ))}
       </Box>
