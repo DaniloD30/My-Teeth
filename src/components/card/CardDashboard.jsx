@@ -1,37 +1,89 @@
-import React from "react";
-import { Box, Card, Divider, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from "@material-ui/core";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import MoneyIcon from "@material-ui/icons/Money";
+import { red } from "@material-ui/core/colors";
 
-
-const CardDashboard = (props) => {
-  const { color, title, icon } = props;
-  return (
-    <>
-      <Card
+const CardDashboard = ({ name, colorAvatar, props }) => (
+  <Card
+    style={{ height: "100%" }}
+    //  {...props}
+  >
+    <CardContent>
+      <Grid
+        container
+        spacing={3}
         style={{
-          width: "150px",
-          backgroundColor: color,
-          padding: "10px",
+          justifyContent: "space-between",
         }}
       >
-        <Box
+        <Grid item>
+          <Typography color="textSecondary" gutterBottom variant="h6">
+            {name}
+          </Typography>
+          <Typography color="textPrimary" variant="h3">
+            $24,000
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Avatar
+            style={{
+              backgroundColor: colorAvatar,
+              height: 56,
+              width: 56,
+            }}
+            // sx={{
+            //   backgroundColor: red[600],
+            //   height: 56,
+            //   width: 56,
+            // }}
+          >
+            <MoneyIcon />
+          </Avatar>
+        </Grid>
+      </Grid>
+      <Box
+        style={{
+          pt: 2,
+          display: "flex",
+          alignItems: "center",
+        }}
+        // sx={{
+        //   pt: 2,
+        //   display: "flex",
+        //   alignItems: "center",
+        // }}
+      >
+        <ArrowDownwardIcon
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            color: red[900],
           }}
+        />
+        <Typography
+          style={{
+            color: red[900],
+            mr: 1,
+          }}
+          // sx={{
+          //   color: red[900],
+          //   mr: 1
+          // }}
+          variant="body2"
         >
-          <Typography variant="h4">{title}</Typography>
-          <Box style={{ marginRight: "20px" }}>
-            {icon}
-          </Box>
-        </Box>
-        <Divider style={{ marginTop: "10px", padding: "1px" }} />
-        <Box style={{ padding: "10px" }}>
-          <Typography variant="h3">1229</Typography>
-        </Box>
-      </Card>
-    </>
-  );
-};
+          12%
+        </Typography>
+        <Typography color="textSecondary" variant="caption">
+          Since last month
+        </Typography>
+      </Box>
+    </CardContent>
+  </Card>
+);
 
 export default CardDashboard;

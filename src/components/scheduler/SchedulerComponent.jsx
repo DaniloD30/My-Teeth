@@ -320,7 +320,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
         // ref={(schedule) => (scheduleObj = schedule)}
         // cssClass="schedule-drag-drop"
         width="100%"
-        height="650px"
+        height="100%"
         currentView="Day"
         // selectedDate={new Date(2020, 6, 13)}
         ref={scheduler}

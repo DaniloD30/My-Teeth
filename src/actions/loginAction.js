@@ -76,8 +76,9 @@ const loginUserAboutRefreshWindow =
       payload: data,
     });
     dispatch(addProfileId(parseInt(localStorage.getItem("profileid"), 10)));
-    dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
     fnCallback();
+    dispatch(Utils.endLoading(LOADING_IDENTIFICATOR));
+
   };
 const logoutUser = () => (dispatch) => {
   // dispatch({ type: Constants.CLEAR_REDUCER_APPOINTMENTS });

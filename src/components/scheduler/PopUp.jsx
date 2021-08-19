@@ -166,14 +166,15 @@ const PopUp = ({
               if (!values.userpatient_id) {
                 errors.userpatient_id = "Selecione um paciente";
               }
-              if (!values.appointmentsStatus_id) {
-                errors.appointmentsStatus_id = "Selecione um Status";
-              }
+              // if (!values.appointmentsStatus_id) {
+              //   errors.appointmentsStatus_id = "Selecione um Status";
+              // }
 
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
               values.userregistered_id = localStorage.getItem("userid");
+              // values.appointmentsStatus_id = 2 
               if (flagEdit) {
                 if (isAuthenticated()) {
                   dispatch(
