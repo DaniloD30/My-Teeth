@@ -10,6 +10,7 @@ import Utils from "~/helpers/Utils";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { withRouter } from "react-router";
+import loginAction from "~/actions/loginAction";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -40,6 +41,14 @@ const Profile = (props) => {
       dispatch(
         userAction.getAddress(getToken(), "getAdressLoading", (error) => {
           if (error) {
+            if (error === "Failed to authenticate token!") {
+              Utils.showError("Não autenticado!");
+              dispatch(loginAction.logoutUser());
+              // setTimeout(function () {
+              //   props.history.push("/login");
+              // }, 3000);
+              return;
+            }
             Utils.showError(error);
             return;
           }
@@ -49,6 +58,14 @@ const Profile = (props) => {
       dispatch(
         userAction.getCities(getToken(), "getCitiesLoading", (error) => {
           if (error) {
+            if (error === "Failed to authenticate token!") {
+              Utils.showError("Não autenticado!");
+              dispatch(loginAction.logoutUser());
+              // setTimeout(function () {
+              //   props.history.push("/login");
+              // }, 3000);
+              return;
+            }
             Utils.showError(error);
             return;
           }
@@ -58,6 +75,14 @@ const Profile = (props) => {
       dispatch(
         userAction.getStates(getToken(), "getStatesLoading", (error) => {
           if (error) {
+            if (error === "Failed to authenticate token!") {
+              Utils.showError("Não autenticado!");
+              dispatch(loginAction.logoutUser());
+              // setTimeout(function () {
+              //   props.history.push("/login");
+              // }, 3000);
+              return;
+            }
             Utils.showError(error);
             return;
           }

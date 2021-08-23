@@ -12,7 +12,7 @@ import { Box, CircularProgress } from "@material-ui/core";
 import Utils from "~/helpers/Utils";
 import { ToastContainer } from "react-toastify";
 import { Typography } from "@material-ui/core";
-
+import loginAction from "~/actions/loginAction";
 const Scheduler = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
@@ -54,6 +54,14 @@ const Scheduler = (props) => {
           "dataAllUserLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }
@@ -66,6 +74,14 @@ const Scheduler = (props) => {
           "appointmentTypeLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }
@@ -80,6 +96,14 @@ const Scheduler = (props) => {
           false,
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }
@@ -93,6 +117,14 @@ const Scheduler = (props) => {
           "getStatusLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }

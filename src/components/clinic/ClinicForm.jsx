@@ -9,6 +9,7 @@ import {
   Paper,
   // Typography,
 } from "@material-ui/core";
+import loginAction from "~/actions/loginAction";
 import { Formik, Form } from "formik";
 import Utils from "~/helpers/Utils";
 // import { useTranslation } from "react-i18next";
@@ -110,6 +111,14 @@ const ClinicForm = (props) => {
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }
@@ -148,6 +157,14 @@ const ClinicForm = (props) => {
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }

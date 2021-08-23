@@ -20,7 +20,7 @@ import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
-
+import loginAction from "~/actions/loginAction";
 const RegisteredConsults = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
@@ -105,6 +105,14 @@ const RegisteredConsults = (props) => {
             "getAppointmentsDentist",
             (error) => {
               if (error) {
+                if (error === "Failed to authenticate token!") {
+                  Utils.showError("Não autenticado!");
+                  dispatch(loginAction.logoutUser());
+                  // setTimeout(function () {
+                  //   props.history.push("/login");
+                  // }, 3000);
+                  return;
+                }
                 Utils.showError(error);
                 return;
               }
@@ -120,6 +128,14 @@ const RegisteredConsults = (props) => {
             true,
             (error) => {
               if (error) {
+                if (error === "Failed to authenticate token!") {
+                  Utils.showError("Não autenticado!");
+                  dispatch(loginAction.logoutUser());
+                  // setTimeout(function () {
+                  //   props.history.push("/login");
+                  // }, 3000);
+                  return;
+                }
                 Utils.showError(error);
                 return;
               }
@@ -162,6 +178,14 @@ const RegisteredConsults = (props) => {
           "deleteClinicLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }

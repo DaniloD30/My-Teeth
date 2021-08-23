@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 // import profileAction from "../../../actions/profileAction";
 import procedureAction from "~/actions/procedureAction";
+import loginAction from "~/actions/loginAction";
 import { isAuthenticated, getToken } from "~/services/auth";
 import Page from "~/components/common/page/Page";
 import Table from "~/components/common/table/Table";
@@ -44,6 +45,14 @@ const RegisteredProcedure = (props) => {
             "getProceduresLoading",
             (error) => {
               if (error) {
+                if (error === "Failed to authenticate token!") {
+                  Utils.showError("Não autenticado!");
+                  dispatch(loginAction.logoutUser());
+                  // setTimeout(function () {
+                  //   props.history.push("/login");
+                  // }, 3000);
+                  return;
+                }
                 Utils.showError(error);
                 return;
               }
@@ -98,6 +107,14 @@ const RegisteredProcedure = (props) => {
           "getProceduresLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }
@@ -135,6 +152,14 @@ const RegisteredProcedure = (props) => {
           "deleteProcedureLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }

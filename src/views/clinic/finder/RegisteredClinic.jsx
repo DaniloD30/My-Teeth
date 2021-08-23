@@ -17,6 +17,7 @@ import Table from "~/components/common/table/Table";
 import AddIcon from "~/assets/icons/mais.svg";
 import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
+import loginAction from "~/actions/loginAction";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
 const RegisteredClinic = (props) => {
@@ -44,6 +45,14 @@ const RegisteredClinic = (props) => {
             "getClinicsLoading",
             (error) => {
               if (error) {
+                if (error === "Failed to authenticate token!") {
+                  Utils.showError("Não autenticado!");
+                  dispatch(loginAction.logoutUser());
+                  // setTimeout(function () {
+                  //   props.history.push("/login");
+                  // }, 3000);
+                  return;
+                }
                 Utils.showError(error);
                 return;
               }
@@ -92,6 +101,14 @@ const RegisteredClinic = (props) => {
       dispatch(
         clinicAction.getAllClinics(getToken(), "getClinicsLoading", (error) => {
           if (error) {
+            if (error === "Failed to authenticate token!") {
+              Utils.showError("Não autenticado!");
+              dispatch(loginAction.logoutUser());
+              // setTimeout(function () {
+              //   props.history.push("/login");
+              // }, 3000);
+              return;
+            }
             Utils.showError(error);
             return;
           }
@@ -128,6 +145,14 @@ const RegisteredClinic = (props) => {
           "deleteClinicLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }

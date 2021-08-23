@@ -10,6 +10,7 @@ import {
   // Typography,
 } from "@material-ui/core";
 import { Formik, Form } from "formik";
+import loginAction from "~/actions/loginAction";
 import Utils from "~/helpers/Utils";
 // import { useTranslation } from "react-i18next";
 // import Utils from "~/helpers/Utils";
@@ -99,6 +100,14 @@ const ClinicTypeForm = (props) => {
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }
@@ -137,6 +146,14 @@ const ClinicTypeForm = (props) => {
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }

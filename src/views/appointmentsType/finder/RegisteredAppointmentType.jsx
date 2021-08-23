@@ -19,6 +19,7 @@ import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
+import loginAction from "~/actions/loginAction";
 const RegisteredAppointmentType = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
@@ -46,6 +47,14 @@ const RegisteredAppointmentType = (props) => {
             "appointmentTypeLoading",
             (error) => {
               if (error) {
+                if (error === "Failed to authenticate token!") {
+                  Utils.showError("Não autenticado!");
+                  dispatch(loginAction.logoutUser());
+                  // setTimeout(function () {
+                  //   props.history.push("/login");
+                  // }, 3000);
+                  return;
+                }
                 Utils.showError(error);
                 return;
               }
@@ -92,6 +101,14 @@ const RegisteredAppointmentType = (props) => {
           "appointmentTypeLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }
@@ -129,6 +146,14 @@ const RegisteredAppointmentType = (props) => {
           "deleteAppointmentTypeLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }

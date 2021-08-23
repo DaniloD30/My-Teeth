@@ -35,6 +35,14 @@ export default function Logon() {
       dispatch(
         loginAction.loginUserAboutRefreshWindow("loginLoading", (error) => {
           if (error) {
+            if (error === "Failed to authenticate token!") {
+              Utils.showError("Não autenticado!");
+              dispatch(loginAction.logoutUser());
+              // setTimeout(function () {
+              //   props.history.push("/login");
+              // }, 3000);
+              return;
+            }
             Utils.showError(error);
             return;
           }
@@ -44,6 +52,14 @@ export default function Logon() {
               "dataUserLoading",
               (error) => {
                 if (error) {
+                  if (error === "Failed to authenticate token!") {
+                    Utils.showError("Não autenticado!");
+                    dispatch(loginAction.logoutUser());
+                    // setTimeout(function () {
+                    //   props.history.push("/login");
+                    // }, 3000);
+                    return;
+                  }
                   Utils.showError(error);
                   return;
                 }
@@ -67,12 +83,28 @@ export default function Logon() {
     dispatch(
       loginAction.createLogin(dataLogin?.values, "loginLoading", (error) => {
         if (error) {
+          if (error === "Failed to authenticate token!") {
+            Utils.showError("Não autenticado!");
+            dispatch(loginAction.logoutUser());
+            // setTimeout(function () {
+            //   props.history.push("/login");
+            // }, 3000);
+            return;
+          }
           Utils.showError(error);
           return;
         }
         dispatch(
           userAction.getDataProfile(getToken(), "dataUserLoading", (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }

@@ -24,7 +24,7 @@ import RegisterMaskedTextInput from "~/components/common/registerInputs/Register
 import { withRouter } from "react-router";
 import { ToastContainer } from "react-toastify";
 import Utils from "~/helpers/Utils";
-
+import loginAction from "~/actions/loginAction";
 const useStyles = makeStyles(() => ({
   root: {},
 }));
@@ -165,6 +165,14 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       setSubmitting(false);
 
                       if (error) {
+                        if (error === "Failed to authenticate token!") {
+                          Utils.showError("Não autenticado!");
+                          dispatch(loginAction.logoutUser());
+                          // setTimeout(function () {
+                          //   props.history.push("/login");
+                          // }, 3000);
+                          return;
+                        }
                         Utils.showError(error);
                         return;
                       }
@@ -181,6 +189,14 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                             "dataUserLoading",
                             (error) => {
                               if (error) {
+                                if (error === "Failed to authenticate token!") {
+                                  Utils.showError("Não autenticado!");
+                                  dispatch(loginAction.logoutUser());
+                                  // setTimeout(function () {
+                                  //   props.history.push("/login");
+                                  // }, 3000);
+                                  return;
+                                }
                                 Utils.showError(error);
                                 return;
                               }
@@ -203,6 +219,14 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }
@@ -236,6 +260,14 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }

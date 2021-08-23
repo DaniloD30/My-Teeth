@@ -20,7 +20,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import pt from "date-fns/locale/pt-BR";
 import DateFnsUtils from "@date-io/date-fns";
-
+import loginAction from "~/actions/loginAction";
 const PopUp = ({
   flagOpen,
   handleClose,
@@ -107,6 +107,14 @@ const PopUp = ({
           "DeleteAppointmentLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }
@@ -123,6 +131,14 @@ const PopUp = ({
                   false,
                   (error) => {
                     if (error) {
+                      if (error === "Failed to authenticate token!") {
+                        Utils.showError("Não autenticado!");
+                        dispatch(loginAction.logoutUser());
+                        // setTimeout(function () {
+                        //   props.history.push("/login");
+                        // }, 3000);
+                        return;
+                      }
                       Utils.showError(error);
                       return;
                     }
@@ -187,6 +203,14 @@ const PopUp = ({
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }
@@ -203,6 +227,14 @@ const PopUp = ({
                               false,
                               (error) => {
                                 if (error) {
+                                  if (error === "Failed to authenticate token!") {
+                                    Utils.showError("Não autenticado!");
+                                    dispatch(loginAction.logoutUser());
+                                    // setTimeout(function () {
+                                    //   props.history.push("/login");
+                                    // }, 3000);
+                                    return;
+                                  }
                                   Utils.showError(error);
                                   return;
                                 }
@@ -234,6 +266,14 @@ const PopUp = ({
                         setSubmitting(false);
 
                         if (error) {
+                          if (error === "Failed to authenticate token!") {
+                            Utils.showError("Não autenticado!");
+                            dispatch(loginAction.logoutUser());
+                            // setTimeout(function () {
+                            //   props.history.push("/login");
+                            // }, 3000);
+                            return;
+                          }
                           Utils.showError(error);
                           return;
                         }
@@ -251,6 +291,14 @@ const PopUp = ({
                               false,
                               (error) => {
                                 if (error) {
+                                  if (error === "Failed to authenticate token!") {
+                                    Utils.showError("Não autenticado!");
+                                    dispatch(loginAction.logoutUser());
+                                    // setTimeout(function () {
+                                    //   props.history.push("/login");
+                                    // }, 3000);
+                                    return;
+                                  }
                                   Utils.showError(error);
                                   return;
                                 }

@@ -20,7 +20,7 @@ import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import ModalCommon from "~/components/common/modal/Modal";
 import Utils from "~/helpers/Utils";
-
+import loginAction from "~/actions/loginAction";
 const ScheduledAppointments = (props) => {
   const { history, statePacient } = props;
   const dispatch = useDispatch();
@@ -106,6 +106,14 @@ const ScheduledAppointments = (props) => {
           "getAppointmentPacientLoading",
           (error) => {
             if (error) {
+              if (error === "Failed to authenticate token!") {
+                Utils.showError("Não autenticado!");
+                dispatch(loginAction.logoutUser());
+                // setTimeout(function () {
+                //   props.history.push("/login");
+                // }, 3000);
+                return;
+              }
               Utils.showError(error);
               return;
             }

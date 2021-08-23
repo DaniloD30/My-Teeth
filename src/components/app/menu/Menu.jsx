@@ -90,7 +90,7 @@ const Menu = (props) => {
               fnClick={setSubMenu}
             />
           )}
-          <List style={{overflow: "auto"}}>
+          <List>
             {routes
               .filter((r) => r.showOnMenu)
               .map(
