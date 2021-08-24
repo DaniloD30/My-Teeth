@@ -76,6 +76,11 @@ const RegisteredConsults = (props) => {
       render: (data) => <strong>{data}</strong>,
     },
     {
+      name: "statusName",
+      label: "Status",
+      render: (data) => <strong>{data}</strong>,
+    },
+    {
       name: "pacientName",
       label: "Paciente",
       render: (dentista) => <span>{dentista}</span>,

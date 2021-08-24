@@ -114,7 +114,7 @@ const SchedulerComponent = ({ dataAppointment }) => {
           item.Text = item?.person?.name;
           item.Id = item?.id;
           item.GroupId = 1; // grupo de dentistas
-          item.Color = "#f00"; //Cada dentista tem que ter uma cor
+          item.Color = "#2e3192"; //Cada dentista tem que ter uma cor
           // pode vim DO BACKEND ( MELHOR )
           item.Designation = "Dentista"; // necessario isso para o scheduler
         }

@@ -190,7 +190,7 @@ const PopUp = ({
             }}
             onSubmit={(values, { setSubmitting }) => {
               values.userregistered_id = localStorage.getItem("userid");
-              // values.appointmentsStatus_id = 2 
+              // values.appointmentsStatus_id = 2
               if (flagEdit) {
                 if (isAuthenticated()) {
                   dispatch(
@@ -227,7 +227,9 @@ const PopUp = ({
                               false,
                               (error) => {
                                 if (error) {
-                                  if (error === "Failed to authenticate token!") {
+                                  if (
+                                    error === "Failed to authenticate token!"
+                                  ) {
                                     Utils.showError("Não autenticado!");
                                     dispatch(loginAction.logoutUser());
                                     // setTimeout(function () {
@@ -291,7 +293,9 @@ const PopUp = ({
                               false,
                               (error) => {
                                 if (error) {
-                                  if (error === "Failed to authenticate token!") {
+                                  if (
+                                    error === "Failed to authenticate token!"
+                                  ) {
                                     Utils.showError("Não autenticado!");
                                     dispatch(loginAction.logoutUser());
                                     // setTimeout(function () {
@@ -367,7 +371,7 @@ const PopUp = ({
                           label="Data Inicial"
                           inputVariant="outlined"
                           name="StartTime"
-                          format="MM/dd/yyyy HH:mm"
+                          format="MM/dd/yyyy - HH:mm"
                           // value={selectedDate}
                           value={values.StartTime}
                           onChange={(value) =>
@@ -383,7 +387,7 @@ const PopUp = ({
                           label="Data Final"
                           inputVariant="outlined"
                           name="EndTime"
-                          format="MM/dd/yyyy HH:mm"
+                          format="MM/dd/yyyy - HH:mm"
                           // value={selectedDate}
                           value={values.EndTime}
                           onChange={(value) => setFieldValue("EndTime", value)}
@@ -418,7 +422,7 @@ const PopUp = ({
                             variant="contained"
                             color="primary"
                             disableElevation
-                            // disabled={loginCreateLoading}
+                            disabled={DeleteAppointmentLoading}
                             onClick={deletEvent}
                           >
                             {DeleteAppointmentLoading ? (
@@ -445,7 +449,7 @@ const PopUp = ({
                           variant="contained"
                           color="primary"
                           disableElevation
-                          // disabled={loginCreateLoading}
+                          disabled={addAppointmentLoading || editAppointmentLoading}
                           onClick={submitForm}
                         >
                           {addAppointmentLoading || editAppointmentLoading ? (

@@ -25,7 +25,7 @@ const isCpf = (cpf) => {
   var Soma;
   var Resto;
   Soma = 0;
-  let strCPF = cpf.replace(/[^a-z0-9]/gi, "");
+  let strCPF = cpf?.replace(/[^a-z0-9]/gi, "");
   // console.log("repace -> ",);
   // console.log("cpf ->", strCPF);
   if (strCPF === "00000000000") return false;

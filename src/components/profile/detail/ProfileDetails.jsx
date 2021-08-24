@@ -209,7 +209,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                     }
                   )
                 );
-                if (userDataAddress.length < 0) {
+                if (userDataAddress?.length < 0) {
                   dispatch(
                     userAction.addAddress(
                       values.addres,

@@ -89,6 +89,7 @@ export const getAllAppointmentsDentists =
       .then((response) => {
         if (response) {
           response.data.appointments.rows.forEach((item) => {
+            item.statusName = item?.appointments_status?.status
             item.pacientName = item?.person?.name;
             item.day = Utils.getFormatDay(item?.StartTime);
             item.hour = Utils.getFormatHour(item?.StartTime, item?.EndTime);
@@ -145,6 +146,7 @@ export const getAllAppointmentsPacients =
         if (response) {
           response.data.appointments.rows.forEach((item) => {
             // nameDentist
+            item.statusName = item?.appointments_status?.status;
             response.data.nameDentist.rows.forEach((itemDentist) => {
               // itemDentist?.id  === item?.userdentist_id && item.dentistName = itemDentist?.person?.name
               if (itemDentist?.id === item?.userdentist_id) {
