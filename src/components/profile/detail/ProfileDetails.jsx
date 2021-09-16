@@ -325,7 +325,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       <RegisterMaskedTextInput
                         label={"RG"}
                         name="rg"
-                        mask="99.999.999-9"
+                        mask="99.999.999-99"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>

@@ -53,6 +53,7 @@ export const getAllAppointments =
             item.pacientName = item?.person?.name;
             item.hour = Utils.getFormatHour(item?.StartTime, item?.EndTime);
             item.day = Utils.getFormatDay(item?.StartTime);
+            item.statusName = item?.appointments_status?.status
           });
           if(flagMyConsults){
             /*
@@ -88,6 +89,7 @@ export const getAllAppointmentsDentists =
     getAppointmentTypeByIdDentist(token, id, localStorage.getItem("clinic_id"))
       .then((response) => {
         if (response) {
+
           response.data.appointments.rows.forEach((item) => {
             item.statusName = item?.appointments_status?.status
             item.pacientName = item?.person?.name;

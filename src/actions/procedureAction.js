@@ -14,7 +14,7 @@ export const addProcedure = (
   fnCallback = () => {}
 ) => (dispatch) => {
   dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-
+  params.clinic_id = localStorage.getItem("clinic_id")
   addProcedureService(params, token)
     .then((response) => {
       if (response) {

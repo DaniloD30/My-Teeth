@@ -49,7 +49,7 @@ export const addAddressService = (data, token) => {
 export const getAddressByPersonId = (token, id) => {
   return new Promise((resolve, reject) => {
     http
-      .get(`address?personId=${id}`, { headers: { "x-access-token": token } })
+      .get(`address?person_id=${id}`, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
