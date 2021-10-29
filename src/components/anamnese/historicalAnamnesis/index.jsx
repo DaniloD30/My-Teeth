@@ -16,7 +16,7 @@ const HistoricalAnamnesis = ({ statePacient }) => {
   const [modalAdd, setModalAdd] = React.useState(false);
   const anamnesis = useSelector((state) => state.anamnese?.anamnesis);
   const getAnamneseLoading = useSelector((state) => state.app.loading.getAnamneseLoading);
-  
+
   useEffect(() => {
     if (isAuthenticated()) {
       dispatch(
@@ -72,13 +72,7 @@ const HistoricalAnamnesis = ({ statePacient }) => {
         </AnamneseForm>
       </Box>
       <Grid container spacing={3}>
-        {anamnesis.map((item) => (
-          // Saber o retorno do Item, para isso preciso salvar uma anamnese
-          // para saber os dados e preencher o CardAnamnese
-          <Grid item xs={3}>
-            <CardAnamnese name="Anamnese 1" colorAvatar="red" />
-          </Grid>
-        ))}
+      
         <Grid item xs={3}>
           <CardAnamnese name="Anamnese 1" colorAvatar="red" />
         </Grid>
