@@ -29,7 +29,7 @@ const RegisteredDetails = (props) => {
       case 0:
         return <AboutCard statePacient={location?.state} />;
       case 1:
-        return <Anamnese />;
+        return <Anamnese statePacient={location?.state}/>;
       case 2:
         return "Tratamentos ou Procedimentos (Ja existe a table Procedimentos)";
       case 3:

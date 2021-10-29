@@ -49,6 +49,8 @@ const ProfileForm = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const userDataProfile = useSelector((state) => state.user?.userDataProfile);
+  const userDataAddress = useSelector((state) => state.user?.address);
+  // const userDataProfile = useSelector((state) => state.user?.userDataProfile);
   const [img, setImage] = useState(null);
   // const [imgResult, setImageResult] = useState("");
 
@@ -121,7 +123,7 @@ const ProfileForm = (props) => {
             {userDataProfile?.name}
           </Typography>
           <Typography color="textSecondary" variant="body1">
-            {`${user.city} ${user.country}`}
+            {`${userDataAddress?.district ? userDataAddress?.district : ''}`}
           </Typography>
           <Typography
             className={classes.dateText}

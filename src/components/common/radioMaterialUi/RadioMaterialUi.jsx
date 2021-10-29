@@ -11,7 +11,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 const RadioMaterialUi = (props) => {
   //   const [value, setValue] = React.useState("female");
-  const { title, handleC, value, label, valueLabel, name, yesAsk } = props;
+  const { title, handleC, value, label, nameIfYes, name, yesAsk } = props;
 
   //   const handleChange = (event) => {
   //     setValue(event.target.value);
@@ -46,13 +46,13 @@ const RadioMaterialUi = (props) => {
           {value === "true" && (
             <TextField
               id="standard-full-width"
-              // label="Queixa Principal?"
+              label={yesAsk}
               // style={{ margin: 8 }}
               placeholder={yesAsk}
               // helperText="Full width!"
               fullWidth
               margin="normal"
-              name={`${name}Other`}
+              name={nameIfYes}
               onChange={handleC}
               InputLabelProps={{
                 shrink: true,

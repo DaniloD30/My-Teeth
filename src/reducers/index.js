@@ -11,7 +11,7 @@ import procedure from "~/reducers/procedureReducer";
 import appointment from "~/reducers/appointmentReducer";
 import appointmentType from "~/reducers/appointmentTypeReducer";
 import appointmentStatus from "~/reducers/appointmentStatusReducer";
-
+import anamnese from "~/reducers/anamneseReducer";
 const appReducer = combineReducers({
   app,
   login,
@@ -22,6 +22,7 @@ const appReducer = combineReducers({
   appointmentType,
   appointmentStatus,
   procedure,
+  anamnese,
 });
 
 const rootReducer = (state, action) => {

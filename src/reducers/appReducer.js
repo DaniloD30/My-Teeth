@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     getStatusLoading: false,
     deleteClinicLoading: false,
     addClinicLoading: false,
+    getAnamneseLoading: false,
     addClinicTypeLoading: false,
     editClinicTypeLoading: false,
     editClinicLoading: false,
