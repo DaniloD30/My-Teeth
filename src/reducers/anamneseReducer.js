@@ -1,7 +1,7 @@
 import Constants from "~/helpers/enums/Constants";
 
 const INITIAL_STATE = {
-anamnesis: [],
+    anamnesis: [],
 };
 
 export default function anamneseReducer(state = INITIAL_STATE, action) {
@@ -9,7 +9,7 @@ export default function anamneseReducer(state = INITIAL_STATE, action) {
       case Constants.GET_ANAMNESE:
         return {
           ...state,
-          anamnesis: action?.payload,
+          anamnesis: action?.payload.rows,
         };
     default:
       return state;

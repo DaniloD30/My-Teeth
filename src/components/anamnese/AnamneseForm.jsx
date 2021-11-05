@@ -63,20 +63,20 @@ const useStyles = makeStyles({
     flexDirection: "row",
   },
   headerTitle: {
-    fontSize: '24px',
-    fontWeight:'normal',
-    letterSpacing: '0.18px',
-    lineHeight: '24px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    marginLeft: '20px',
+    fontSize: "24px",
+    fontWeight: "normal",
+    letterSpacing: "0.18px",
+    lineHeight: "24px",
+    color: "rgba(0, 0, 0, 0.6)",
+    marginLeft: "20px",
   },
   headerIcon: {
-    color: 'rgba(0, 0, 0, 0.6)',
-    cursor: 'pointer',
+    color: "rgba(0, 0, 0, 0.6)",
+    cursor: "pointer",
   },
 });
 
-const AnamneseForm = ({ statePacient, history, open, onClose, children }) => {
+const AnamneseForm = ({ statePacient, history, refetch, open, onClose, children }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   // const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
@@ -84,18 +84,18 @@ const AnamneseForm = ({ statePacient, history, open, onClose, children }) => {
     data: {
       are_you_taking_any_medication: "",
       what_medications_tak: "",
-
       allergy_to_medications_or_anesthetics: "",
       what_medications_are_allergic: "",
       screening_date: new Date(),
       blood_pressure_is_high: "",
       controlled_high_pressure: "",
-      describe_main_complaint: "",
+      describe_main_complaint: "Teste xas",
       clinic_id: +localStorage.getItem("clinic_id"),
       userpatient_id: statePacient.id,
       userdentist_id: +localStorage.getItem("userid"),
       userregistered_id: +localStorage.getItem("userid"),
       have_diabetes: "",
+      main_complaint: "",
       what_type_of_diabetes: "",
     },
   });
@@ -106,7 +106,7 @@ const AnamneseForm = ({ statePacient, history, open, onClose, children }) => {
 
   const handleChange = (event) => {
     // event.persist();
-    console.log("event", event);
+    // console.log("event", event);
     // console.log("event ->", event.target.name);
     // console.log("value ->", event.target.value);
     if (typeof event.getMonth === "function") {
@@ -167,10 +167,14 @@ const AnamneseForm = ({ statePacient, history, open, onClose, children }) => {
     },
   ];
 
+  const onCloseModal = React.useCallback(() => {
+    refetch();
+    onClose();
+  }, [onClose, refetch]);
+
   const handleSubmit = () => {
     // dispatch anamnese here
-    console.log("id user", statePacient);
-    console.log("value ->", value);
+    // console.log("id user", statePacient);
     if (isAuthenticated()) {
       dispatch(
         anamneseAction.addAnamnese(
@@ -193,9 +197,9 @@ const AnamneseForm = ({ statePacient, history, open, onClose, children }) => {
               description: "Anamnese adicionada com sucesso!",
             });
 
-            // setTimeout(function () {
-            //   props.comeback();
-            // }, 3000);
+            setTimeout(function () {
+              onCloseModal();
+            }, 3000);
 
             // props.comeback();
           }
@@ -208,10 +212,6 @@ const AnamneseForm = ({ statePacient, history, open, onClose, children }) => {
       }, 3000);
     }
   };
-
-  const onCloseModal = React.useCallback(() => {
-    onClose();
-  }, [onClose]);
 
   // PARA O OUTRO, TEREI QUE PASSAR UMA PROP TBM, Ex: OtherDor
   return (

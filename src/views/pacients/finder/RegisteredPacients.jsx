@@ -17,59 +17,20 @@ import Table from "~/components/common/table/Table";
 import AddIcon from "~/assets/icons/mais.svg";
 import Pagination from "~/components/common/pagination/Pagination";
 import { ToastContainer } from "react-toastify";
-import ModalCommon from "~/components/common/modal/Modal";
+// import ModalCommon from "~/components/common/modal/Modal";
+import ModalClientAccess from "./ModalClientAccess";
 import Utils from "~/helpers/Utils";
 import loginAction from "~/actions/loginAction";
 const RegisteredPacients = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
   const pacient = useSelector((state) => state.user?.cliente);
-  const [IdrowDelete, setIdRowDelete] = React.useState();
-  const [isDelete, setIsDelete] = React.useState(false);
   const [modal, setFlagModal] = React.useState(false);
   const [data, setData] = React.useState();
 
   const dataAllUserLoading = useSelector(
     (state) => state.app?.loading?.dataAllUserLoading
   );
-
-  const deleteAppointmentTypeLoading = useSelector(
-    (state) => state.app?.loading?.deleteAppointmentTypeLoading
-  );
-
-  useEffect(() => {
-    if (isDelete) {
-      if (isAuthenticated()) {
-        dispatch(
-          userAction.getAllDataProfile(
-            getToken(),
-            null,
-            "dataAllUserLoading",
-            (error) => {
-              if (error) {
-                if (error === "Failed to authenticate token!") {
-                  Utils.showError("Não autenticado!");
-                  dispatch(loginAction.logoutUser());
-                  // setTimeout(function () {
-                  //   props.history.push("/login");
-                  // }, 3000);
-                  return;
-                }
-                Utils.showError(error);
-                return;
-              }
-            }
-          )
-        );
-      } else {
-        Utils.showError("Não autenticado!");
-        setTimeout(function () {
-          history.push("/login");
-        }, 3000);
-      }
-    }
-    setIsDelete(false);
-  }, [dispatch, isDelete, history]);
 
   const SENT_COLUMNS = [
     {
@@ -90,7 +51,7 @@ const RegisteredPacients = (props) => {
   ];
 
   const openForm = () => {
-    history.push("/register/appointmentsTypeInsert");
+    // history.push("/register/appointmentsTypeInsert");
   };
 
   const handlePage = (event, value) => {
@@ -110,9 +71,6 @@ const RegisteredPacients = (props) => {
               if (error === "Failed to authenticate token!") {
                 Utils.showError("Não autenticado!");
                 dispatch(loginAction.logoutUser());
-                // setTimeout(function () {
-                //   props.history.push("/login");
-                // }, 3000);
                 return;
               }
               Utils.showError(error);
@@ -140,20 +98,6 @@ const RegisteredPacients = (props) => {
     }
   }, [pacient]);
 
-  const edit = (id, row) => {
-    history.push(
-      {
-        pathname: `/register/appointmentsTypeInsert/${id}`,
-      },
-      row
-    );
-  };
-
-  const handleDelete = (row) => {
-    setIdRowDelete(row?.id);
-    setFlagModal(true);
-  };
-
   const handleDetail = (row) => {
     history.push(
       {
@@ -162,44 +106,10 @@ const RegisteredPacients = (props) => {
       row
     );
   };
-  
-  const confirmDeleteRow = () => {
-    if (isAuthenticated()) {
-      // dispatch(
-      //   appointmentTypeAction.deleteAppointmentType(
-      //     getToken(),
-      //     IdrowDelete,
-      //     "deleteAppointmentTypeLoading",
-      //     (error) => {
-      //       if (error) {
-      //         Utils.showError(error);
-      //         return;
-      //       }
-      //       Utils.showToast({
-      //         type: "success",
-      //         description: "Tipo de consulta deletada com sucesso",
-      //       });
-      //       setTimeout(function () {
-      //         setIsDelete(true);
-      //       }, 3000);
-      //       // props.comeback();
-      //     }
-      //   )
-      // );
-    } else {
-      Utils.showError("Não autenticado!");
-      setTimeout(function () {
-        history.push("/login");
-      }, 3000);
-    }
 
-    // dispatch(pointsInterestAction.pointsInterestDelete(IdrowDelete, refreshList));
-    setFlagModal(false);
-  };
-
-  const handleCloseModal = () => {
-    setFlagModal(false);
-  };
+  // const handleCloseModal = () => {
+  //   setFlagModal(false);
+  // };
 
   return (
     <>
@@ -211,27 +121,27 @@ const RegisteredPacients = (props) => {
           >
             <Grid container>
               <Grid item xs={12}>
-                <div style={{ marginBottom: "40px", display: "flex" }}>
+                <div style={{ padding: "10px" }}>
                   <Box>
-                    {/* <Button
+                    <Button
                       id="add-button-driver"
                       className="report-save-button"
                       variant="contained"
                       color="primary"
                       disableElevation
-                      onClick={openForm}
-                    > */}
+                      onClick={() => setFlagModal(true)}
+                    >
                       {/* <AddIcon /> */}
-                      {/* <img
+                      <img
                         alt="addIcon"
                         src={AddIcon}
                         style={{ height: "auto", width: 20, padding: 3 }}
                       />
-                      Adicionar Paciente
-                    </Button> */}
+                      Solicitar acesso a um novo paciente
+                    </Button>
                   </Box>
                 </div>
-                {dataAllUserLoading || deleteAppointmentTypeLoading ? (
+                {dataAllUserLoading ? (
                   <Box style={{ display: "flex", justifyContent: "center" }}>
                     <CircularProgress />
                   </Box>
@@ -243,8 +153,6 @@ const RegisteredPacients = (props) => {
                   <Table
                     columns={SENT_COLUMNS}
                     dataSource={data}
-                    edit={edit}
-                    del={handleDelete}
                     handleD={handleDetail}
                     detail={true}
                     excluir={false}
@@ -261,13 +169,14 @@ const RegisteredPacients = (props) => {
                 >
                   <Pagination onChange={handlePage} count={10} />
                 </Box>
-                <ModalCommon
+                {/* <ModalCommon
                   title={"Confirma Exclusão do registro selecionado?"}
                   confirmDelete={confirmDeleteRow}
                   handleClose={handleCloseModal}
                   flag={modal}
-                />
+                /> */}
                 <ToastContainer />
+                <ModalClientAccess open={modal} onClose={() => setFlagModal(false)}/>
               </Grid>
             </Grid>
           </Container>

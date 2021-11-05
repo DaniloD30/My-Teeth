@@ -11,6 +11,7 @@ const INITIAL_STATE = {
     deleteClinicLoading: false,
     addClinicLoading: false,
     getAnamneseLoading: false,
+    clinicAccessRequestLoading: false,
     addClinicTypeLoading: false,
     editClinicTypeLoading: false,
     editClinicLoading: false,

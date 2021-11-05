@@ -1,4 +1,4 @@
-import { Button, Grid, Box } from "@material-ui/core";
+import { Button, Grid, Box, CircularProgress } from "@material-ui/core";
 import React, { useEffect } from "react";
 import CardAnamnese from "../../cardAnamnese";
 import AnamneseForm from "../AnamneseForm";
@@ -12,10 +12,13 @@ const HistoricalAnamnesis = ({ statePacient }) => {
   // BOTAO DE ADICIONAR ANAMNESE PARA IR DIRETO PARA A TELA JA CRIADA
   // O VOLTAR DA TELA DE ADICIONAR, LEVA PARA A TELA DE ANAMNESE COM O ID DO TabsCommon
   // para abrir direto para o anamnese
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const [modalAdd, setModalAdd] = React.useState(false);
+  const [refetch, setRefetch] = React.useState(false);
   const anamnesis = useSelector((state) => state.anamnese?.anamnesis);
-  const getAnamneseLoading = useSelector((state) => state.app.loading.getAnamneseLoading);
+  const getAnamneseLoading = useSelector(
+    (state) => state.app.loading.getAnamneseLoading
+  );
 
   useEffect(() => {
     if (isAuthenticated()) {
@@ -41,7 +44,8 @@ const HistoricalAnamnesis = ({ statePacient }) => {
         )
       );
     }
-  }, [dispatch, statePacient.id]);
+  }, [dispatch, statePacient.id, refetch ]);
+  
 
   return (
     <>
@@ -49,6 +53,7 @@ const HistoricalAnamnesis = ({ statePacient }) => {
         <AnamneseForm
           statePacient={statePacient}
           open={modalAdd}
+          refetch={() => setRefetch(true)}
           onClose={() => setModalAdd(false)}
         >
           <Box style={{ padding: "20px" }}>
@@ -71,21 +76,34 @@ const HistoricalAnamnesis = ({ statePacient }) => {
           </Box>
         </AnamneseForm>
       </Box>
-      <Grid container spacing={3}>
-      
-        <Grid item xs={3}>
-          <CardAnamnese name="Anamnese 1" colorAvatar="red" />
+      {getAnamneseLoading ? (
+        <CircularProgress
+          style={{ height: 14, width: 14, marginRight: 8 }}
+          color={"#fff"}
+        />
+      ) : (
+        <Grid container spacing={3}>
+          {anamnesis?.map((item) => (
+            // Saber o retorno do Item, para isso preciso salvar uma anamnese
+            // para saber os dados e preencher o CardAnamnese
+            <Grid item xs={3}>
+              <CardAnamnese name={item?.main_complaint} description={item?.describe_main_complaint} colorAvatar="red" />
+            </Grid>
+          ))}
+          {/* <Grid item xs={3}>
+            <CardAnamnese name="Anamnese 1" colorAvatar="red" />
+          </Grid>
+          <Grid item xs={3}>
+            <CardAnamnese name="Anamnese 2" colorAvatar="red" />
+          </Grid>
+          <Grid item xs={3}>
+            <CardAnamnese name="Anamnese 3" colorAvatar="red" />
+          </Grid>
+          <Grid item xs={3}>
+            <CardAnamnese name="Anamnese 4" colorAvatar="red" />
+          </Grid> */}
         </Grid>
-        <Grid item xs={3}>
-          <CardAnamnese name="Anamnese 2" colorAvatar="red" />
-        </Grid>
-        <Grid item xs={3}>
-          <CardAnamnese name="Anamnese 3" colorAvatar="red" />
-        </Grid>
-        <Grid item xs={3}>
-          <CardAnamnese name="Anamnese 4" colorAvatar="red" />
-        </Grid>
-      </Grid>
+      )}
     </>
   );
 };

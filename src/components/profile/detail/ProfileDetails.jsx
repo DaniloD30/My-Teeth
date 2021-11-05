@@ -168,9 +168,6 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                         if (error === "Failed to authenticate token!") {
                           Utils.showError("Não autenticado!");
                           dispatch(loginAction.logoutUser());
-                          // setTimeout(function () {
-                          //   props.history.push("/login");
-                          // }, 3000);
                           return;
                         }
                         Utils.showError(error);
@@ -192,9 +189,6 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                                 if (error === "Failed to authenticate token!") {
                                   Utils.showError("Não autenticado!");
                                   dispatch(loginAction.logoutUser());
-                                  // setTimeout(function () {
-                                  //   props.history.push("/login");
-                                  // }, 3000);
                                   return;
                                 }
                                 Utils.showError(error);
@@ -222,31 +216,13 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                           if (error === "Failed to authenticate token!") {
                             Utils.showError("Não autenticado!");
                             dispatch(loginAction.logoutUser());
-                            // setTimeout(function () {
-                            //   props.history.push("/login");
-                            // }, 3000);
                             return;
                           }
                           Utils.showError(error);
                           return;
                         }
 
-                        // setTimeout(function () {
-                        //   dispatch(
-                        //     userAction.getDataProfile(
-                        //       getToken(),
-                        //       "dataUserLoading",
-                        //       (error) => {
-                        //         if (error) {
-                        //           Utils.showError(error);
-                        //           return;
-                        //         }
-                        //       }
-                        //     )
-                        //   );
-                        // }, 2000);
-
-                        // props.comeback();
+                    
                       }
                     )
                   );
@@ -263,31 +239,13 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                           if (error === "Failed to authenticate token!") {
                             Utils.showError("Não autenticado!");
                             dispatch(loginAction.logoutUser());
-                            // setTimeout(function () {
-                            //   props.history.push("/login");
-                            // }, 3000);
                             return;
                           }
                           Utils.showError(error);
                           return;
                         }
 
-                        // setTimeout(function () {
-                        //   dispatch(
-                        //     userAction.getDataProfile(
-                        //       getToken(),
-                        //       "dataUserLoading",
-                        //       (error) => {
-                        //         if (error) {
-                        //           Utils.showError(error);
-                        //           return;
-                        //         }
-                        //       }
-                        //     )
-                        //   );
-                        // }, 2000);
-
-                        // props.comeback();
+                     
                       }
                     )
                   );

@@ -87,9 +87,6 @@ const MyClinicForm = ({ data }) => {
                         if (error === "Failed to authenticate token!") {
                           Utils.showError("Não autenticado!");
                           dispatch(loginAction.logoutUser());
-                          // setTimeout(function () {
-                          //   props.history.push("/login");
-                          // }, 3000);
                           return;
                         }
                         Utils.showError(error);
@@ -111,9 +108,6 @@ const MyClinicForm = ({ data }) => {
                                 if (error === "Failed to authenticate token!") {
                                   Utils.showError("Não autenticado!");
                                   dispatch(loginAction.logoutUser());
-                                  // setTimeout(function () {
-                                  //   props.history.push("/login");
-                                  // }, 3000);
                                   return;
                                 }
                                 Utils.showError(error);

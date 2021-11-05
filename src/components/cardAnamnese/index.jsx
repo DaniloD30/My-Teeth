@@ -7,10 +7,11 @@ import {
     Typography,
   } from "@material-ui/core";
   import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-  import MoneyIcon from "@material-ui/icons/Money";
+  // import MoneyIcon from "@material-ui/icons/Money";
+  import MedicationIcon from '@mui/icons-material/Medication';
   import { red } from "@material-ui/core/colors";
   
-  const CardAnamnese = ({ name, colorAvatar, props }) => (
+  const CardAnamnese = ({ name, description, colorAvatar, props }) => (
     <Card
       style={{ height: "100%" }}
       //  {...props}
@@ -28,7 +29,7 @@ import {
               {name}
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              $24,000
+              {description}
             </Typography>
           </Grid>
           <Grid item>
@@ -44,7 +45,7 @@ import {
               //   width: 56,
               // }}
             >
-              <MoneyIcon />
+              <MedicationIcon />
             </Avatar>
           </Grid>
         </Grid>
