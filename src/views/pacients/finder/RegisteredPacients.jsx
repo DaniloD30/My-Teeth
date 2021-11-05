@@ -49,11 +49,7 @@ const RegisteredPacients = (props) => {
       render: (phone_mobile) => <span>{phone_mobile}</span>,
     },
   ];
-
-  const openForm = () => {
-    // history.push("/register/appointmentsTypeInsert");
-  };
-
+  
   const handlePage = (event, value) => {
     // change page
     // dispatch(profileAction.getProfiles("deleteClinicLoading", value));

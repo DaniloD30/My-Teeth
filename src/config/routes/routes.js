@@ -227,7 +227,7 @@ export const routes = [
   {
     path: "/register/appointmentsTypeInsert",
     exact: true,
-    title: () => "Tipo de Clínica",
+    title: () => "Tipo de Consulta",
     breadcrumbs: [{ label: "Cadastro" }, { label: "Tipo de Consulta" }],
     // menu: () => "Usuários",
     // iconMaterial: <PersonAddIcon fontSize="large" />,

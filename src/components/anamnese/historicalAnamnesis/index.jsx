@@ -1,4 +1,10 @@
-import { Button, Grid, Box, CircularProgress } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Box,
+  CircularProgress,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect } from "react";
 import CardAnamnese from "../../cardAnamnese";
 import AnamneseForm from "../AnamneseForm";
@@ -12,7 +18,7 @@ const HistoricalAnamnesis = ({ statePacient }) => {
   // BOTAO DE ADICIONAR ANAMNESE PARA IR DIRETO PARA A TELA JA CRIADA
   // O VOLTAR DA TELA DE ADICIONAR, LEVA PARA A TELA DE ANAMNESE COM O ID DO TabsCommon
   // para abrir direto para o anamnese
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [modalAdd, setModalAdd] = React.useState(false);
   const [refetch, setRefetch] = React.useState(false);
   const anamnesis = useSelector((state) => state.anamnese?.anamnesis);
@@ -44,8 +50,7 @@ const HistoricalAnamnesis = ({ statePacient }) => {
         )
       );
     }
-  }, [dispatch, statePacient.id, refetch ]);
-  
+  }, [dispatch, statePacient.id, refetch]);
 
   return (
     <>
@@ -81,13 +86,21 @@ const HistoricalAnamnesis = ({ statePacient }) => {
           style={{ height: 14, width: 14, marginRight: 8 }}
           color={"#fff"}
         />
+      ) : anamnesis?.length < 1 ? (
+        <Typography variant="h3" style={{ textAlign: "center" }}>
+          Nenhuma anamnese encontrada!
+        </Typography>
       ) : (
         <Grid container spacing={3}>
           {anamnesis?.map((item) => (
             // Saber o retorno do Item, para isso preciso salvar uma anamnese
             // para saber os dados e preencher o CardAnamnese
             <Grid item xs={3}>
-              <CardAnamnese name={item?.main_complaint} description={item?.describe_main_complaint} colorAvatar="red" />
+              <CardAnamnese
+                name={item?.main_complaint}
+                description={item?.describe_main_complaint}
+                colorAvatar="red"
+              />
             </Grid>
           ))}
           {/* <Grid item xs={3}>

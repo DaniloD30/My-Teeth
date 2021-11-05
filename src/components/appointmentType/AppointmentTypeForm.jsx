@@ -45,15 +45,14 @@ const AppointmentTypeForm = (props) => {
     (state) => state.app?.loading?.editAppointmentTypeLoading
   );
 
-  let clinic = {
-    description: "Clinica dasdadd",
-    value: "50",
-    
+  let appointmentTye = {
+    description: "",
+    value: "",
   };
 
   if (location?.state) {
-    clinic = {
-      ...clinic,
+    appointmentTye = {
+      ...appointmentTye,
       ...location?.state,
     };
   }
@@ -80,7 +79,7 @@ const AppointmentTypeForm = (props) => {
         <Box id="userForm" style={{ padding: "10px" }}>
           <Formik
             initialValues={{
-              ...clinic,
+              ...appointmentTye,
             }}
             validate={(values) => {
               const errors = {};
