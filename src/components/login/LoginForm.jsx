@@ -22,11 +22,16 @@ export default function Logon() {
   const { location } = history;
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(window.location.href);
-    if (location.pathname === "/login/") {
+    if (window.location.href === "https://myteethprod.herokuapp.com/login/?redirect=true") {
       Utils.showToast({
         type: "success",
         description: "Conta ativada com sucesso!",
+      });
+    }
+    if (window.location.href === "https://myteethprod.herokuapp.com/login/?authorize=true") {
+      Utils.showToast({
+        type: "success",
+        description: "Acesso concebido com sucesso!",
       });
     }
   }, [location]);
