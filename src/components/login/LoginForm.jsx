@@ -22,6 +22,7 @@ export default function Logon() {
   const { location } = history;
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log(window.location.href);
     if (location.pathname === "/login/") {
       Utils.showToast({
         type: "success",
