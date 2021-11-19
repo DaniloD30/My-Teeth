@@ -1,5 +1,9 @@
 import Utils from "~/helpers/Utils";
-import { addAnamneseService, editAnamneseService, getAnamneseService } from "~/services/anamneseService";
+import {
+  addAnamneseService,
+  editAnamneseService,
+  getAnamneseService,
+} from "~/services/anamneseService";
 import Constants from "~/helpers/enums/Constants";
 
 export const addAnamnese =
@@ -23,17 +27,17 @@ export const addAnamnese =
       });
   };
 
-  export const getAnamnese = (
-    token,
-    idPacient,
-    LOADING_IDENTIFICATOR = "",
-    fnCallback = () => {}
-  ) => (dispatch) => {
+export const getAnamnese =
+  (token, idPacient, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-  
-    getAnamneseService(token,idPacient, localStorage.getItem("clinic_id"))
+
+    getAnamneseService(token, idPacient, localStorage.getItem("clinic_id"))
       .then((response) => {
         if (response) {
+          response?.data?.rows.forEach((element) => {
+            element.date = Utils.getFormatDay(element.screening_date);
+          });
           dispatch({
             type: Constants.GET_ANAMNESE,
             payload: response?.data,
@@ -50,15 +54,11 @@ export const addAnamnese =
       });
   };
 
-  export const editAnamnese = (
-    data,
-    token,
-    id,
-    LOADING_IDENTIFICATOR = "",
-    fnCallback = () => {}
-  ) => (dispatch) => {
+export const editAnamnese =
+  (data, token, id, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
+  (dispatch) => {
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-  
+
     editAnamneseService(data, token, id)
       .then((response) => {
         if (response) {
@@ -75,10 +75,9 @@ export const addAnamnese =
       });
   };
 
-
 const AnamneseAction = {
   addAnamnese,
   editAnamnese,
-  getAnamnese
+  getAnamnese,
 };
 export default AnamneseAction;

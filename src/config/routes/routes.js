@@ -344,7 +344,7 @@ export const routes = [
     iconMaterial: <ApartmentIcon fontSize="large" />,
     view: () => <MyClinic />,
     onlyAuthorized: true,
-    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
+    profilesAuthorized: ["Administrador"],
     showOnMenu: true,
     // mainPage: true,
   },

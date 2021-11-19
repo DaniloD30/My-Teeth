@@ -99,6 +99,8 @@ const HistoricalAnamnesis = ({ statePacient }) => {
               <CardAnamnese
                 name={item?.main_complaint}
                 description={item?.describe_main_complaint}
+                date={item?.date}
+                clinicName={item?.clinic?.company_name}
                 colorAvatar="red"
               />
             </Grid>

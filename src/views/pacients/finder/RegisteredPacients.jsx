@@ -49,7 +49,7 @@ const RegisteredPacients = (props) => {
       render: (phone_mobile) => <span>{phone_mobile}</span>,
     },
   ];
-  
+
   const handlePage = (event, value) => {
     // change page
     // dispatch(profileAction.getProfiles("deleteClinicLoading", value));
@@ -117,8 +117,27 @@ const RegisteredPacients = (props) => {
           >
             <Grid container>
               <Grid item xs={12}>
-                <div style={{ padding: "10px" }}>
+                <div style={{ padding: "10px", display: "flex" }}>
                   <Box>
+                    <Button
+                      id="add-button-driver"
+                      className="report-save-button"
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                      onClick={() => setFlagModal(true)}
+                    >
+                      {/* <AddIcon /> */}
+                      <img
+                        alt="addIcon"
+                        src={AddIcon}
+                        style={{ height: "auto", width: 20, padding: 3 }}
+                      />
+                      Adicionar um novo paciente
+                    </Button>
+                  </Box>
+
+                  <Box style={{ marginLeft: "10px" }}>
                     <Button
                       id="add-button-driver"
                       className="report-save-button"
@@ -172,7 +191,10 @@ const RegisteredPacients = (props) => {
                   flag={modal}
                 /> */}
                 <ToastContainer />
-                <ModalClientAccess open={modal} onClose={() => setFlagModal(false)}/>
+                <ModalClientAccess
+                  open={modal}
+                  onClose={() => setFlagModal(false)}
+                />
               </Grid>
             </Grid>
           </Container>
