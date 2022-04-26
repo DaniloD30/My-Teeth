@@ -125,6 +125,7 @@ const RegisteredPacients = (props) => {
                       variant="contained"
                       color="primary"
                       disableElevation
+                      disabled
                       onClick={() => setFlagModal(true)}
                     >
                       {/* <AddIcon /> */}

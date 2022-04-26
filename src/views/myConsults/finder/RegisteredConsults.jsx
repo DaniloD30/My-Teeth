@@ -88,7 +88,7 @@ const RegisteredConsults = (props) => {
   ];
 
   const openForm = () => {
-    history.push("/register/clinicInsert");
+    history.push("/scheduler");
   };
 
   const handlePage = (event, value) => {

@@ -203,7 +203,8 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                     }
                   )
                 );
-                if (userDataAddress?.length < 0) {
+                if (!!!user.addres?.id) {
+                  console.log("entrou aqui ->", userDataAddress)
                   dispatch(
                     userAction.addAddress(
                       values.addres,
@@ -227,6 +228,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                     )
                   );
                 } else {
+                  console.log("entrou aqui edit ->", userDataAddress)
                   dispatch(
                     userAction.editAddress(
                       values.addres,

@@ -89,7 +89,7 @@ export const routes = [
     iconMaterial: <PostAddIcon fontSize="large" />,
     showOnMenu: true,
     subMenu: true,
-    profilesAuthorized: ["Administrador", "Dentista", "Atendente"],
+    profilesAuthorized: ["Administrador", "Dentista"],
     subRoutes: subRoutesUsers,
   },
 
@@ -257,7 +257,7 @@ export const routes = [
     view: () => <RegisteredPacients />,
     breadcrumbs: [{ label: "Pacientes" }, { label: "Lista de Pacientes" }],
     onlyAuthorized: true,
-    profilesAuthorized: ["Administrador", "Dentista", "Atendente", "Cliente"],
+    profilesAuthorized: ["Administrador", "Dentista", "Atendente"],
     showOnMenu: true,
     // subMenu: true,
     // subRoutes: subRoutesUsers,

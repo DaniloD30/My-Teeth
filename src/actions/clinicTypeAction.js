@@ -11,7 +11,7 @@ export const addClinicType =
   (params = "", token, LOADING_IDENTIFICATOR = "", fnCallback = () => {}) =>
   (dispatch) => {
     dispatch(Utils.startLoading(LOADING_IDENTIFICATOR));
-
+   
     addClinicTypeService(params, token)
       .then((response) => {
         if (response) {
