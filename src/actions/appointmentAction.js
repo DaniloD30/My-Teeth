@@ -59,6 +59,7 @@ export const getAllAppointments =
             /*
             ---- Flag necessária para a tela de Consultas.
             ---- Por enquanto, essa flag só vai ser TRUE, na view myConsults
+            -- teste para deploy
             */
             dispatch({
               type: Constants.GET_ALL_APPOINTMENTS_MYCONSULTS,
