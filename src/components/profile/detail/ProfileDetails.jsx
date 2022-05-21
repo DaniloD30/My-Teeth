@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import clsx from 'clsx';
 // import PropTypes from 'prop-types';
 import {
@@ -19,6 +19,12 @@ import userAction from "~/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
 import { isAuthenticated, getToken } from "~/services/auth";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import pt from "date-fns/locale/pt-BR";
+import DateFnsUtils from "@date-io/date-fns";
 import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
 // import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
@@ -62,27 +68,6 @@ const ProfileDetails = ({ className, props, ...rest }) => {
 
   const states = useSelector((state) => state.user?.states);
 
-  let user = {
-    name: "Teste ds",
-    birthday: null,
-    genre: "M",
-    rg: null,
-    cpf: null,
-    picture: null,
-    phone_mobile: null,
-    phone_other: null,
-    addres: {
-      id: null,
-      address: "Rua carlos conceição, 161 testeee",
-      number: "14",
-      complement: "Villa Bella",
-      district: "Buraquinho",
-      zip_code: "",
-      state_id: 4,
-      citie_id: 4,
-      person_id: localStorage.getItem("userid"),
-    },
-  };
   // const handleChange = (event) => {
   //   setValues({
   //     ...values,
@@ -92,25 +77,41 @@ const ProfileDetails = ({ className, props, ...rest }) => {
 
   // console.log("userDataProfile ->", userDataProfile);
 
-  if (userDataProfile) {
-    // setData(userDataProfile)
-    user = userDataProfile;
-  }
-  if (userDataAddress) {
-    // console.log("userDataAddress", userDataAddress);
-    user.addres = userDataAddress;
-  }
+  useEffect(() => {
+    console.log("userDataAddress ->", userDataAddress);
+    console.log("userDataProfile ->", userDataProfile);
+  }, [userDataAddress, userDataProfile]);
 
-  // useEffect(() => {
-  // console.log("userDataProfile", userDataProfile)
-  // setData(userDataProfile);
-  // if (userDataAddress.length > 0) {
-  // setData(userDataAddress)
-  // console.log("userDataAddress", userDataAddress);
-  // user.addres = userDataAddress;
-  //   }
-  // }, [userDataAddress]);
-
+  let user = {
+    name: userDataProfile?.name,
+    birthday: userDataProfile?.birthday,
+    genre: userDataProfile?.genre,
+    rg: userDataProfile?.rg,
+    cpf: userDataProfile?.cpf,
+    picture: userDataProfile?.picture,
+    phone_mobile: userDataProfile?.phone_mobile,
+    phone_other: userDataProfile?.phone_other,
+    // addres: {
+    //   id: null,
+    //   address: "Rua carlos conceição, 161 testeee",
+    //   number: "14",
+    //   complement: "Villa Bella",
+    //   district: "Buraquinho",
+    //   zip_code: "",
+    //   state_id: 4,
+    //   citie_id: 0,
+    //   person_id: localStorage.getItem("userid"),
+    // },
+    id: userDataAddress?.id,
+    address: userDataAddress?.address,
+    number: userDataAddress?.number,
+    complement: userDataAddress?.complement,
+    district: userDataAddress?.district,
+    zip_code: userDataAddress?.zip_code,
+    state_id: userDataAddress?.state_id,
+    citie_id: userDataAddress?.citie_id,
+    person_id: localStorage.getItem("userid"),
+  };
   // useEffect(() => {
   // console.log("userDataProfile", userDataProfile)
   // setData(userDataProfile);
@@ -143,11 +144,16 @@ const ProfileDetails = ({ className, props, ...rest }) => {
               if (!Utils.isCpf(values.cpf)) {
                 errors.cpf = "CPF Inválido";
               }
+              if (values.citie_id === 0) {
+                errors.citie_id = "Campo Obrigatório";
+              }
+              if (values.state_id === 0) {
+                errors.state_id = "Campo Obrigatório";
+              }
               //  console.log("zip_code ->", values.addres.zip_code)
-              // if (!Utils.ValidaCep(values.addres.zip_code)) {
-              //   console.log("entrou")
-              //   errors.addres.zip_code = "CPF Inválido";
-              // }
+              if (!Utils.ValidaCep(values.zip_code)) {
+                errors.zip_code = "CPF Inválido";
+              }
 
               return errors;
             }}
@@ -155,6 +161,17 @@ const ProfileDetails = ({ className, props, ...rest }) => {
               if (userPhoto !== "") {
                 values.picture = userPhoto;
               }
+              let objAdress = {
+                id: values.id,
+                address: values.address,
+                number: values.number,
+                complement: values.complement,
+                district: values.district,
+                zip_code: values.zip_code,
+                state_id: values.state_id,
+                citie_id: values.citie_id,
+                person_id: localStorage.getItem("userid"),
+              };
               if (isAuthenticated()) {
                 dispatch(
                   userAction.editProfile(
@@ -203,11 +220,11 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                     }
                   )
                 );
-                if (!!!user.addres?.id) {
-                  console.log("entrou aqui ->", userDataAddress)
+                if (!!!user.id) {
+                  console.log("entrou aqui ->", objAdress);
                   dispatch(
                     userAction.addAddress(
-                      values.addres,
+                      objAdress,
                       getToken(),
                       "addAdressLoading",
                       (error) => {
@@ -222,16 +239,14 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                           Utils.showError(error);
                           return;
                         }
-
-                    
                       }
                     )
                   );
                 } else {
-                  console.log("entrou aqui edit ->", userDataAddress)
+                  // console.log("entrou aqui edit ->", userDataAddress)
                   dispatch(
                     userAction.editAddress(
-                      values.addres,
+                      objAdress,
                       getToken(),
                       "editAddressLoading",
                       (error) => {
@@ -246,8 +261,6 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                           Utils.showError(error);
                           return;
                         }
-
-                     
                       }
                     )
                   );
@@ -260,7 +273,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                 }, 3000);
               }
             }}
-            render={({ submitForm, setFieldValue }) => {
+            render={({ submitForm, setFieldValue, values }) => {
               return (
                 <Form>
                   <Grid container spacing={3}>
@@ -272,11 +285,27 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                         label={"Data de Nascimento"}
                         name="birthday"
                       /> */}
-                        <RegisterMaskedTextInput
+                      <MuiPickersUtilsProvider locale={pt} utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          value={values.birthday}
+                          onChange={(date) => setFieldValue('birthday', date)}
+                          inputVariant="outlined"
+                          name="birthday"
+                          // minDate={dayjs(new Date(1999, 12, 31))}
+                          minDateMessage="Data inválida"
+                          // maxDateMessage="Os dados não devem ser posteriores à data final"
+                          // maxDate={finalDateMemo}
+                          // label="Data de Nascimento"
+                          cancelLabel="Cancelar"
+                          // format="DD/MM/YYYY"
+                          format="dd/MM/yyyy"
+                        />
+                      </MuiPickersUtilsProvider>
+                      {/* <RegisterMaskedTextInput
                         label={"Data de Nascimento"}
                         name="birthday"
                         mask="99/99/9999"
-                      />
+                      /> */}
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <RegisterInputText label={"Gênero"} name="genre" />
@@ -329,35 +358,35 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                     <Grid item md={6} xs={12}>
                       <RegisterInputText
                         label={"Endereço"}
-                        name="addres.address"
+                        name="address"
                         maxL="255"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <RegisterInputText
                         label={"Número"}
-                        name="addres.number"
+                        name="number"
                         maxL="20"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <RegisterInputText
                         label={"Complemento"}
-                        name="addres.complement"
+                        name="complement"
                         maxL="255"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <RegisterInputText
                         label={"Distrito"}
-                        name="addres.district"
+                        name="district"
                         maxL="255"
                       />
                     </Grid>
                     <Grid item md={6} xs={12}>
                       <RegisterMaskedTextInput
                         label={"CEP"}
-                        name="addres.zip_code"
+                        name="zip_code"
                         mask="99.999-999"
                       />
                     </Grid>
@@ -374,7 +403,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       /> */}
                       <RegisterSelect
                         label={"Estado"}
-                        name="addres.state_id"
+                        name="state_id"
                         options={states}
                         type="scheduler"
                       />
@@ -387,7 +416,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                       /> */}
                       <RegisterSelect
                         label={"Cidade"}
-                        name="addres.citie_id"
+                        name="citie_id"
                         options={cities}
                         type="scheduler"
                       />

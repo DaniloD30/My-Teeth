@@ -9,14 +9,14 @@ export const getDataProfile =
       userService
         .getDataUser(token, localStorage.getItem("userid"))
         .then((response) => {
+
           if (response?.data) {
             // console.log("data ->", response.data)
-
             dispatch({
               type: Constants.GET_DADOS_PROFILE,
-              payload: response.data,
+              payload: response.data.rows[0],
             });
-            localStorage.setItem("clinic_id", response?.data?.clinicaccesses[0]?.clinic_id);
+            // localStorage.setItem("clinic_id", response?.data?.clinicaccesses[0]?.clinic_id);
           }
         })
         .catch((error) => {
@@ -76,6 +76,7 @@ export const getAllDataProfile =
       userService
         .getAllDataUser(token)
         .then((response) => {
+          console.log("data profile ->", response)
           if (response?.data) {
             let admnistrador = [];
             let atendente = [];
@@ -250,6 +251,7 @@ export const getAddress =
       userService
         .getAddressByPersonId(token, localStorage.getItem("userid"))
         .then((response) => {
+          console.log("")
           if (response) {
             dispatch({
               type: Constants.GET_ADDRESS,

@@ -4,7 +4,7 @@ const USER = "users";
 export const getDataUser = (token, id) => {
   return new Promise((resolve, reject) => {
     http
-      .get(`${USER}/${id}`, { headers: { "x-access-token": token } })
+      .get(`${USER}/?clinic_id=${localStorage.getItem("clinic_id")}&user_id=${id}`, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
@@ -13,7 +13,7 @@ export const getDataUser = (token, id) => {
 export const getAllDataUser = (token) => {
   return new Promise((resolve, reject) => {
     http  //Esse endpoint não precisa filtrar pelo clinic_id, o filtro é feito direto na action
-      .get(`${USER}`, { headers: { "x-access-token": token } })
+      .get(`${USER}/?clinic_id=${localStorage.getItem("clinic_id")}`, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
@@ -40,7 +40,7 @@ export const editAddressServ = (data, token, id) => {
 export const addAddressService = (data, token) => {
   return new Promise((resolve, reject) => {
     http
-      .post(`address/`, data, { headers: { "x-access-token": token } })
+      .post(`address?person_id=${localStorage.getItem("userid")}`, data, { headers: { "x-access-token": token } })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

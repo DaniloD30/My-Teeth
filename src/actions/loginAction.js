@@ -44,12 +44,13 @@ export const createLogin =
             type: Constants.CREATE_LOGIN,
             payload: response?.data,
           });
-          login(response?.data?.token);
-          dispatch(addProfileId(response?.data?.profileid));
+          login(response?.data?.userPayload.token);
+          dispatch(addProfileId(response?.data?.userPayload.profileid));
           // console.log("response?.data?.profileid", response?.data?.profileid);
           // localStorage.setItem("profile_id", response?.data?.profileid);
-          localStorage.setItem("profileid", response?.data?.profileid);
-          localStorage.setItem("userid", response?.data?.userid);
+          localStorage.setItem("profileid", response?.data?.userPayload.profileid);
+          localStorage.setItem("userid", response?.data?.userPayload.userid);
+          localStorage.setItem("clinic_id", response?.data?.userPayload.clinicId)
           fnCallback();
         }
       })
