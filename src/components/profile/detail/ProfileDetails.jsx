@@ -25,6 +25,7 @@ import {
 } from "@material-ui/pickers";
 import pt from "date-fns/locale/pt-BR";
 import DateFnsUtils from "@date-io/date-fns";
+import { format } from "date-fns"
 import RegisterMaskedTextInput from "~/components/common/registerInputs/RegisterMaskedTextInput";
 // import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
@@ -84,7 +85,7 @@ const ProfileDetails = ({ className, props, ...rest }) => {
 
   let user = {
     name: userDataProfile?.name,
-    birthday: userDataProfile?.birthday,
+    birthday: new Date(userDataProfile?.birthday),
     genre: userDataProfile?.genre,
     rg: userDataProfile?.rg,
     cpf: userDataProfile?.cpf,
@@ -141,23 +142,25 @@ const ProfileDetails = ({ className, props, ...rest }) => {
               //   "Utils.isCpf(values.cpf) ->",
               //   Utils.isCpf(values.cpf)
               // );
-              if (!Utils.isCpf(values.cpf)) {
-                errors.cpf = "CPF Inválido";
-              }
-              if (values.citie_id === 0) {
-                errors.citie_id = "Campo Obrigatório";
-              }
-              if (values.state_id === 0) {
-                errors.state_id = "Campo Obrigatório";
-              }
+              // if (!Utils.isCpf(values.cpf)) {
+              //   errors.cpf = "CPF Inválido";
+              // }
+              // if (values.citie_id === 0) {
+              //   errors.citie_id = "Campo Obrigatório";
+              // }
+              // if (values.state_id === 0) {
+              //   errors.state_id = "Campo Obrigatório";
+              // }
               //  console.log("zip_code ->", values.addres.zip_code)
-              if (!Utils.ValidaCep(values.zip_code)) {
-                errors.zip_code = "CPF Inválido";
-              }
+              // if (!Utils.ValidaCep(values.zip_code)) {
+              //   errors.zip_code = "CPF Inválido";
+              // }
 
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
+              values.birthday = format(new Date(values.birthday), 'yyyy-MM-dd')
+              console.log("value birthday -->", values.birthday)
               if (userPhoto !== "") {
                 values.picture = userPhoto;
               }
@@ -172,10 +175,30 @@ const ProfileDetails = ({ className, props, ...rest }) => {
                 citie_id: values.citie_id,
                 person_id: localStorage.getItem("userid"),
               };
+
+              let objProfile = {
+                another_that_indicated: null,
+                birthday: values.birthday,
+                cpf: values.cpf,
+                education: null,
+                family_income: null,
+                genre: values.genre,
+                marital_status: null,
+                name: values.name,
+                number_of_family_members_in_the_residence: null,
+                phone_mobile: values.phone_mobile,
+                phone_other: values.phone_other,
+                picture: null,
+                profession: null,
+                race: null,
+                rg: values.rg,
+                type_of_housing: null,
+                who_indicated: null
+              }
               if (isAuthenticated()) {
                 dispatch(
                   userAction.editProfile(
-                    values,
+                    objProfile,
                     getToken(),
                     "editUserLoading",
                     (error) => {
