@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import logo2 from "~/assets/images/tpcLogo1.jpg";
 import logo1 from "~/assets/images/heroes.png";
+
 // import logo2 from "~/assets/images/tpcLogo3.jpg";
 import "./LoginForm.scss";
 import loginAction from "~/actions/loginAction";
@@ -15,6 +16,8 @@ import Utils from "~/helpers/Utils";
 import { getToken } from "~/services/auth";
 import { useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import myteeth01 from "~/assets/images/Myteeth01.png";
+import myteeth02 from "~/assets/images/Myteeth02.png";
 export default function Logon() {
   const [dataLogin, setDataLogin] = useState({ values: {} });
   const loginLoading = useSelector((state) => state.app?.loading?.loginLoading);
@@ -22,6 +25,7 @@ export default function Logon() {
   const { location } = history;
   const dispatch = useDispatch();
   useEffect(() => {
+    //TO DO: Isso se o sistema estiver no heroku
     if (window.location.href === "https://myteethprod.herokuapp.com/login/?redirect=true") {
       Utils.showToast({
         type: "success",
@@ -134,7 +138,7 @@ export default function Logon() {
           {/* <img className="logoImg" src={logo2} alt="Be the hero" /> */}
           {/* <form onSubmit={(e) => handleLogin(e)}> */}
           {/* <form> */}
-          <h1>Faça o seu login</h1>
+          <h5>Faça seu login e acesse o MyTeeth</h5>
           <input
             style={{ marginBottom: "10px" }}
             placeholder="Sua ID"
@@ -156,6 +160,7 @@ export default function Logon() {
           ) : (
             <button
               className="buttonLogin"
+              disabled={dataLogin?.values?.password === undefined}
               onClick={(e) => handleLogin(e)}
               type="submit"
             >
@@ -169,7 +174,7 @@ export default function Logon() {
           </Link>
           {/* </form> */}
         </section>
-        <img className="heroesImg" src={logo1} alt="Heroes" />
+        <img className="heroesImg" src={myteeth02}  alt="Heroes" />
       </div>
     </div>
   );

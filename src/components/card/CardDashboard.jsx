@@ -10,7 +10,7 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import MoneyIcon from "@material-ui/icons/Money";
 import { red } from "@material-ui/core/colors";
 
-const CardDashboard = ({ name, colorAvatar, props }) => (
+const CardDashboard = ({ name, colorAvatar, value, props }) => (
   <Card
     style={{ height: "100%" }}
     //  {...props}
@@ -28,7 +28,7 @@ const CardDashboard = ({ name, colorAvatar, props }) => (
             {name}
           </Typography>
           <Typography color="textPrimary" variant="h3">
-            $24,000
+            {value}
           </Typography>
         </Grid>
         <Grid item>
@@ -38,17 +38,13 @@ const CardDashboard = ({ name, colorAvatar, props }) => (
               height: 56,
               width: 56,
             }}
-            // sx={{
-            //   backgroundColor: red[600],
-            //   height: 56,
-            //   width: 56,
-            // }}
+         
           >
             <MoneyIcon />
           </Avatar>
         </Grid>
       </Grid>
-      <Box
+      {/* <Box
         style={{
           pt: 2,
           display: "flex",
@@ -81,7 +77,7 @@ const CardDashboard = ({ name, colorAvatar, props }) => (
         <Typography color="textSecondary" variant="caption">
           Since last month
         </Typography>
-      </Box>
+      </Box> */}
     </CardContent>
   </Card>
 );

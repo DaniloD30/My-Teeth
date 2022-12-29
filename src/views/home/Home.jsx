@@ -12,18 +12,22 @@ const Home = () => {
     {
       name: "PACIENTES",
       colorAvatar: "red",
+      value: 7,
     },
     {
-      name: "TOTAL CUSTOMERS",
+      name: "CONSULTAS",
       colorAvatar: "green",
+      value: 12,
     },
     {
-      name: "TASKS PROGRESS",
+      name: "DENTISTAS",
       colorAvatar: "orange",
+      value: 3
     },
     {
-      name: "TOTAL PROFIT",
+      name: "PROFISSIONAIS",
       colorAvatar: "indigo",
+      value: 5
     },
   ];
   return (
@@ -35,11 +39,7 @@ const Home = () => {
             minHeight: "100%",
             py: 3,
           }}
-          // sx={{
-          //   backgroundColor: "background.default",
-          //   minHeight: "100%",
-          //   py: 3,
-          // }}
+    
         >
           <Container maxWidth={false}>
             <Grid container spacing={3}>
@@ -47,24 +47,17 @@ const Home = () => {
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <CardDashboard
                     name={item.name}
+                    value={item.value}
                     colorAvatar={item.colorAvatar}
                   />
                 </Grid>
               ))}
 
-              {/* <Grid item lg={3} sm={6} xl={3} xs={12}>
-                <CardDashboard name="TOTAL CUSTOMERS" colorAvatar="green" />
-              </Grid>
-              <Grid item lg={3} sm={6} xl={3} xs={12}>
-                <CardDashboard name="TASKS PROGRESS" colorAvatar="orange" />
-              </Grid>
-              <Grid item lg={3} sm={6} xl={3} xs={12}>
-                <CardDashboard name="TOTAL PROFIT" colorAvatar="indigo" />
-              </Grid> */}
-              <Grid item lg={8} md={12} xl={9} xs={12}>
+            
+               <Grid item lg={8} md={12} xl={9} xs={12}>
                 <Sales />
               </Grid>
-              <Grid item lg={4} md={6} xl={3} xs={12}>
+              {/* <Grid item lg={4} md={6} xl={3} xs={12}>
                 <TrafficByDevice style={{ height: "100%" }} />
               </Grid>
               <Grid item lg={4} md={6} xl={3} xs={12}>
@@ -72,7 +65,7 @@ const Home = () => {
               </Grid>
               <Grid item lg={8} md={12} xl={9} xs={12}>
                 <LatestOrders />
-              </Grid>
+              </Grid> */}
             </Grid>
           </Container>
         </Box>

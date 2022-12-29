@@ -13,6 +13,8 @@ import RegisterInputText from "~/components/common/registerInputs/RegisterInputT
 import RegisterSelect from "~/components/common/registerInputs/RegisterSelect";
 import { useDispatch, useSelector } from "react-redux";
 import loginAction from "~/actions/loginAction";
+import myteeth01 from "~/assets/images/Myteeth01.png";
+import myteeth02 from "~/assets/images/Myteeth02.png";
 export default function SignUpForm(props) {
   const dispatch = useDispatch();
   const accountCreateSuccess = useSelector(
@@ -22,51 +24,15 @@ export default function SignUpForm(props) {
   const loginCreateLoading = useSelector(
     (state) => state?.app?.loading?.loginCreateLoading
   );
-  // const { userData } = useSelector((state) => state.login);
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [whatsapp, setWhatsapp] = useState("");
-  // const [city, setCity] = useState("");
-  // const [uf, setUf] = useState("");
-  // const history = useHistory();
-  // "email": "denisonoliveiraass@gmail.com",
-  // "pass": "e10adc3949ba59abbe56e057f20f883e",
-  // "name": "denisonoliveiraaa",
-  // "genre": "M",
-  // "plan_id":1,
-  // "profile_id":1,
-  // "clinic_id":1
+ 
   let user = {
     name: "",
     email: "",
     pass: "",
     genre: "",
-    // profile_id: "",
-    // plan_id: "",
-    // clinic_id: "",
+    
   };
-  // async function handleRegister(e) {
-  //     e.preventDefault();
 
-  //     const data = {
-  //         name,
-  //         email,
-  //         whatsapp,
-  //         city,
-  //         uf,
-  //     };
-
-  //     try {
-  //         const response = await api.post('ongs', data);
-
-  //         alert(`Seu ID de acesso é: ${response.data.id}`);
-
-  //         history.push('/');
-  //     } catch (err) {
-  //         alert('Ocorreu um erro, tente novamente mais tarde');
-  //     }
-
-  // }
 
   useEffect(() => {
     if (accountCreateSuccess) {
@@ -81,7 +47,7 @@ export default function SignUpForm(props) {
       <div className="register-container">
         <div className="content">
           <section>
-            <img className="logoImg" src={logo1} alt="Be The Hero" />
+            <img className="logoImg" src={myteeth02} alt="Be The Hero" />
 
             <h1>Cadastro</h1>
             <p>Efetue seu cadastro, entre na plataforma</p>

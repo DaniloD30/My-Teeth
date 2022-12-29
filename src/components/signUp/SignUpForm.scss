@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
 .signUp {
   font: 400 14px Roboto, sans-serif;
+  .MuiButtonBase-root{
+    background: #29abe2;
+  }
   .register-container {
     width: 100%;
     max-width: 1120px;
