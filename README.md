@@ -1,5 +1,5 @@
 ## 💻 Projeto
-Teeth - Este trabalho apresenta uma nova solu¸c˜ao de software centrada no paciente. Onde o paciente tem a possibilidade de acessar seus dados, facilitando a troca de informações em novos tratamentos, especialmente quando se muda de dentista. Um novo fluxo de troca de informações entre clínica/dentista e paciente foi projetado para garantir que o paciente tenha acesso aos seus dados quando necess´ario, visualizando seu hist´orico de forma intuitiva. A solução proposta foi desenvolvida em tecnologias web , para facilitar o uso por parte dos pacientes, possibilitando pesquisas rápidas sobre seu hist´orico de onde estiver.
+Teeth - Este trabalho apresenta uma nova solução de software centrada no paciente. Onde o paciente tem a possibilidade de acessar seus dados, facilitando a troca de informações em novos tratamentos, especialmente quando se muda de dentista. Um novo fluxo de troca de informações entre clínica/dentista e paciente foi projetado para garantir que o paciente tenha acesso aos seus dados quando necess´ario, visualizando seu hist´orico de forma intuitiva. A solução proposta foi desenvolvida em tecnologias web , para facilitar o uso por parte dos pacientes, possibilitando pesquisas rápidas sobre seu hist´orico de onde estiver.
 
 ## :hammer_and_wrench: Features 
 
